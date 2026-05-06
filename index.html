@@ -2,55 +2,62 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>나의 첫 웹 페이지</title>
+    <title>KOSPI 종가 추이 조회</title>
+    <!-- Google Charts 라이브러리 로드 -->
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <style>
-        /* CSS: 페이지를 예쁘게 꾸밉니다 */
-        body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f4f4f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .card {
-            background: white;
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
+        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; background-color: #f8f9fa; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .search-box { margin-bottom: 20px; display: flex; gap: 10px; }
+        input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
+        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        #chart_div { width: 100%; height: 400px; margin-top: 20px; }
     </style>
 </head>
 <body>
 
-    <!-- HTML: 페이지의 내용을 구성합니다 -->
-    <div class="card">
-        <h1>안녕하세요! 👋</h1>
-        <p>웹 개발의 세계에 오신 것을 환영합니다.</p>
-        <button onclick="sayHello()">클릭해 보세요</button>
-        <p id="message"></p>
+<div class="container">
+    <h2>📈 KOSPI 종목 종가 추이</h2>
+    <div class="search-box">
+        <input type="text" id="stockInput" placeholder="종목 코드 또는 이름을 입력하세요 (예: 삼성전자)">
+        <button onclick="drawChart()">검색</button>
     </div>
+    
+    <!-- 차트가 그려질 영역 -->
+    <div id="chart_div"></div>
+</div>
 
-    <script>
-        /* JavaScript: 페이지에 생동감을 더합니다 */
-        function sayHello() {
-            const msgElement = document.getElementById('message');
-            msgElement.innerText = "반갑습니다! 첫 페이지 제작을 축하드려요! 🎉";
-        }
-    </script>
+<script>
+    // 구글 차트 로드
+    google.charts.load('current', {'packages':['corechart']});
+
+    function drawChart() {
+        const stockName = document.getElementById('stockInput').value;
+        if (!stockName) { alert("종목을 입력해주세요!"); return; }
+
+        // 실제 운영 시에는 여기서 API를 호출하여 데이터를 가져옵니다.
+        // 지금은 구현 원리를 확인하기 위한 가상 데이터(더미)입니다.
+        const data = google.visualization.arrayToDataTable([
+            ['날짜', '종가'],
+            ['2026-04-28',  75000],
+            ['2026-04-29',  76200],
+            ['2026-04-30',  74800],
+            ['2026-05-01',  77000],
+            ['2026-05-04',  78500]
+        ]);
+
+        const options = {
+            title: stockName + ' 최근 종가 추이',
+            curveType: 'function',
+            legend: { position: 'bottom' },
+            colors: ['#e74c3c'],
+            animation: { startup: true, duration: 1000, easing: 'out' }
+        };
+
+        const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    }
+</script>
 
 </body>
 </html>
