@@ -2,58 +2,79 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>KOSPI 종가 추이 조회</title>
-    <!-- Google Charts 라이브러리 로드 -->
+    <title>KOSPI 실시간 추이 조회</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <style>
-        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; background-color: #f8f9fa; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .search-box { margin-bottom: 20px; display: flex; gap: 10px; }
-        input { flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        button { padding: 10px 20px; background-color: #007bff; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        #chart_div { width: 100%; height: 400px; margin-top: 20px; }
+        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; line-height: 1.6; }
+        .container { max-width: 900px; margin: auto; }
+        .search-box { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 12px; border: 1px solid #ccc; border-radius: 4px; }
+        button { padding: 12px 24px; background: #28a745; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #218838; }
+        #chart_div { width: 100%; height: 500px; border: 1px solid #eee; margin-top: 20px; }
+        .info { font-size: 0.9rem; color: #666; margin-top: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>📈 KOSPI 종목 종가 추이</h2>
+    <h2>📊 KOSPI 종목별 종가 추이 조회</h2>
     <div class="search-box">
-        <input type="text" id="stockInput" placeholder="종목 코드 또는 이름을 입력하세요 (예: 삼성전자)">
-        <button onclick="drawChart()">검색</button>
+        <input type="text" id="stockName" placeholder="종목명 입력 (예: 삼성전자)">
+        <button onclick="fetchStockData()">데이터 불러오기</button>
     </div>
-    
-    <!-- 차트가 그려질 영역 -->
-    <div id="chart_div"></div>
+    <div id="chart_div">페이지 로드 후 검색을 클릭하세요.</div>
+    <p class="info">* 공공데이터포털의 '금융위원회 주식시세정보' API를 사용합니다.</p>
 </div>
 
 <script>
-    // 구글 차트 로드
     google.charts.load('current', {'packages':['corechart']});
 
-    function drawChart() {
-        const stockName = document.getElementById('stockInput').value;
-        if (!stockName) { alert("종목을 입력해주세요!"); return; }
+    async function fetchStockData() {
+        const stockName = document.getElementById('stockName').value;
+        if (!stockName) { alert("종목명을 입력하세요."); return; }
 
-        // 실제 운영 시에는 여기서 API를 호출하여 데이터를 가져옵니다.
-        // 지금은 구현 원리를 확인하기 위한 가상 데이터(더미)입니다.
-        const data = google.visualization.arrayToDataTable([
-            ['날짜', '종가'],
-            ['2026-04-28',  75000],
-            ['2026-04-29',  76200],
-            ['2026-04-30',  74800],
-            ['2026-05-01',  77000],
-            ['2026-05-04',  78500]
-        ]);
+        // ⚠️ 주의: 실제 서비스 시에는 인증키를 보안 처리해야 하지만, 
+        // 지금은 연습을 위해 직접 입력합니다.
+        const serviceKey = '여기에_발급받은_인증키를_넣으세요'; 
+        const url = `https://apis.data.go.kr/1160100/service/GetStockSecuritiesDetailsService/getStockPriceInfo?serviceKey=${serviceKey}&numOfRows=10&pageNo=1&resultType=json&itmsNm=${encodeURIComponent(stockName)}`;
 
+        try {
+            const response = await fetch(url);
+            const result = await response.json();
+            const items = result.response.body.items.item;
+
+            if (!items || items.length === 0) {
+                alert("데이터를 찾을 수 없습니다. 종목명이 정확한지 확인해 주세요.");
+                return;
+            }
+
+            // 차트 데이터 준비 (날짜순 정렬을 위해 reverse)
+            const chartData = [['날짜', '종가']];
+            items.reverse().forEach(item => {
+                // 날짜 형식을 YYYY-MM-DD로 변환
+                const dateStr = item.basDt.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3');
+                chartData.push([dateStr, parseInt(item.clpr)]);
+            });
+
+            drawChart(chartData, stockName);
+
+        } catch (error) {
+            console.error("데이터 호출 에러:", error);
+            alert("데이터를 가져오는 중 오류가 발생했습니다. 인증키를 확인해 주세요.");
+        }
+    }
+
+    function drawChart(chartData, title) {
+        const data = google.visualization.arrayToDataTable(chartData);
         const options = {
-            title: stockName + ' 최근 종가 추이',
-            curveType: 'function',
-            legend: { position: 'bottom' },
-            colors: ['#e74c3c'],
-            animation: { startup: true, duration: 1000, easing: 'out' }
+            title: `${title} 최근 10거래일 종가 추이`,
+            hAxis: { title: '날짜' },
+            vAxis: { title: '종가 (원)' },
+            legend: 'none',
+            pointSize: 5,
+            colors: ['#007bff']
         };
-
         const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
         chart.draw(data, options);
     }
