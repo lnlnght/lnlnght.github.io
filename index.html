@@ -37,7 +37,7 @@
         // ⚠️ 주의: 실제 서비스 시에는 인증키를 보안 처리해야 하지만, 
         // 지금은 연습을 위해 직접 입력합니다.
         const serviceKey = '97cb036aab4ad7e829130f4fe800973aa2ad98c14dc04214bedc223af2532ffd'; 
-        const url = `https://apis.data.go.kr/1160100/service/GetStockSecuritiesDetailsService/getStockPriceInfo?serviceKey=${serviceKey}&numOfRows=10&pageNo=1&resultType=json&itmsNm=${encodeURIComponent(stockName)}`;
+        const url = `https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo?serviceKey=${serviceKey}&numOfRows=10&pageNo=1&resultType=json&itmsNm=${encodeURIComponent(stockName)}`;
 
         try {
             const response = await fetch(url);
