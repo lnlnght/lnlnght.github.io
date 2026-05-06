@@ -61,9 +61,12 @@
             code = symbolMap[input];
         }
         
-        if (!code) { alert("정확한 종목명을 선택해주세요."); return; }
+        if (!code) { 
+            alert("올바른 종목명 또는 6자리 종목코드를 입력해주세요."); 
+            return; 
+        }
 
-        document.getElementById('chart_div').innerHTML = "데이터를 불러오는 중...";
+        document.getElementById('chart_div').innerHTML = `${displayName}(${code}) 데이터를 불러오는 중...`;
 
         // 방법 A에서 썼던 공공데이터 API 호출
         const serviceKey = '97cb036aab4ad7e829130f4fe800973aa2ad98c14dc04214bedc223af2532ffd'; 
