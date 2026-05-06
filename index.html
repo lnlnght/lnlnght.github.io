@@ -1,0 +1,56 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>나의 첫 웹 페이지</title>
+    <style>
+        /* CSS: 페이지를 예쁘게 꾸밉니다 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HTML: 페이지의 내용을 구성합니다 -->
+    <div class="card">
+        <h1>안녕하세요! 👋</h1>
+        <p>웹 개발의 세계에 오신 것을 환영합니다.</p>
+        <button onclick="sayHello()">클릭해 보세요</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        /* JavaScript: 페이지에 생동감을 더합니다 */
+        function sayHello() {
+            const msgElement = document.getElementById('message');
+            msgElement.innerText = "반갑습니다! 첫 페이지 제작을 축하드려요! 🎉";
+        }
+    </script>
+
+</body>
+</html>
