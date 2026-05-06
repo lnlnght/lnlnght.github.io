@@ -52,7 +52,7 @@
 
         // 방법 A에서 썼던 공공데이터 API 호출
         const serviceKey = '97cb036aab4ad7e829130f4fe800973aa2ad98c14dc04214bedc223af2532ffd'; 
-        const url = `https://apis.data.go.kr/1160100/service/getStockPriceInfo/getStockPriceInfo?serviceKey=${serviceKey}&numOfRows=20&resultType=json&itmsNm=${encodeURIComponent(name)}`;
+        const url = `https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getSecuritiesPriceInfo?serviceKey=${serviceKey}&numOfRows=20&resultType=json&itmsNm=${encodeURIComponent(name)}`;
 
         try {
             const res = await fetch(url);
