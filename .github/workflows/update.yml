@@ -21,7 +21,7 @@ jobs:
           pip install finance-datareader pandas
 
       - name: Run update script
-        run: python update_data.py
+        run: python update_symbols.py
 
       - name: Commit and Push
         run: |
