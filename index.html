@@ -1,94 +1,82 @@
-﻿방법 B의 핵심은 데이터 소스를 외부 API가 아닌 내 저장소의 data.json으로 교체하는 것입니다. Python 스크립트가 매일 새벽에 데이터를 갱신해 두면, 사용자가 접속할 때 웹 페이지는 이미 준비된 파일을 읽어오기만 하면 됩니다.
-
-기존 코드를 지우고 아래 내용으로 index.html을 업데이트해 보세요.
-
-방법 B 전용 index.html 수정 코드
-HTML
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>주식 데이터 자동화 대시보드</title>
+    <title>전종목 실시간 주가 조회</title>
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
     <style>
-        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; background-color: #f0f2f5; }
-        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        .header { border-bottom: 2px solid #eee; margin-bottom: 25px; padding-bottom: 10px; }
-        #chart_div { width: 100%; height: 500px; }
-        .status { font-size: 0.85rem; color: #888; text-align: right; margin-top: 15px; }
-        .badge { background: #e8f0fe; color: #1967d2; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        body { font-family: 'Malgun Gothic', sans-serif; padding: 20px; background-color: #f8f9fa; }
+        .container { max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .search-area { display: flex; gap: 10px; margin-bottom: 20px; }
+        input { flex: 1; padding: 12px; border: 1px solid #ddd; border-radius: 6px; }
+        button { padding: 12px 24px; background: #007bff; color: white; border: none; border-radius: 6px; cursor: pointer; }
+        #chart_div { width: 100%; height: 500px; border: 1px solid #eee; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="header">
-        <h2>📈 주식 종가 추이 <span class="badge">자동 업데이트 모드</span></h2>
-        <p>GitHub Actions가 매일 아침 데이터를 갱신합니다.</p>
+    <h2>🔍 전종목 실시간 주가 조회</h2>
+    <div class="search-area">
+        <input type="text" id="stockInput" placeholder="종목명을 입력하세요 (예: 삼성전자)" list="stockList">
+        <datalist id="stockList"></datalist> <button onclick="searchStock()">조회</button>
     </div>
-
-    <!-- 차트 영역 -->
-    <div id="chart_div">데이터를 불러오는 중...</div>
-
-    <div class="status" id="last_update">
-        데이터 소스: 저장소 내 data.json
-    </div>
+    <div id="chart_div">종목명을 입력하고 조회를 눌러주세요.</div>
 </div>
 
 <script>
-    // 1. 구글 차트 라이브러리 로드
+    let symbolMap = {};
     google.charts.load('current', {'packages':['corechart']});
-    google.charts.setOnLoadCallback(loadLocalData);
 
-    async function loadLocalData() {
+    // 1. 페이지 로드 시 종목 리스트(symbols.json) 불러오기
+    async function loadSymbols() {
+        const response = await fetch('./symbols.json');
+        symbolMap = await response.json();
+        
+        const datalist = document.getElementById('stockList');
+        Object.keys(symbolMap).forEach(name => {
+            const option = document.createElement('option');
+            option.value = name;
+            datalist.appendChild(option);
+        });
+    }
+
+    // 2. 실시간 API 호출
+    async function searchStock() {
+        const name = document.getElementById('stockInput').value;
+        const code = symbolMap[name];
+        
+        if (!code) { alert("정확한 종목명을 선택해주세요."); return; }
+
+        document.getElementById('chart_div').innerHTML = "데이터를 불러오는 중...";
+
+        // 방법 A에서 썼던 공공데이터 API 호출
+        const serviceKey = '97cb036aab4ad7e829130f4fe800973aa2ad98c14dc04214bedc223af2532ffd'; 
+        const url = `https://apis.data.go.kr/1160100/service/getStockPriceInfo/getStockPriceInfo?serviceKey=${serviceKey}&numOfRows=20&resultType=json&itmsNm=${encodeURIComponent(name)}`;
+
         try {
-            // 2. Python 스크립트가 생성한 data.json 파일을 읽어옴
-            // 상대 경로인 ./data.json을 사용하여 같은 저장소 내 파일을 호출합니다.
-            const response = await fetch('./data.json');
-            
-            if (!response.ok) {
-                throw new Error("data.json 파일을 찾을 수 없습니다. Actions가 먼저 실행되어야 합니다.");
-            }
+            const res = await fetch(url);
+            const json = await res.json();
+            const items = json.response.body.items.item;
 
-            const rawData = await response.json();
-
-            // 3. 차트용 데이터 배열 생성
             const chartData = [['날짜', '종가']];
-            rawData.forEach(item => {
-                chartData.push([item.date, item.close]);
+            items.reverse().forEach(item => {
+                chartData.push([item.basDt.replace(/(\d{4})(\d{2})(\d{2})/, '$1-$2-$3'), parseInt(item.clpr)]);
             });
 
-            drawChart(chartData);
-            
-            // 마지막 데이터 날짜 표시
-            if(rawData.length > 0) {
-                document.getElementById('last_update').innerText = 
-                    `최근 업데이트: ${rawData[rawData.length-1].date} 기준`;
-            }
-
-        } catch (error) {
-            console.error("데이터 로드 실패:", error);
-            document.getElementById('chart_div').innerHTML = 
-                `<p style="color:red;">⚠️ 에러: ${error.message}<br>GitHub Actions 탭에서 'Run workflow'를 먼저 실행해 보세요.</p>`;
+            drawChart(chartData, name);
+        } catch (e) {
+            alert("데이터를 가져오는데 실패했습니다. 인증키를 확인하세요.");
         }
     }
 
-    function drawChart(chartData) {
+    function drawChart(chartData, title) {
         const data = google.visualization.arrayToDataTable(chartData);
-        const options = {
-            title: '삼성전자 최근 30거래일 종가 추이',
-            curveType: 'function', // 선을 부드럽게
-            legend: { position: 'bottom' },
-            hAxis: { slantedText: true, slantedTextAngle: 45 },
-            vAxis: { format: 'decimal' },
-            colors: ['#1a73e8'],
-            chartArea: { width: '85%', height: '70%' }
-        };
-
         const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
-        chart.draw(data, options);
+        chart.draw(data, { title: `${title} 추이`, height: 500, legend: 'none' });
     }
-</script>
 
+    loadSymbols();
+</script>
 </body>
 </html>

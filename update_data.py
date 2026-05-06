@@ -2,13 +2,13 @@ import FinanceDataReader as fdr
 import json
 import os
 from datetime import datetime, timedelta
-print("ë°ì´í„° ì—…ë°ì´íŠ¸ ì‹œì‘!")
-# 1. ë°ì´í„° ìˆ˜ì§‘ (ì‚¼ì„±ì „ì ì˜ˆì‹œ)
+
+# 1. µ¥ÀÌÅÍ ¼öÁı (»ï¼ºÀüÀÚ ¿¹½Ã)
 end_date = datetime.now().strftime('%Y-%m-%d')
 start_date = (datetime.now() - timedelta(days=30)).strftime('%Y-%m-%d')
 df = fdr.DataReader('005930', start_date, end_date)
 
-# 2. JSON í˜•íƒœë¡œ ê°€ê³µ
+# 2. JSON ÇüÅÂ·Î °¡°ø
 stock_data = []
 for date, row in df.iterrows():
     stock_data.append({
@@ -16,8 +16,8 @@ for date, row in df.iterrows():
         "close": int(row['Close'])
     })
 
-# 3. íŒŒì¼ë¡œ ì €ì¥
+# 3. ÆÄÀÏ·Î ÀúÀå
 with open('data.json', 'w', encoding='utf-8') as f:
     json.dump(stock_data, f, ensure_ascii=False, indent=4)
 
-print("ë°ì´í„° ì—…ë°ì´íŠ¸ ì™„ë£Œ!")
+print("µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ® ¿Ï·á!")
