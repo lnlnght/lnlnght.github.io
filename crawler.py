@@ -19,41 +19,37 @@ def get_security_news():
 
 def get_ent_news():
     try:
-        # 구조가 더 고정적인 '랭킹 뉴스' 페이지를 타겟으로 변경
-        url = "https://entertain.naver.com/ranking"
+        # 랭킹 뉴스 페이지는 차단이 심할 수 있으니 메인 '연예 홈'으로 시도
+        url = "https://entertain.naver.com/home"
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         }
         res = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(res.text, 'html.parser')
         
-        # 랭킹 뉴스의 제목과 링크를 찾는 여러 후보 선택자
-        # 1순위: rank_lst, 2순위: 뉴스 제목 클래스들
-        news_items = soup.select('.rank_lst li') or soup.select('.news_lst li')
-        
         result = ""
         count = 0
-        for item in news_items:
-            if count >= 5: break
+        visited_links = set() # 중복 기사 방지
+
+        # 클래스명 상관없이 모든 <a> 태그를 다 뒤집니다.
+        for a_tag in soup.find_all('a', href=True):
+            link = a_tag['href']
+            title = a_tag.get_text().strip()
             
-            # 제목 태그 찾기 (a 태그 혹은 tit 클래스)
-            a_tag = item.select_one('.tit') or item.select_one('a')
+            # 1. 링크에 'read' 또는 'article'이 들어있고 
+            # 2. 제목이 15자 이상(너무 짧은 메뉴명 제외)인 것만 필터링
+            if ('read' in link or 'article' in link) and len(title) >= 15:
+                if link not in visited_links:
+                    # 상대 경로 처리
+                    full_link = link if link.startswith('http') else "https://entertain.naver.com" + link
+                    result += f'<li><a href="{full_link}" target="_blank">{title}</a></li>\n'
+                    visited_links.add(link)
+                    count += 1
             
-            if a_tag:
-                title = a_tag.get_text().strip()
-                link = a_tag['href']
-                
-                # 가끔 제목이 너무 짧거나 무의미한 경우 제외
-                if len(title) < 5: continue
-                
-                if not link.startswith('http'):
-                    link = "https://entertain.naver.com" + link
-                
-                result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
-                count += 1
-        
+            if count >= 5: break # 5개만 가져오기
+
         if not result:
-            return "<li>데이터 추출 성공했으나 항목이 비어있음 (선택자 점검 필요)</li>"
+            return "<li>기사 패턴 매칭 실패 (타겟 사이트 변경 권장)</li>"
             
         return result
     except Exception as e:
