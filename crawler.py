@@ -91,6 +91,6 @@ if __name__ == "__main__":
     print("--- 수집된 연예 뉴스 ---")
     print(ent_content)
     print("------------------------")
-    update_html(sec_content, get_youtube_trending, eco_content)
+    update_html(sec_content, ent_content, eco_content)
 
     print("업데이트 완료!")
