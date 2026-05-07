@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>오늘의 주요 정보</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        button { padding: 10px 20px; cursor: pointer; border: 1px solid #ddd; background: #f9f9f9; }
+        button.active { background: #333; color: #fff; }
+        .content-section { display: none; }
+        .content-section.active { display: block; }
+        ul { list-style: none; padding: 0; }
+        li { margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        a { text-decoration: none; color: #0066cc; }
+    </style>
+</head>
+<body>
+    <h1>📰 매일 업데이트 뉴스 리포트</h1>
+    
+    <div class="tabs">
+        <button onclick="showCategory('security')" id="btn-security">IT 보안</button>
+        <button onclick="showCategory('economy')" id="btn-economy">경제 지표</button>
+        <button onclick="showCategory('ent')" id="btn-ent">연예 뉴스</button>
+    </div>
+
+    <!-- IT 보안 섹션 -->
+    <div id="security" class="content-section">
+        <h3>🛡️ IT 보안 주요 뉴스</h3>
+        <ul id="list-security">
+            <!-- 파이썬 스크립트가 기사를 이곳에 채워넣을 것입니다 -->
+            <li><a href="#">보안 뉴스 예시 기사 제목입니다.</a></li>
+        </ul>
+    </div>
+
+    <!-- 경제 지표 섹션 -->
+    <div id="economy" class="content-section">
+        <h3>📈 오늘의 경제 지표</h3>
+        <ul id="list-economy">
+            <li><a href="#">KOSPI 지수 및 주요 경제 지표 링크</a></li>
+        </ul>
+    </div>
+
+    <!-- 연예 뉴스 섹션 -->
+    <div id="ent" class="content-section">
+        <h3>🎬 연예 소식</h3>
+        <ul id="list-ent">
+            <li><a href="#">실시간 주요 연예 기사 제목입니다.</a></li>
+        </ul>
+    </div>
+
+    <script>
+        function showCategory(categoryId) {
+            // 모든 섹션 숨기기
+            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
+            // 모든 버튼 비활성화 스타일
+            document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
+            
+            // 선택한 섹션 및 버튼 활성화
+            document.getElementById(categoryId).classList.add('active');
+            document.getElementById('btn-' + categoryId).classList.add('active');
+        }
+        // 초기 화면 설정
+        showCategory('security');
+    </script>
+</body>
+</html>
