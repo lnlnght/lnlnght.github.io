@@ -39,14 +39,24 @@ def get_youtube_trending():
         result = ""
         
         for item in items:
-            # RSS 태그는 .text로 접근하는 것이 가장 안전합니다.
             title_tag = item.find('title')
+            # 구글 RSS의 link 태그는 가끔 속성 없이 텍스트로만 존재합니다.
             link_tag = item.find('link')
             
             if title_tag and link_tag:
                 title = title_tag.get_text().split(' - ')[0]
-                link = link_tag.get_text()
-                result += f'<li><a href="{link}" target="_blank">📺 {title}</a></li>\n'
+                
+                # 링크를 가져오는 3단계 필터
+                # 1. 태그 내부 텍스트, 2. string 속성, 3. 다음 요소 확인
+                link = link_tag.get_text() or link_tag.string or ""
+                
+                # 만약 그래도 비어있다면, item 자식 중 가장 긴 텍스트를 링크로 추정 (RSS 특성)
+                if not link:
+                    link = item.text.split('http')[-1].split(' ')[0]
+                    link = 'http' + link if link else ""
+
+                if link:
+                    result += f'<li><a href="{link}" target="_blank">📺 {title}</a></li>\n'
         
         return result if result else "<li>인기 영상을 찾을 수 없습니다.</li>"
         
