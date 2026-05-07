@@ -19,17 +19,43 @@ def get_security_news():
 
 def get_ent_news():
     try:
-        url = "https://m.entertain.naver.com/now"
-        headers = {'User-Agent': 'Mozilla/5.0'}
+        # 구조가 더 고정적인 '랭킹 뉴스' 페이지를 타겟으로 변경
+        url = "https://entertain.naver.com/ranking"
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
         res = requests.get(url, headers=headers, timeout=10)
+        soup = BeautifulSoup(res.text, 'html.parser')
         
-        # --- 차단 확인용 로그 ---
-        print(f"네이버 응답 코드: {res.status_code}") 
-        # 200이면 성공, 403이나 401이면 차단된 것입니다.
+        # 랭킹 뉴스의 제목과 링크를 찾는 여러 후보 선택자
+        # 1순위: rank_lst, 2순위: 뉴스 제목 클래스들
+        news_items = soup.select('.rank_lst li') or soup.select('.news_lst li')
         
-        if res.status_code != 200:
-            return f"<li>접속 차단됨 (에러코드: {res.status_code})</li>"
+        result = ""
+        count = 0
+        for item in news_items:
+            if count >= 5: break
+            
+            # 제목 태그 찾기 (a 태그 혹은 tit 클래스)
+            a_tag = item.select_one('.tit') or item.select_one('a')
+            
+            if a_tag:
+                title = a_tag.get_text().strip()
+                link = a_tag['href']
+                
+                # 가끔 제목이 너무 짧거나 무의미한 경우 제외
+                if len(title) < 5: continue
+                
+                if not link.startswith('http'):
+                    link = "https://entertain.naver.com" + link
+                
+                result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
+                count += 1
         
+        if not result:
+            return "<li>데이터 추출 성공했으나 항목이 비어있음 (선택자 점검 필요)</li>"
+            
+        return result
     except Exception as e:
         return f"<li>연예 뉴스 로딩 에러: {str(e)}</li>"
 
