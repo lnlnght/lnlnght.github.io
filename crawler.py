@@ -107,5 +107,11 @@ if __name__ == "__main__":
     sec_content = get_security_news()
     ent_content = get_ent_news()
     eco_content = get_economy_index()
+
+   # 디버깅용: 수집된 연예 뉴스 내용을 로그에 출력
+    print("--- 수집된 연예 뉴스 ---")
+    print(ent_content) 
+    print("------------------------")
     update_html(sec_content, ent_content, eco_content)
+
     print("업데이트 완료!")
