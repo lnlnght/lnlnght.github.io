@@ -19,43 +19,58 @@ def get_security_news():
 
 def get_ent_news():
     try:
-        # 네이버 연예 뉴스 메인 (예시)
-        url = "https://entertain.naver.com/now" 
-        headers = {'User-Agent': 'Mozilla/5.0'} # 네이버는 차단 방지를 위해 헤더가 필요할 수 있음
+        # 다음 연예 뉴스 (구조가 명확하여 크롤링이 안정적입니다)
+        url = "https://news.daum.net/entertain"
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+        }
         res = requests.get(url, headers=headers, timeout=10)
         soup = BeautifulSoup(res.text, 'html.parser')
         
-        # 최신 뉴스 리스트 추출 (사이트 구조에 따라 선택자는 변경될 수 있음)
-        news_items = soup.select('.news_lst li')[:5]
+        # 다음 뉴스 메인 하이라이트 기사 추출
+        news_items = soup.select('.item_bundle .tit_g')[:5]
+        if not news_items: # 구조가 다를 경우 대비한 보조 선택자
+            news_items = soup.select('.list_newsissue li .tit_g')[:5]
+
         result = ""
         for item in news_items:
-            title = item.select_one('.tit').text.strip()
-            link = item.select_one('a')['href']
-            # 상대 경로일 경우 절대 경로로 변환
-            if not link.startswith('http'):
-                link = "https://entertain.naver.com" + link
+            a_tag = item.find('a')
+            title = a_tag.text.strip()
+            link = a_tag['href']
             result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
+        
+        if not result:
+            return "<li>가져온 연예 기사가 없습니다.</li>"
         return result
-    except:
-        return "<li>연예 뉴스 로딩 실패</li>"
+    except Exception as e:
+        return f"<li>연예 뉴스 로딩 실패: {str(e)}</li>"
 
 def update_html(sec_content, ent_content):
-    with open("index.html", "r", encoding="utf-8") as f:
-        html = f.read()
+    try:
+        with open("index.html", "r", encoding="utf-8") as f:
+            html = f.read()
 
-    # 보안 뉴스 업데이트
-    s_tag, e_tag = '<!-- security_start -->', '<!-- security_end -->'
-    html = html[:html.find(s_tag)+len(s_tag)] + "\n" + sec_content + html[html.find(e_tag):]
+        # 보안 뉴스 업데이트
+        if '<!-- security_start -->' in html:
+            s_tag, e_tag = '<!-- security_start -->', '<!-- security_end -->'
+            start_part = html.split(s_tag)[0]
+            end_part = html.split(e_tag)[1]
+            html = start_part + s_tag + "\n" + sec_content + e_tag + end_part
 
-    # 연예 뉴스 업데이트
-    s_tag, e_tag = '<!-- ent_start -->', '<!-- ent_end -->'
-    html = html[:html.find(s_tag)+len(s_tag)] + "\n" + ent_content + html[html.find(e_tag):]
-    
-    with open("index.html", "w", encoding="utf-8") as f:
-        f.write(html)
+        # 연예 뉴스 업데이트
+        if '<!-- ent_start -->' in html:
+            s_tag, e_tag = '<!-- ent_start -->', '<!-- ent_end -->'
+            start_part = html.split(s_tag)[0]
+            end_part = html.split(e_tag)[1]
+            html = start_part + s_tag + "\n" + ent_content + e_tag + end_part
+        
+        with open("index.html", "w", encoding="utf-8") as f:
+            f.write(html)
+    except Exception as e:
+        print(f"HTML 업데이트 중 오류 발생: {e}")
 
 if __name__ == "__main__":
     sec = get_security_news()
     ent = get_ent_news()
     update_html(sec, ent)
-    print("모든 카테고리 업데이트 완료!")
+    print("업데이트 완료!")
