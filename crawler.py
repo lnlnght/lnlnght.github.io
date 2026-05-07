@@ -1,4 +1,4 @@
-﻿import requests
+﻿﻿import requests
 from bs4 import BeautifulSoup
 
 def get_security_news():
@@ -19,25 +19,41 @@ def get_security_news():
 
 def get_ent_news():
     try:
-        # 네이버 연예 뉴스 메인 (예시)
-        url = "https://entertain.naver.com/now" 
-        headers = {'User-Agent': 'Mozilla/5.0'} # 네이버는 차단 방지를 위해 헤더가 필요할 수 있음
+        # 네이버 연예 뉴스 최신순 페이지
+        url = "https://entertain.naver.com/now"
+        
+        # 봇 차단을 방지하기 위한 필수 헤더 (크롬 브라우저인 척 합니다)
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36',
+            'Accept-Language': 'ko-KR,ko;q=0.9,en-US;q=0.8,en;q=0.7'
+        }
+        
         res = requests.get(url, headers=headers, timeout=10)
+        res.raise_for_status() # 접속 오류 시 예외 발생
+        
         soup = BeautifulSoup(res.text, 'html.parser')
         
-        # 최신 뉴스 리스트 추출 (사이트 구조에 따라 선택자는 변경될 수 있음)
+        # 네이버 연예 최신 뉴스 리스트 선택자 (현재 기준: .news_lst 내의 li)
         news_items = soup.select('.news_lst li')[:5]
+        
         result = ""
         for item in news_items:
-            title = item.select_one('.tit').text.strip()
-            link = item.select_one('a')['href']
-            # 상대 경로일 경우 절대 경로로 변환
-            if not link.startswith('http'):
-                link = "https://entertain.naver.com" + link
-            result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
+            # 제목과 링크가 있는 <a> 태그 찾기
+            a_tag = item.select_one('.tit')
+            if a_tag:
+                title = a_tag.get_text().strip()
+                link = a_tag['href']
+                # 주소가 상대 경로일 경우를 대비해 도메인 결합
+                if not link.startswith('http'):
+                    link = "https://entertain.naver.com" + link
+                result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
+        
+        if not result:
+            return "<li>가져온 뉴스 항목이 없습니다. (구조 변경 확인 필요)</li>"
         return result
-    except:
-        return "<li>연예 뉴스 로딩 실패</li>"
+
+    except Exception as e:
+        return f"<li>연예 뉴스 로딩 실패: {str(e)}</li>"
 
 def update_html(sec_content, ent_content):
     with open("index.html", "r", encoding="utf-8") as f:
