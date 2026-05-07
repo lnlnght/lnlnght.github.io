@@ -19,31 +19,25 @@ def get_security_news():
 
 def get_ent_news():
     try:
-        # 깨끗한 구글 뉴스 한국 연예 섹션 RSS URL입니다.
-        url = "https://news.google.com/rss/headlines/section/topic/ENTERTAINMENT?hl=ko&gl=KR&ceid=KR:ko"
-        
-        headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
-        }
-        
+        # 네이버 연예 뉴스 메인 (예시)
+        url = "https://entertain.naver.com/now" 
+        headers = {'User-Agent': 'Mozilla/5.0'} # 네이버는 차단 방지를 위해 헤더가 필요할 수 있음
         res = requests.get(url, headers=headers, timeout=10)
-        # 중요: 구글 RSS는 기본적으로 lxml 파서를 쓰는 것이 좋지만, 
-        # 없을 경우를 대비해 'html.parser'로도 동작하게 짰습니다.
-        soup = BeautifulSoup(res.text, 'xml') 
+        soup = BeautifulSoup(res.text, 'html.parser')
         
-        items = soup.find_all('item')[:5]
-        
+        # 최신 뉴스 리스트 추출 (사이트 구조에 따라 선택자는 변경될 수 있음)
+        news_items = soup.select('.news_lst li')[:5]
         result = ""
-        for item in items:
-            title = item.title.text
-            clean_title = title.split(' - ')[0] # "제목 - 언론사"에서 제목만 추출
-            link = item.link.text
-            result += f'<li><a href="{link}" target="_blank">{clean_title}</a></li>\n'
-            
-        return result if result else "<li>현재 업데이트된 연예 소식이 없습니다.</li>"
-        
-    except Exception as e:
-        return f"<li>연예 뉴스 서비스 연결 실패 (RSS)</li>"
+        for item in news_items:
+            title = item.select_one('.tit').text.strip()
+            link = item.select_one('a')['href']
+            # 상대 경로일 경우 절대 경로로 변환
+            if not link.startswith('http'):
+                link = "https://entertain.naver.com" + link
+            result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
+        return result
+    except:
+        return "<li>연예 뉴스 로딩 실패</li>"
 
 def get_economy_index():
     try:
