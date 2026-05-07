@@ -19,37 +19,31 @@ def get_security_news():
 
 def get_ent_news():
     try:
-        # 랭킹 뉴스 페이지는 차단이 심할 수 있으니 메인 '연예 홈'으로 시도
-        url = "https://entertain.naver.com/home"
+        # 스포츠서울 연예 섹션 - 해외 IP 차단이 거의 없고 구조가 단순함
+        url = "https://www.sportsseoul.com/news/section/entertainment"
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         }
         res = requests.get(url, headers=headers, timeout=10)
+        # 스포츠서울은 UTF-8 인코딩을 사용하므로 별도 설정 없이 바로 파싱
         soup = BeautifulSoup(res.text, 'html.parser')
         
+        # 기사 제목을 담고 있는 클래스 추출
+        news_items = soup.select('.news_list_title')[:5]
+        
         result = ""
-        count = 0
-        visited_links = set() # 중복 기사 방지
-
-        # 클래스명 상관없이 모든 <a> 태그를 다 뒤집니다.
-        for a_tag in soup.find_all('a', href=True):
-            link = a_tag['href']
-            title = a_tag.get_text().strip()
-            
-            # 1. 링크에 'read' 또는 'article'이 들어있고 
-            # 2. 제목이 15자 이상(너무 짧은 메뉴명 제외)인 것만 필터링
-            if ('read' in link or 'article' in link) and len(title) >= 15:
-                if link not in visited_links:
-                    # 상대 경로 처리
-                    full_link = link if link.startswith('http') else "https://entertain.naver.com" + link
-                    result += f'<li><a href="{full_link}" target="_blank">{title}</a></li>\n'
-                    visited_links.add(link)
-                    count += 1
-            
-            if count >= 5: break # 5개만 가져오기
-
+        for item in news_items:
+            title = item.get_text().strip()
+            # <a> 태그가 본인이거나 부모일 수 있으므로 안전하게 추출
+            a_tag = item.find_parent('a')
+            if a_tag:
+                link = a_tag['href']
+                if not link.startswith('http'):
+                    link = "https://www.sportsseoul.com" + link
+                result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
+        
         if not result:
-            return "<li>기사 패턴 매칭 실패 (타겟 사이트 변경 권장)</li>"
+            return "<li>기사를 찾을 수 없습니다. (구조 확인 필요)</li>"
             
         return result
     except Exception as e:
