@@ -1,0 +1,33 @@
+name: Daily News Update
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # 매일 한국 시간 오전 9시 실행 (UTC 00:00)
+  workflow_dispatch:      # 수동으로 실행하고 싶을 때 버튼 생성
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 저장소 코드 가져오기
+        uses: actions/checkout@v4
+
+      - name: 파이썬 설정
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: 라이브러리 설치
+        run: |
+          pip install requests beautifulsoup4
+
+      - name: 크롤러 실행
+        run: python crawler.py
+
+      - name: 업데이트된 파일 커밋 및 푸시
+        run: |
+          git config --global user.name "GitHub Action"
+          git config --global user.email "action@github.com"
+          git add index.html
+          git commit -m "Update news report" || echo "No changes to commit"
+          git push
