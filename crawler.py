@@ -19,37 +19,41 @@ def get_security_news():
 
 def get_youtube_trending():
     try:
-        # 한국 유튜브 인기 급상승 RSS 피드
-        url = "https://www.youtube.com/feeds/videos.xml?user=YouTube" 
-        # (참고: 유튜브는 보안이 좋아 RSS 주소가 가끔 변동되지만, 
-        # 아래의 '구글 뉴스-유튜브 섹션' 방식이 현재 GitHub Actions에서 가장 안정적입니다.)
+        # 구글 뉴스 기반 유튜브 트렌드 RSS
         url = "https://news.google.com/rss/search?q=유튜브+인기+급상승&hl=ko&gl=KR&ceid=KR:ko"
-        
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         }
         
         res = requests.get(url, headers=headers, timeout=15)
-        soup = BeautifulSoup(res.text, 'xml') # RSS는 XML 파서가 가장 정확합니다.
+        res.encoding = 'utf-8'
+        
+        # 'Couldn't find a tree' 에러 방지를 위해 데이터가 있는지 먼저 확인
+        if not res.text.strip():
+            return "<li>데이터가 비어있습니다.</li>"
+
+        # lxml 대신 기본 html.parser를 사용하고 형식을 명시함
+        soup = BeautifulSoup(res.text, "html.parser")
         
         items = soup.find_all('item')[:5]
         result = ""
         
         for item in items:
-            title = item.title.text
-            # 제목 뒤에 붙는 ' - YouTube' 또는 언론사명 제거
-            clean_title = title.split(' - ')[0]
-            link = item.link.text
+            # RSS 태그는 .text로 접근하는 것이 가장 안전합니다.
+            title_tag = item.find('title')
+            link_tag = item.find('link')
             
-            # 리스트 항목 생성 (유튜브 아이콘이나 강조 추가 가능)
-            result += f'<li><a href="{link}" target="_blank">📺 {clean_title}</a></li>\n'
+            if title_tag and link_tag:
+                title = title_tag.get_text().split(' - ')[0]
+                link = link_tag.get_text()
+                result += f'<li><a href="{link}" target="_blank">📺 {title}</a></li>\n'
         
-        if not result:
-            return "<li>현재 인기 영상을 불러올 수 없습니다.</li>"
-            
-        return result
+        return result if result else "<li>인기 영상을 찾을 수 없습니다.</li>"
+        
     except Exception as e:
-        return f"<li>유튜브 데이터 연결 실패: {str(e)[:20]}</li>"
+        # 에러 발생 시 로그에 상세 원인 출력 (디버깅용)
+        print(f"상세 에러: {e}")
+        return "<li>유튜브 로딩 중 오류 발생</li>"
 
 def get_economy_index():
     try:
