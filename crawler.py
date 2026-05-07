@@ -29,6 +29,9 @@ def get_ent_news():
         
         if res.status_code != 200:
             return f"<li>접속 차단됨 (에러코드: {res.status_code})</li>"
+        
+    except Exception as e:
+        return f"<li>연예 뉴스 로딩 에러: {str(e)}</li>"
 
 def get_economy_index():
     try:
