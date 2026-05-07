@@ -17,27 +17,39 @@ def get_security_news():
     except:
         return "<li>보안 뉴스 로딩 실패</li>"
 
-def get_ent_news():
+def get_youtube_trending():
     try:
-        # 네이버 연예 뉴스 메인 (예시)
-        url = "https://entertain.naver.com/now" 
-        headers = {'User-Agent': 'Mozilla/5.0'} # 네이버는 차단 방지를 위해 헤더가 필요할 수 있음
-        res = requests.get(url, headers=headers, timeout=10)
-        soup = BeautifulSoup(res.text, 'html.parser')
+        # 한국 유튜브 인기 급상승 RSS 피드
+        url = "https://www.youtube.com/feeds/videos.xml?user=YouTube" 
+        # (참고: 유튜브는 보안이 좋아 RSS 주소가 가끔 변동되지만, 
+        # 아래의 '구글 뉴스-유튜브 섹션' 방식이 현재 GitHub Actions에서 가장 안정적입니다.)
+        url = "https://news.google.com/rss/search?q=유튜브+인기+급상승&hl=ko&gl=KR&ceid=KR:ko"
         
-        # 최신 뉴스 리스트 추출 (사이트 구조에 따라 선택자는 변경될 수 있음)
-        news_items = soup.select('.news_lst li')[:5]
+        headers = {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+        }
+        
+        res = requests.get(url, headers=headers, timeout=15)
+        soup = BeautifulSoup(res.text, 'xml') # RSS는 XML 파서가 가장 정확합니다.
+        
+        items = soup.find_all('item')[:5]
         result = ""
-        for item in news_items:
-            title = item.select_one('.tit').text.strip()
-            link = item.select_one('a')['href']
-            # 상대 경로일 경우 절대 경로로 변환
-            if not link.startswith('http'):
-                link = "https://entertain.naver.com" + link
-            result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
+        
+        for item in items:
+            title = item.title.text
+            # 제목 뒤에 붙는 ' - YouTube' 또는 언론사명 제거
+            clean_title = title.split(' - ')[0]
+            link = item.link.text
+            
+            # 리스트 항목 생성 (유튜브 아이콘이나 강조 추가 가능)
+            result += f'<li><a href="{link}" target="_blank">📺 {clean_title}</a></li>\n'
+        
+        if not result:
+            return "<li>현재 인기 영상을 불러올 수 없습니다.</li>"
+            
         return result
-    except:
-        return "<li>연예 뉴스 로딩 실패</li>"
+    except Exception as e:
+        return f"<li>유튜브 데이터 연결 실패: {str(e)[:20]}</li>"
 
 def get_economy_index():
     try:
@@ -72,13 +84,13 @@ def update_html(sec, ent, eco):
 
 if __name__ == "__main__":
     sec_content = get_security_news()
-    ent_content = get_ent_news()
+    ent_content = get_youtube_trending()
     eco_content = get_economy_index()
 
    # 디버깅용: 수집된 연예 뉴스 내용을 로그에 출력
     print("--- 수집된 연예 뉴스 ---")
-    print(ent_content) 
+    printget_youtube_trending
     print("------------------------")
-    update_html(sec_content, ent_content, eco_content)
+    update_html(sec_content, get_youtube_trending, eco_content)
 
     print("업데이트 완료!")
