@@ -19,31 +19,30 @@ def get_security_news():
 
 def get_ent_news():
     try:
-        # 다음 연예 뉴스 (구조가 명확하여 크롤링이 안정적입니다)
-        url = "https://news.daum.net/entertain"
+        # 가장 안정적인 Google 뉴스 RSS (연예 섹션)
+        url = "https://news.google.com/rss/topics/CAAqJggKIiBDQkFTRWdvSUwyMHZNREpxYW5S架WFlSQUFpS0Fid0o4R2dNRW9BQVAB?hl=ko&gl=KR&ceid=KR:ko"
         headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
         }
-        res = requests.get(url, headers=headers, timeout=10)
-        soup = BeautifulSoup(res.text, 'html.parser')
+        res = requests.get(url, headers=headers, timeout=15)
+        soup = BeautifulSoup(res.text, 'xml') # RSS는 XML 형식이므로 'xml' 파서 사용
         
-        # 다음 뉴스 메인 하이라이트 기사 추출
-        news_items = soup.select('.item_bundle .tit_g')[:5]
-        if not news_items: # 구조가 다를 경우 대비한 보조 선택자
-            news_items = soup.select('.list_newsissue li .tit_g')[:5]
-
+        items = soup.find_all('item')[:5]
         result = ""
-        for item in news_items:
-            a_tag = item.find('a')
-            title = a_tag.text.strip()
-            link = a_tag['href']
-            result += f'<li><a href="{link}" target="_blank">{title}</a></li>\n'
+        
+        for item in items:
+            title = item.title.text
+            # 구글 뉴스는 '제목 - 언론사' 형식이므로 제목만 추출
+            clean_title = title.split(' - ')[0]
+            link = item.link.text
+            result += f'<li><a href="{link}" target="_blank">{clean_title}</a></li>\n'
         
         if not result:
-            return "<li>가져온 연예 기사가 없습니다.</li>"
+            return "<li>가져온 연예 소식이 없습니다.</li>"
         return result
     except Exception as e:
-        return f"<li>연예 뉴스 로딩 실패: {str(e)}</li>"
+        print(f"연예 뉴스 에러 상세: {e}")
+        return "<li>연예 뉴스 서비스를 일시적으로 이용할 수 없습니다.</li>"
 
 def update_html(sec_content, ent_content):
     try:
