@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
    # 디버깅용: 수집된 연예 뉴스 내용을 로그에 출력
     print("--- 수집된 연예 뉴스 ---")
-    printget_youtube_trending
+    print(ent_content)
     print("------------------------")
     update_html(sec_content, get_youtube_trending, eco_content)
 
