@@ -2,29 +2,29 @@ name: Daily News Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # ¸ÅÀÏ ÇÑ±¹ ½Ã°£ ¿ÀÀü 9½Ã ½ÇÇà (UTC 00:00)
-  workflow_dispatch:      # ¼öµ¿À¸·Î ½ÇÇàÇÏ°í ½ÍÀ» ¶§ ¹öÆ° »ı¼º
+    - cron: '20 1 * * *' # ë§¤ì¼ í•œêµ­ ì‹œê°„ ì˜¤ì „ 9ì‹œ ì‹¤í–‰ (UTC 00:00)
+  workflow_dispatch:      # ìˆ˜ë™ìœ¼ë¡œ ì‹¤í–‰í•˜ê³  ì‹¶ì„ ë•Œ ë²„íŠ¼ ìƒì„±
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: ÀúÀå¼Ò ÄÚµå °¡Á®¿À±â
+      - name: ì €ì¥ì†Œ ì½”ë“œ ê°€ì ¸ì˜¤ê¸°
         uses: actions/checkout@v4
 
-      - name: ÆÄÀÌ½ã ¼³Á¤
+      - name: íŒŒì´ì¬ ì„¤ì •
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: ¶óÀÌºê·¯¸® ¼³Ä¡
+      - name: ë¼ì´ë¸ŒëŸ¬ë¦¬ ì„¤ì¹˜
         run: |
           pip install requests beautifulsoup4
 
-      - name: Å©·Ñ·¯ ½ÇÇà
+      - name: í¬ë¡¤ëŸ¬ ì‹¤í–‰
         run: python crawler.py
 
-      - name: ¾÷µ¥ÀÌÆ®µÈ ÆÄÀÏ Ä¿¹Ô ¹× Çª½Ã
+      - name: ì—…ë°ì´íŠ¸ëœ íŒŒì¼ ì»¤ë°‹ ë° í‘¸ì‹œ
         run: |
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
