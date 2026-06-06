@@ -1,78 +1,244 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>오늘의 주요 정보</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>데일리 브리핑</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
-        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
-        button { padding: 10px 20px; cursor: pointer; border: 1px solid #ddd; background: #f9f9f9; }
-        button.active { background: #333; color: #fff; }
-        .content-section { display: none; }
-        .content-section.active { display: block; }
-        ul { list-style: none; padding: 0; }
-        li { margin-bottom: 10px; border-bottom: 1px solid #eee; padding-bottom: 5px; }
-        a { text-decoration: none; color: #0066cc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: #0f0f13;
+            color: #e2e2e8;
+            min-height: 100vh;
+        }
+
+        header {
+            padding: 40px 24px 24px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .date-label {
+            font-size: 12px;
+            letter-spacing: 0.1em;
+            color: #666;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        h1 {
+            font-size: clamp(28px, 5vw, 42px);
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff 0%, #a0a0b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 4px;
+        }
+
+        .subtitle {
+            font-size: 14px;
+            color: #555;
+        }
+
+        nav {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid #1e1e28;
+            padding-bottom: 0;
+        }
+
+        .tab {
+            padding: 12px 20px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 500;
+            color: #555;
+            border: none;
+            background: none;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -1px;
+            transition: color 0.2s, border-color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .tab:hover { color: #aaa; }
+
+        .tab.active {
+            color: #e2e2e8;
+            border-bottom-color: #6366f1;
+        }
+
+        main {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 32px 24px;
+        }
+
+        .section { display: none; }
+        .section.active { display: block; }
+
+        .section-title {
+            font-size: 11px;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #444;
+            margin-bottom: 20px;
+        }
+
+        .card-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .card {
+            padding: 16px 20px;
+            background: #13131a;
+            border-radius: 8px;
+            border: 1px solid #1a1a24;
+            transition: border-color 0.2s, background 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .card:hover {
+            background: #16161f;
+            border-color: #2a2a3a;
+        }
+
+        .card-num {
+            font-size: 11px;
+            color: #333;
+            font-weight: 600;
+            min-width: 20px;
+            text-align: right;
+        }
+
+        .card a {
+            text-decoration: none;
+            color: #c8c8d8;
+            font-size: 14px;
+            line-height: 1.5;
+            transition: color 0.2s;
+        }
+
+        .card a:hover { color: #fff; }
+
+        .card-badge {
+            margin-left: auto;
+            font-size: 10px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .badge-security { background: #1a1a2e; color: #6366f1; }
+        .badge-ent { background: #1a1a1a; color: #ef4444; }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #333;
+        }
+
+        .empty-state p { font-size: 14px; margin-top: 8px; }
+
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            font-size: 11px;
+            color: #2a2a3a;
+            border-top: 1px solid #111116;
+            margin-top: 40px;
+        }
     </style>
 </head>
 <body>
-    <h1>📰 매일 업데이트 뉴스 리포트</h1>
-    
-    <div class="tabs">
-        <button onclick="showCategory('security')" id="btn-security">IT 보안</button>
-        <button onclick="showCategory('economy')" id="btn-economy">경제 지표</button>
-        <button onclick="showCategory('ent')" id="btn-ent">유투브 인기 급상승</button>
-    </div>
 
-    <!-- IT 보안 섹션 -->
-    <div id="security" class="content-section">
-        <h3>🛡️ IT 보안 주요 뉴스</h3>
-        <ul id="list-security">
+<header>
+    <p class="date-label" id="today-date"></p>
+    <h1>데일리 브리핑</h1>
+    <p class="subtitle">매일 자동 업데이트되는 뉴스 모음</p>
+</header>
+
+<nav>
+    <button class="tab active" onclick="show('security', this)">
+        🛡️ IT 보안
+    </button>
+    <button class="tab" onclick="show('ent', this)">
+        🔥 유튜브 급상승
+    </button>
+    <button class="tab" onclick="show('economy', this)">
+        📈 경제 지표
+    </button>
+</nav>
+
+<main>
+
+    <!-- IT 보안 -->
+    <section id="security" class="section active">
+        <p class="section-title">IT 보안 주요 뉴스</p>
+        <div class="card-list">
             <!-- security_start -->
-<li><a href="https://www.boannews.com/media/view.asp?idx=143973&page=1&mkind=1&kind=3" target="_blank">매크로영상기술, 의료와 디스플레이 시장 겨냥한 제품 공개</a></li>
-<li><a href="https://www.boannews.com/media/view.asp?idx=143981&page=1&mkind=1&kind=4" target="_blank">美 우주군 이어 사이버군 만드나... 미 싱크탱크, “사이버군 설립에 15조원 필요”</a></li>
-<li><a href="https://www.boannews.com/media/view.asp?idx=143850&page=1&mkind=1&kind=1" target="_blank">[해킹을 결제하시겠습니까?] #6. “누가 내 계좌에 1원을 보냈나” 통장 비밀번호 유출 신호는?</a></li>
-<li><a href="https://www.boannews.com/media/view.asp?idx=143968&page=1&mkind=1&kind=3" target="_blank">[PIS FAIR 2026 미리보기] 마크애니, AI 기반 화면 보안 ‘SDR’로 개인정보 유출 차단 나선다</a></li>
-<li><a href="https://www.boannews.com/media/view.asp?idx=143974&page=1&mkind=1&kind=3" target="_blank">아수스토어, NAS 기반 AI 앱으로 차세대 스토리지 전략 제시</a></li>
+<div class="card"><span class="card-num">1</span><a href="https://www.boannews.com/media/view.asp?idx=143973&page=1&mkind=1&kind=3" target="_blank">매크로영상기술, 의료와 디스플레이 시장 겨냥한 제품 공개</a><span class="card-badge badge-security">보안</span></div>
+<div class="card"><span class="card-num">2</span><a href="https://www.boannews.com/media/view.asp?idx=143981&page=1&mkind=1&kind=4" target="_blank">美 우주군 이어 사이버군 만드나... 미 싱크탱크, "사이버군 설립에 15조원 필요"</a><span class="card-badge badge-security">보안</span></div>
+<div class="card"><span class="card-num">3</span><a href="https://www.boannews.com/media/view.asp?idx=143850&page=1&mkind=1&kind=1" target="_blank">[해킹을 결제하시겠습니까?] #6. "누가 내 계좌에 1원을 보냈나" 통장 비밀번호 유출 신호는?</a><span class="card-badge badge-security">보안</span></div>
+<div class="card"><span class="card-num">4</span><a href="https://www.boannews.com/media/view.asp?idx=143968&page=1&mkind=1&kind=3" target="_blank">[PIS FAIR 2026 미리보기] 마크애니, AI 기반 화면 보안 'SDR'로 개인정보 유출 차단 나선다</a><span class="card-badge badge-security">보안</span></div>
+<div class="card"><span class="card-num">5</span><a href="https://www.boannews.com/media/view.asp?idx=143974&page=1&mkind=1&kind=3" target="_blank">아수스토어, NAS 기반 AI 앱으로 차세대 스토리지 전략 제시</a><span class="card-badge badge-security">보안</span></div>
 <!-- security_end -->
-        </ul>
-    </div>
+        </div>
+    </section>
 
-    <!-- 경제 지표 섹션 -->
-    <div id="economy" class="content-section">
-        <h3>📈 오늘의 경제 지표</h3>
-        <ul id="list-economy">
-            <li><a href="#">KOSPI 지수 및 주요 경제 지표 링크</a></li>
-        </ul>
-    </div>
-
-    <!-- 유투브 인기 급상승 -->
-    <div id="ent" class="content-section">
-        <h3>🔥 유튜브 인기 급상승</h3>
-        <ul id="list-ent">
+    <!-- 유튜브 급상승 -->
+    <section id="ent" class="section">
+        <p class="section-title">유튜브 인기 급상승</p>
+        <div class="card-list">
             <!-- ent_start -->
-<li><a href="https://news.google.com/rss/articles/CBMiV0FVX3lxTFBIOFozVzRWRXRsN3duaUJJSm1VT1hMaDk1U09aRlJ5OWZFRTNEcFNoQmpsX1B5ZDdnR2lFQlZOTWtXdFl2dk1QTTVyVzlrZUl2VFdPOEZ3RQ?oc=5"" target="_blank">📺 코르티스, 글로벌 차트 점령…美 유튜브 인기 급상승 진입</a></li>
-<li><a href="https://news.google.com/rss/articles/CBMiRkFVX3lxTE90ZFJPNXNFUkQ3V3VPUXd0UmIzWXFOQjdtbUVMa2pzUFcyTkY1YmtMRHJ6MTVzd3VZd00zQUgycDk4OXpZSnc?oc=5"" target="_blank">📺 코르티스 '레드레드', 23개국 유튜브 인기 급상승…'글로벌 루키'</a></li>
-<li><a href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE1oaFRlQnNBNVJLalp3OGdDT2VZVGlxeHh6YkRPYWJ5LXlfejlGVm1YVjZwLWRyeXRoUVloS0UyTWxkeXRwaFloelJVN0ZuZDA3OU9jQktla0wzREtETHfSAWNBVV95cUxNSFEteWdYWXFOVmxLVFBHYUZCMXY3TXpEZFB3WHRzUWZvNU1HQkwzZWNYSjJsOHM0aUkza282NXBfbFZZUzN3Nm9xdk5nMjJNd2FlLWlqVWcySkVtYmxUTHBzcXM?oc=5"" target="_blank">📺 코르티스 ‘REDRED’, 글로벌 인기 불붙었다! 미국 유튜브 인기 급상승 진입</a></li>
-<li><a href="https://news.google.com/rss/articles/CBMiU0FVX3lxTFBGc2JlaFpVLWhKdDAxUTFjaEd0WkVfWG00N0g1N1BFSU9IUkt1elUzc0p0N0tIWTZKZG91OVlpV0Z2Q1VZQVY4RHczREd6NzRyMUsw?oc=5"" target="_blank">📺 글로벌 인기 불붙었다…코르티스, 미 유튜브 ‘인기 급상승’ 차트 안착</a></li>
-<li><a href="https://news.google.com/rss/articles/CBMia0FVX3lxTFA2M0hseGZHUlBmcW1faDVKaHNzTnFlYkNId0NYT0R2a1ZUaXN4VUNkT0N5cEtqbWxsZzk2TXNFRXlITWVTdUFyZGF4cW1wd3ZKN2pOXzlaUmVoQnVhRnRwdTQ0TTNSd1U2Y0xZ?oc=5"" target="_blank">📺 아이브, 신곡 ‘뱅뱅’ 유튜브 인기 급상승 음악 1위...존재감 ‘입증’</a></li>
+<div class="card"><span class="card-num">1</span><a href="https://news.google.com/rss/articles/CBMiV0FVX3lxTFBIOFozVzRWRXRsN3duaUJJSm1VT1hMaDk1U09aRlJ5OWZFRTNEcFNoQmpsX1B5ZDdnR2lFQlZOTWtXdFl2dk1QTTVyVzlrZUl2VFdPOEZ3RQ?oc=5" target="_blank">코르티스, 글로벌 차트 점령…美 유튜브 인기 급상승 진입</a><span class="card-badge badge-ent">유튜브</span></div>
+<div class="card"><span class="card-num">2</span><a href="https://news.google.com/rss/articles/CBMiRkFVX3lxTE90ZFJPNXNFUkQ3V3VPUXd0UmIzWXFOQjdtbUVMa2pzUFcyTkY1YmtMRHJ6MTVzd3VZd00zQUgycDk4OXpZSnc?oc=5" target="_blank">코르티스 '레드레드', 23개국 유튜브 인기 급상승…'글로벌 루키'</a><span class="card-badge badge-ent">유튜브</span></div>
+<div class="card"><span class="card-num">3</span><a href="https://news.google.com/rss/articles/CBMiXkFVX3lxTE1oaFRlQnNBNVJLalp3OGdDT2VZVGlxeHh6YkRPYWJ5LXlfejlGVm1YVjZwLWRyeXRoUVloS0UyTWxkeXRwaFloelJVN0ZuZDA3OU9jQktla0wzREtETHfSAWNBVV95cUxNSFEteWdYWXFOVmxLVFBHYUZCMXY3TXpEZFB3WHRzUWZvNU1HQkwzZWNYSjJsOHM0aUkza282NXBfbFZZUzN3Nm9xdk5nMjJNd2FlLWlqVWcySkVtYmxUTHBzcXM?oc=5" target="_blank">코르티스 'REDRED', 글로벌 인기 불붙었다! 미국 유튜브 인기 급상승 진입</a><span class="card-badge badge-ent">유튜브</span></div>
+<div class="card"><span class="card-num">4</span><a href="https://news.google.com/rss/articles/CBMiU0FVX3lxTFBGc2JlaFpVLWhKdDAxUTFjaEd0WkVfWG00N0g1N1BFSU9IUkt1elUzc0p0N0tIWTZKZG91OVlpV0Z2Q1VZQVY4RHczREd6NzRyMUsw?oc=5" target="_blank">글로벌 인기 불붙었다…코르티스, 미 유튜브 '인기 급상승' 차트 안착</a><span class="card-badge badge-ent">유튜브</span></div>
+<div class="card"><span class="card-num">5</span><a href="https://news.google.com/rss/articles/CBMia0FVX3lxTFA2M0hseGZHUlBmcW1faDVKaHNzTnFlYkNId0NYT0R2a1ZUaXN4VUNkT0N5cEtqbWxsZzk2TXNFRXlITWVTdUFyZGF4cW1wd3ZKN2pOXzlaUmVoQnVhRnRwdTQ0TTNSd1U2Y0xZ?oc=5" target="_blank">아이브, 신곡 '뱅뱅' 유튜브 인기 급상승 음악 1위...존재감 '입증'</a><span class="card-badge badge-ent">유튜브</span></div>
 <!-- ent_end -->
-        </ul>
-    </div>
+        </div>
+    </section>
 
-    <script>
-        function showCategory(categoryId) {
-            // 모든 섹션 숨기기
-            document.querySelectorAll('.content-section').forEach(section => section.classList.remove('active'));
-            // 모든 버튼 비활성화 스타일
-            document.querySelectorAll('button').forEach(btn => btn.classList.remove('active'));
-            
-            // 선택한 섹션 및 버튼 활성화
-            document.getElementById(categoryId).classList.add('active');
-            document.getElementById('btn-' + categoryId).classList.add('active');
-        }
-        // 초기 화면 설정
-        showCategory('security');
-    </script>
+    <!-- 경제 지표 -->
+    <section id="economy" class="section">
+        <p class="section-title">경제 지표</p>
+        <div class="empty-state">
+            <div style="font-size: 32px;">📊</div>
+            <p>경제 지표 데이터가 준비 중입니다</p>
+        </div>
+    </section>
+
+</main>
+
+<footer>
+    데일리 브리핑 · 자동 업데이트
+</footer>
+
+<script>
+    document.getElementById('today-date').textContent =
+        new Date().toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' });
+
+    function show(id, btn) {
+        document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+        btn.classList.add('active');
+    }
+</script>
+
 </body>
 </html>
