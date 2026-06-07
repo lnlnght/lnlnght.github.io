@@ -2,8 +2,8 @@ name: Daily Stock Update
 
 on:
   schedule:
-    - cron: '0 0 * * *' # 매일 한국 시간 오전 9시 (UTC 0)
-  workflow_dispatch: # 수동으로도 실행 가능하게 설정
+    - cron: '0 0 * * 1-5'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -14,11 +14,10 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.9'
+          python-version: '3.10'
 
       - name: Install dependencies
-        run: |
-          pip install finance-datareader pandas
+        run: pip install finance-datareader pandas
 
       - name: Run update script
         run: python update_symbols.py
@@ -27,6 +26,6 @@ jobs:
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add .  # 모든 변경된 파일을 다 집어넣습니다.
-          git commit -m "Auto update" || echo "No changes to commit"
+          git add stocks.json
+          git commit -m "Auto update stock data" || echo "No changes to commit"
           git push
