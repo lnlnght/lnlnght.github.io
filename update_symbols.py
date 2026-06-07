@@ -3,16 +3,28 @@ import json
 from datetime import datetime, timedelta
 
 STOCKS = [
-    {"code": "005930", "name": "삼성전자",  "market": "KR", "currency": "KRW"},
-    {"code": "000660", "name": "SK하이닉스","market": "KR", "currency": "KRW"},
-    {"code": "035420", "name": "NAVER",     "market": "KR", "currency": "KRW"},
-    {"code": "035720", "name": "카카오",    "market": "KR", "currency": "KRW"},
-    {"code": "005380", "name": "현대차",    "market": "KR", "currency": "KRW"},
-    {"code": "AAPL",   "name": "Apple",     "market": "US", "currency": "USD"},
-    {"code": "NVDA",   "name": "NVIDIA",    "market": "US", "currency": "USD"},
-    {"code": "TSLA",   "name": "Tesla",     "market": "US", "currency": "USD"},
-    {"code": "MSFT",   "name": "Microsoft", "market": "US", "currency": "USD"},
-    {"code": "AMZN",   "name": "Amazon",    "market": "US", "currency": "USD"},
+    # 국내 주요 종목 (시가총액 상위)
+    {"code": "005930", "name": "삼성전자",        "market": "KR", "currency": "KRW"},
+    {"code": "000660", "name": "SK하이닉스",      "market": "KR", "currency": "KRW"},
+    {"code": "373220", "name": "LG에너지솔루션",  "market": "KR", "currency": "KRW"},
+    {"code": "207940", "name": "삼성바이오로직스","market": "KR", "currency": "KRW"},
+    {"code": "005380", "name": "현대차",          "market": "KR", "currency": "KRW"},
+    {"code": "000270", "name": "기아",            "market": "KR", "currency": "KRW"},
+    {"code": "105560", "name": "KB금융",          "market": "KR", "currency": "KRW"},
+    {"code": "068270", "name": "셀트리온",        "market": "KR", "currency": "KRW"},
+    {"code": "005490", "name": "POSCO홀딩스",     "market": "KR", "currency": "KRW"},
+    {"code": "035420", "name": "NAVER",           "market": "KR", "currency": "KRW"},
+    # 미국 주요 종목 (시가총액 상위)
+    {"code": "AAPL",   "name": "Apple",           "market": "US", "currency": "USD"},
+    {"code": "MSFT",   "name": "Microsoft",       "market": "US", "currency": "USD"},
+    {"code": "NVDA",   "name": "NVIDIA",          "market": "US", "currency": "USD"},
+    {"code": "AMZN",   "name": "Amazon",          "market": "US", "currency": "USD"},
+    {"code": "GOOGL",  "name": "Alphabet",        "market": "US", "currency": "USD"},
+    {"code": "META",   "name": "Meta",            "market": "US", "currency": "USD"},
+    {"code": "TSLA",   "name": "Tesla",           "market": "US", "currency": "USD"},
+    {"code": "AVGO",   "name": "Broadcom",        "market": "US", "currency": "USD"},
+    {"code": "JPM",    "name": "JPMorgan",        "market": "US", "currency": "USD"},
+    {"code": "WMT",    "name": "Walmart",         "market": "US", "currency": "USD"},
 ]
 
 end   = datetime.now()
