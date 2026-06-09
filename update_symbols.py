@@ -33,23 +33,23 @@ for s in STOCKS:
         ticker = yf.Ticker(s["yf"])
         fi = ticker.fast_info
 
-        # fast_info.last_price is the real-time price during market hours,
-        # or the last closing price when the market is closed.
+        # fast_info.last_price: real-time during market hours, last close otherwise
         current    = round(float(fi.last_price), 2)
         prev_close = round(float(fi.previous_close), 2)
         change     = round(current - prev_close, 2)
         change_pct = round((change / prev_close) * 100, 2)
-        high_52w   = round(float(fi.fifty_two_week_high), 2)
-        low_52w    = round(float(fi.fifty_two_week_low), 2)
 
-        # 90 days of daily price history for the chart
-        hist = ticker.history(period="3mo")
+        # 1-year history for 52-week range + 90-day chart data
+        hist = ticker.history(period="1y")
         if hist.empty:
             print(f"✗ {s['code']}: 히스토리 없음"); continue
 
+        high_52w = round(float(hist['High'].max()), 2)
+        low_52w  = round(float(hist['Low'].min()), 2)
+
         prices = [
             {"date": d.strftime('%Y-%m-%d'), "close": round(float(r['Close']), 2)}
-            for d, r in hist.iterrows()
+            for d, r in hist.tail(90).iterrows()
         ]
 
         result.append({
