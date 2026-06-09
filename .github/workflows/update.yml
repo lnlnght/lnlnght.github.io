@@ -1,8 +1,9 @@
-name: Daily Stock Update
+name: Stock Data Update
 
 on:
   schedule:
-    - cron: '0 0 * * 1-5'
+    - cron: '*/15 0-6 * * 1-5'    # 국내 장 중 (KST 09:00-15:30 = UTC 00:00-06:30)
+    - cron: '*/15 13-21 * * 1-5'  # 미국 장 중 (KST 22:30-06:00 = UTC 13:30-21:00)
   workflow_dispatch:
 
 jobs:
