@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-09 05:46",
+  "updated": "2026-06-09 09:35",
   "stocks": [
     {
       "code": "005930",
@@ -379,9 +379,9 @@
       "name": "SK하이닉스",
       "market": "KR",
       "currency": "KRW",
-      "current": 2211000.0,
-      "change": 300000.0,
-      "change_pct": 15.7,
+      "current": 2215000.0,
+      "change": 304000.0,
+      "change_pct": 15.91,
       "high_52w": 2363000.0,
       "low_52w": 202500.0,
       "prices": [
@@ -743,7 +743,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 2211000.0
+          "close": 2215000.0
         }
       ]
     },
@@ -752,9 +752,9 @@
       "name": "LG에너지솔루션",
       "market": "KR",
       "currency": "KRW",
-      "current": 397000.0,
-      "change": 8500.0,
-      "change_pct": 2.19,
+      "current": 396500.0,
+      "change": 8000.0,
+      "change_pct": 2.06,
       "high_52w": 514000.0,
       "low_52w": 272500.0,
       "prices": [
@@ -1116,7 +1116,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 397000.0
+          "close": 396500.0
         }
       ]
     },
@@ -1125,9 +1125,9 @@
       "name": "삼성바이오로직스",
       "market": "KR",
       "currency": "KRW",
-      "current": 1292000.0,
-      "change": 49000.0,
-      "change_pct": 3.94,
+      "current": 1296000.0,
+      "change": 53000.0,
+      "change_pct": 4.26,
       "high_52w": 1965000.0,
       "low_52w": 1243000.0,
       "prices": [
@@ -1489,7 +1489,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 1292000.0
+          "close": 1296000.0
         }
       ]
     },
@@ -1498,9 +1498,9 @@
       "name": "현대차",
       "market": "KR",
       "currency": "KRW",
-      "current": 640000.0,
-      "change": 1000.0,
-      "change_pct": 0.16,
+      "current": 639000.0,
+      "change": 0.0,
+      "change_pct": 0.0,
       "high_52w": 750000.0,
       "low_52w": 181900.0,
       "prices": [
@@ -1862,7 +1862,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 640000.0
+          "close": 639000.0
         }
       ]
     },
@@ -1871,9 +1871,9 @@
       "name": "기아",
       "market": "KR",
       "currency": "KRW",
-      "current": 165800.0,
-      "change": 14400.0,
-      "change_pct": 9.51,
+      "current": 164300.0,
+      "change": 12900.0,
+      "change_pct": 8.52,
       "high_52w": 206000.0,
       "low_52w": 88200.0,
       "prices": [
@@ -2235,7 +2235,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 165800.0
+          "close": 164300.0
         }
       ]
     },
@@ -2244,9 +2244,9 @@
       "name": "KB금융",
       "market": "KR",
       "currency": "KRW",
-      "current": 154300.0,
-      "change": 2800.0,
-      "change_pct": 1.85,
+      "current": 154800.0,
+      "change": 3300.0,
+      "change_pct": 2.18,
       "high_52w": 171600.0,
       "low_52w": 100000.0,
       "prices": [
@@ -2608,7 +2608,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 154300.0
+          "close": 154800.0
         }
       ]
     },
@@ -2617,9 +2617,9 @@
       "name": "셀트리온",
       "market": "KR",
       "currency": "KRW",
-      "current": 169100.0,
-      "change": 9700.0,
-      "change_pct": 6.09,
+      "current": 170000.0,
+      "change": 10600.0,
+      "change_pct": 6.65,
       "high_52w": 236861.0,
       "low_52w": 142855.0,
       "prices": [
@@ -2981,7 +2981,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 169100.0
+          "close": 170000.0
         }
       ]
     },
@@ -3363,9 +3363,9 @@
       "name": "NAVER",
       "market": "KR",
       "currency": "KRW",
-      "current": 252250.0,
-      "change": -26750.0,
-      "change_pct": -9.59,
+      "current": 257000.0,
+      "change": -22000.0,
+      "change_pct": -7.89,
       "high_52w": 290500.0,
       "low_52w": 183800.0,
       "prices": [
@@ -3727,7 +3727,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 252250.0
+          "close": 257000.0
         }
       ]
     },
