@@ -1,14 +1,14 @@
 {
-  "updated": "2026-06-09 01:46",
+  "updated": "2026-06-09 05:46",
   "stocks": [
     {
       "code": "005930",
       "name": "삼성전자",
       "market": "KR",
       "currency": "KRW",
-      "current": 306000.0,
-      "change": 10500.0,
-      "change_pct": 3.55,
+      "current": 322000.0,
+      "change": 26500.0,
+      "change_pct": 8.97,
       "high_52w": 360500.0,
       "low_52w": 53900.0,
       "prices": [
@@ -370,7 +370,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 306000.0
+          "close": 322000.0
         }
       ]
     },
@@ -379,9 +379,9 @@
       "name": "SK하이닉스",
       "market": "KR",
       "currency": "KRW",
-      "current": 2057000.0,
-      "change": 146000.0,
-      "change_pct": 7.64,
+      "current": 2211000.0,
+      "change": 300000.0,
+      "change_pct": 15.7,
       "high_52w": 2363000.0,
       "low_52w": 202500.0,
       "prices": [
@@ -743,7 +743,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 2057000.0
+          "close": 2211000.0
         }
       ]
     },
@@ -752,9 +752,9 @@
       "name": "LG에너지솔루션",
       "market": "KR",
       "currency": "KRW",
-      "current": 388500.0,
-      "change": 0.0,
-      "change_pct": 0.0,
+      "current": 397000.0,
+      "change": 8500.0,
+      "change_pct": 2.19,
       "high_52w": 514000.0,
       "low_52w": 272500.0,
       "prices": [
@@ -1116,7 +1116,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 388500.0
+          "close": 397000.0
         }
       ]
     },
@@ -1125,9 +1125,9 @@
       "name": "삼성바이오로직스",
       "market": "KR",
       "currency": "KRW",
-      "current": 1283000.0,
-      "change": 40000.0,
-      "change_pct": 3.22,
+      "current": 1292000.0,
+      "change": 49000.0,
+      "change_pct": 3.94,
       "high_52w": 1965000.0,
       "low_52w": 1243000.0,
       "prices": [
@@ -1489,7 +1489,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 1283000.0
+          "close": 1292000.0
         }
       ]
     },
@@ -1498,9 +1498,9 @@
       "name": "현대차",
       "market": "KR",
       "currency": "KRW",
-      "current": 626000.0,
-      "change": -13000.0,
-      "change_pct": -2.03,
+      "current": 640000.0,
+      "change": 1000.0,
+      "change_pct": 0.16,
       "high_52w": 750000.0,
       "low_52w": 181900.0,
       "prices": [
@@ -1862,7 +1862,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 626000.0
+          "close": 640000.0
         }
       ]
     },
@@ -1871,9 +1871,9 @@
       "name": "기아",
       "market": "KR",
       "currency": "KRW",
-      "current": 162400.0,
-      "change": 11000.0,
-      "change_pct": 7.27,
+      "current": 165800.0,
+      "change": 14400.0,
+      "change_pct": 9.51,
       "high_52w": 206000.0,
       "low_52w": 88200.0,
       "prices": [
@@ -2235,7 +2235,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 162400.0
+          "close": 165800.0
         }
       ]
     },
@@ -2244,9 +2244,9 @@
       "name": "KB금융",
       "market": "KR",
       "currency": "KRW",
-      "current": 154200.0,
-      "change": 2700.0,
-      "change_pct": 1.78,
+      "current": 154300.0,
+      "change": 2800.0,
+      "change_pct": 1.85,
       "high_52w": 171600.0,
       "low_52w": 100000.0,
       "prices": [
@@ -2608,7 +2608,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 154200.0
+          "close": 154300.0
         }
       ]
     },
@@ -2617,9 +2617,9 @@
       "name": "셀트리온",
       "market": "KR",
       "currency": "KRW",
-      "current": 168200.0,
-      "change": 8800.0,
-      "change_pct": 5.52,
+      "current": 169100.0,
+      "change": 9700.0,
+      "change_pct": 6.09,
       "high_52w": 236861.0,
       "low_52w": 142855.0,
       "prices": [
@@ -2981,7 +2981,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 168200.0
+          "close": 169100.0
         }
       ]
     },
@@ -2990,9 +2990,9 @@
       "name": "POSCO홀딩스",
       "market": "KR",
       "currency": "KRW",
-      "current": 358000.0,
-      "change": -1000.0,
-      "change_pct": -0.28,
+      "current": 364500.0,
+      "change": 5500.0,
+      "change_pct": 1.53,
       "high_52w": 535000.0,
       "low_52w": 237000.0,
       "prices": [
@@ -3354,7 +3354,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 358000.0
+          "close": 364500.0
         }
       ]
     },
@@ -3363,9 +3363,9 @@
       "name": "NAVER",
       "market": "KR",
       "currency": "KRW",
-      "current": 247500.0,
-      "change": -31500.0,
-      "change_pct": -11.29,
+      "current": 252250.0,
+      "change": -26750.0,
+      "change_pct": -9.59,
       "high_52w": 290500.0,
       "low_52w": 183800.0,
       "prices": [
@@ -3727,7 +3727,7 @@
         },
         {
           "date": "2026-06-09",
-          "close": 247500.0
+          "close": 252250.0
         }
       ]
     },
