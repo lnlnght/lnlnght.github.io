@@ -8,9 +8,13 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e2e2e8; min-height: 100vh; }
-        header { max-width: 1100px; margin: 0 auto; padding: 36px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; }
+        header { max-width: 1100px; margin: 0 auto; padding: 36px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
         h1 { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
         .update-label { font-size: 11px; color: #3a3a4a; }
+        .refresh-btn { padding: 5px 14px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+        .refresh-btn:hover { color: #aaa; border-color: #333; }
+        .refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
         .filter-bar { max-width: 1100px; margin: 0 auto; padding: 16px 24px 24px; display: flex; gap: 8px; }
         .filter-btn { padding: 5px 16px; border-radius: 20px; border: 1px solid #1e1e2a; background: transparent; color: #555; font-size: 13px; cursor: pointer; transition: all 0.15s; }
         .filter-btn:hover { color: #999; border-color: #2a2a3a; }
@@ -31,6 +35,7 @@
         .stock-card { background: #0e0e16; border: 1px solid #16161f; border-radius: 12px; padding: 18px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
         .stock-card:hover { background: #121218; border-color: #252535; }
         .stock-card.selected { border-color: #6366f1; background: #111120; }
+        .stock-card.loading { opacity: 0.4; pointer-events: none; }
         .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
         .card-name { font-size: 14px; font-weight: 600; }
         .market-badge { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
@@ -43,13 +48,18 @@
         .card-range-labels { display: flex; justify-content: space-between; font-size: 10px; color: #333; }
         .up { color: #ef4444; } .down { color: #3b82f6; } .up-us { color: #22c55e; } .down-us { color: #ef4444; } .neutral { color: #555; }
         .state-msg { grid-column: 1/-1; text-align: center; padding: 80px 20px; color: #333; font-size: 14px; line-height: 2; }
+        .skeleton { background: linear-gradient(90deg, #111 25%, #1a1a26 50%, #111 75%); background-size: 200% 100%; animation: shimmer 1.5s infinite; border-radius: 6px; }
+        @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
         footer { text-align: center; padding: 32px; font-size: 11px; color: #1e1e28; border-top: 1px solid #0e0e16; }
     </style>
 </head>
 <body>
 <header>
     <h1>투자 분석</h1>
-    <span class="update-label" id="update-label">—</span>
+    <div class="header-right">
+        <span class="update-label" id="update-label">로딩 중…</span>
+        <button class="refresh-btn" id="refresh-btn" onclick="loadAll()">↻ 새로고침</button>
+    </div>
 </header>
 <div class="filter-bar">
     <button class="filter-btn active" onclick="applyFilter('all',this)">전체</button>
@@ -75,72 +85,211 @@
     </div>
 </div>
 <div class="stock-grid" id="stock-grid">
-    <div class="state-msg">📊 데이터 불러오는 중…</div>
+    <div class="state-msg">📊 실시간 데이터 불러오는 중…</div>
 </div>
-<footer>투자 분석 · 매일 자동 업데이트 · 투자 판단의 최종 책임은 본인에게 있습니다</footer>
+<footer>투자 분석 · Yahoo Finance 실시간 데이터 · 투자 판단의 최종 책임은 본인에게 있습니다</footer>
 <script>
-let allStocks=[],selected=null,currentRange=30,chartInst=null,activeFilter='all';
-const fmt=(v,cur)=>cur==='KRW'?v.toLocaleString('ko-KR')+'원':'$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-const chgClass=(c,m)=>c===0?'neutral':m==='KR'?(c>0?'up':'down'):(c>0?'up-us':'down-us');
-function renderCards(stocks){
-    const g=document.getElementById('stock-grid');
-    if(!stocks.length){g.innerHTML='<div class="state-msg">표시할 종목이 없습니다</div>';return;}
-    g.innerHTML=stocks.map(s=>{
-        const sign=s.change>=0?'+':'',cls=chgClass(s.change,s.market);
-        const chg=s.currency==='KRW'?`${sign}${s.change.toLocaleString('ko-KR')}원 (${sign}${s.change_pct.toFixed(2)}%)`:`${sign}$${s.change.toFixed(2)} (${sign}${s.change_pct.toFixed(2)}%)`;
-        const isSel=selected&&selected.code===s.code;
-        const range=s.high_52w-s.low_52w,pos=range>0?Math.min(100,Math.max(0,((s.current-s.low_52w)/range)*100)):50;
-        const bar=s.market==='KR'?(s.change>=0?'#ef4444':'#3b82f6'):(s.change>=0?'#22c55e':'#ef4444');
-        return`<div class="stock-card${isSel?' selected':''}" onclick="selectStock('${s.code}')">
+const STOCKS = [
+    { yf:'005930.KS', code:'005930', name:'삼성전자',        market:'KR', currency:'KRW' },
+    { yf:'000660.KS', code:'000660', name:'SK하이닉스',      market:'KR', currency:'KRW' },
+    { yf:'373220.KS', code:'373220', name:'LG에너지솔루션',  market:'KR', currency:'KRW' },
+    { yf:'207940.KS', code:'207940', name:'삼성바이오로직스',market:'KR', currency:'KRW' },
+    { yf:'005380.KS', code:'005380', name:'현대차',          market:'KR', currency:'KRW' },
+    { yf:'000270.KS', code:'000270', name:'기아',            market:'KR', currency:'KRW' },
+    { yf:'105560.KS', code:'105560', name:'KB금융',          market:'KR', currency:'KRW' },
+    { yf:'068270.KS', code:'068270', name:'셀트리온',        market:'KR', currency:'KRW' },
+    { yf:'005490.KS', code:'005490', name:'POSCO홀딩스',     market:'KR', currency:'KRW' },
+    { yf:'035420.KS', code:'035420', name:'NAVER',           market:'KR', currency:'KRW' },
+    { yf:'AAPL',  code:'AAPL',  name:'Apple',     market:'US', currency:'USD' },
+    { yf:'MSFT',  code:'MSFT',  name:'Microsoft', market:'US', currency:'USD' },
+    { yf:'NVDA',  code:'NVDA',  name:'NVIDIA',    market:'US', currency:'USD' },
+    { yf:'AMZN',  code:'AMZN',  name:'Amazon',    market:'US', currency:'USD' },
+    { yf:'GOOGL', code:'GOOGL', name:'Alphabet',  market:'US', currency:'USD' },
+    { yf:'META',  code:'META',  name:'Meta',      market:'US', currency:'USD' },
+    { yf:'TSLA',  code:'TSLA',  name:'Tesla',     market:'US', currency:'USD' },
+    { yf:'AVGO',  code:'AVGO',  name:'Broadcom',  market:'US', currency:'USD' },
+    { yf:'JPM',   code:'JPM',   name:'JPMorgan',  market:'US', currency:'USD' },
+    { yf:'WMT',   code:'WMT',   name:'Walmart',   market:'US', currency:'USD' },
+];
+
+let allStocks=[], selected=null, currentRange=30, chartInst=null, activeFilter='all';
+
+const r = (v, dec) => Math.round(v * 10**dec) / 10**dec;
+const fmt = (v, cur) => cur==='KRW' ? v.toLocaleString('ko-KR')+'원' : '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const chgClass = (c, m) => c===0?'neutral':m==='KR'?(c>0?'up':'down'):(c>0?'up-us':'down-us');
+
+async function fetchStockData(s) {
+    const url = `https://query1.finance.yahoo.com/v8/finance/chart/${s.yf}?interval=1d&range=1y`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`${res.status}`);
+    const json = await res.json();
+    const result = json.chart.result[0];
+    const meta = result.meta;
+    const closes = result.indicators.quote[0].close;
+    const timestamps = result.timestamp;
+
+    const prices = timestamps
+        .map((ts, i) => ({ date: new Date(ts*1000).toISOString().slice(0,10), close: closes[i] }))
+        .filter(p => p.close != null);
+
+    const dec = s.currency === 'KRW' ? 0 : 2;
+    const current = r(meta.regularMarketPrice, dec);
+    const prev = r(meta.chartPreviousClose ?? meta.previousClose ?? prices[prices.length-2]?.close, dec);
+    const change = r(current - prev, dec);
+    const changePct = r((change / prev) * 100, 2);
+    const allCloses = prices.map(p => p.close);
+
+    return {
+        ...s,
+        current, change, change_pct: changePct,
+        high_52w: r(Math.max(...allCloses), dec),
+        low_52w:  r(Math.min(...allCloses), dec),
+        prices,
+    };
+}
+
+function renderSkeletons() {
+    const g = document.getElementById('stock-grid');
+    g.innerHTML = STOCKS.map(s => `
+<div class="stock-card loading" id="card-${s.code}">
+  <div class="card-top"><span class="card-name">${s.name}</span><span class="market-badge badge-${s.market.toLowerCase()}">${s.market}</span></div>
+  <div class="card-price skeleton" style="height:28px;width:120px;margin-bottom:8px"></div>
+  <div class="skeleton" style="height:16px;width:160px;margin-bottom:14px"></div>
+  <div class="card-range-bar"></div>
+  <div class="card-range-labels"><span>—</span><span>—</span></div>
+</div>`).join('');
+}
+
+function updateCard(s) {
+    const el = document.getElementById(`card-${s.code}`);
+    if (!el) return;
+    const sign = s.change >= 0 ? '+' : '';
+    const cls = chgClass(s.change, s.market);
+    const chg = s.currency==='KRW'
+        ? `${sign}${s.change.toLocaleString('ko-KR')}원 (${sign}${s.change_pct.toFixed(2)}%)`
+        : `${sign}$${s.change.toFixed(2)} (${sign}${s.change_pct.toFixed(2)}%)`;
+    const range = s.high_52w - s.low_52w;
+    const pos = range > 0 ? Math.min(100, Math.max(0, ((s.current - s.low_52w) / range) * 100)) : 50;
+    const bar = s.market==='KR' ? (s.change>=0?'#ef4444':'#3b82f6') : (s.change>=0?'#22c55e':'#ef4444');
+    const isSel = selected && selected.code === s.code;
+
+    el.className = `stock-card${isSel?' selected':''}`;
+    el.onclick = () => selectStock(s.code);
+    el.innerHTML = `
 <div class="card-top"><span class="card-name">${s.name}</span><span class="market-badge badge-${s.market.toLowerCase()}">${s.market}</span></div>
 <div class="card-price">${fmt(s.current,s.currency)}</div>
 <div class="card-change ${cls}">${chg}</div>
 <div class="card-range-bar"><div class="card-range-fill" style="width:${pos}%;background:${bar}"></div></div>
-<div class="card-range-labels"><span>저 ${fmt(s.low_52w,s.currency)}</span><span>고 ${fmt(s.high_52w,s.currency)}</span></div>
-</div>`;
-    }).join('');
+<div class="card-range-labels"><span>저 ${fmt(s.low_52w,s.currency)}</span><span>고 ${fmt(s.high_52w,s.currency)}</span></div>`;
 }
-function selectStock(code){
-    selected=allStocks.find(s=>s.code===code);if(!selected)return;
+
+async function loadAll() {
+    const btn = document.getElementById('refresh-btn');
+    btn.disabled = true;
+    renderSkeletons();
+    allStocks = [];
+    selected = null;
+    document.getElementById('chart-panel').classList.remove('visible');
+
+    let loaded = 0;
+    const results = await Promise.allSettled(
+        STOCKS.map(s => fetchStockData(s).then(data => {
+            allStocks.push(data);
+            updateCard(data);
+            if (++loaded === 1 || (selected === null && data.market === 'KR')) {
+                selectStock(data.code);
+            }
+        }))
+    );
+
+    const ok = results.filter(r => r.status==='fulfilled').length;
+    const now = new Date().toLocaleTimeString('ko-KR', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+    document.getElementById('update-label').textContent = `실시간 · ${now} · ${ok}/${STOCKS.length}종목`;
+    btn.disabled = false;
+}
+
+function selectStock(code) {
+    selected = allStocks.find(s => s.code === code);
+    if (!selected) return;
+
     document.getElementById('chart-panel').classList.add('visible');
-    document.getElementById('c-name').textContent=`${selected.name}  ·  ${selected.code}`;
-    document.getElementById('c-price').textContent=fmt(selected.current,selected.currency);
-    const sign=selected.change>=0?'+':'';
-    const chg=selected.currency==='KRW'?`${sign}${selected.change.toLocaleString('ko-KR')}원 (${sign}${selected.change_pct.toFixed(2)}%)`:`${sign}$${selected.change.toFixed(2)} (${sign}${selected.change_pct.toFixed(2)}%)`;
-    const el=document.getElementById('c-change');el.textContent=chg;el.className='stock-change '+chgClass(selected.change,selected.market);
-    document.getElementById('c-meta').innerHTML=`52주 고점 ${fmt(selected.high_52w,selected.currency)}<br>52주 저점 ${fmt(selected.low_52w,selected.currency)}`;
+    document.getElementById('c-name').textContent = `${selected.name}  ·  ${selected.yf}`;
+    document.getElementById('c-price').textContent = fmt(selected.current, selected.currency);
+
+    const sign = selected.change >= 0 ? '+' : '';
+    const chg = selected.currency==='KRW'
+        ? `${sign}${selected.change.toLocaleString('ko-KR')}원 (${sign}${selected.change_pct.toFixed(2)}%)`
+        : `${sign}$${selected.change.toFixed(2)} (${sign}${selected.change_pct.toFixed(2)}%)`;
+    const cEl = document.getElementById('c-change');
+    cEl.textContent = chg;
+    cEl.className = 'stock-change ' + chgClass(selected.change, selected.market);
+    document.getElementById('c-meta').innerHTML =
+        `52주 고점 ${fmt(selected.high_52w, selected.currency)}<br>52주 저점 ${fmt(selected.low_52w, selected.currency)}`;
+
     drawChart(currentRange);
-    renderCards(activeFilter==='all'?allStocks:allStocks.filter(s=>s.market===activeFilter));
-    document.getElementById('chart-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
+
+    document.querySelectorAll('.stock-card').forEach(el => el.classList.remove('selected'));
+    const card = document.getElementById(`card-${selected.code}`);
+    if (card) card.classList.add('selected');
+    document.getElementById('chart-panel').scrollIntoView({ behavior:'smooth', block:'nearest' });
 }
-function drawChart(days){
-    if(!selected)return;
-    const prices=selected.prices.slice(-days),labels=prices.map(p=>p.date.slice(5)),data=prices.map(p=>p.close);
-    const isUp=data.length>1&&data[data.length-1]>=data[0];
-    const color=selected.market==='KR'?(isUp?'#ef4444':'#3b82f6'):(isUp?'#22c55e':'#ef4444');
-    if(chartInst)chartInst.destroy();
-    chartInst=new Chart(document.getElementById('price-chart'),{
-        type:'line',
-        data:{labels,datasets:[{data,borderColor:color,backgroundColor:color+'15',borderWidth:2,pointRadius:0,pointHoverRadius:4,fill:true,tension:0.3}]},
-        options:{responsive:true,maintainAspectRatio:false,
-            plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>fmt(ctx.parsed.y,selected.currency)}}},
-            scales:{
-                x:{grid:{color:'#0f0f18'},ticks:{color:'#333',maxTicksLimit:6,font:{size:11}}},
-                y:{position:'right',grid:{color:'#141420'},ticks:{color:'#444',font:{size:11},callback:v=>selected.currency==='KRW'?(v>=1000?(v/1000).toFixed(0)+'k':v):'$'+v.toFixed(0)}}
+
+function drawChart(days) {
+    if (!selected) return;
+    const prices = selected.prices.slice(-days);
+    const labels = prices.map(p => p.date.slice(5));
+    const data = prices.map(p => p.close);
+    const isUp = data.length > 1 && data[data.length-1] >= data[0];
+    const color = selected.market==='KR' ? (isUp?'#ef4444':'#3b82f6') : (isUp?'#22c55e':'#ef4444');
+    if (chartInst) chartInst.destroy();
+    chartInst = new Chart(document.getElementById('price-chart'), {
+        type: 'line',
+        data: { labels, datasets: [{ data, borderColor:color, backgroundColor:color+'15', borderWidth:2, pointRadius:0, pointHoverRadius:4, fill:true, tension:0.3 }] },
+        options: {
+            responsive:true, maintainAspectRatio:false,
+            plugins: { legend:{display:false}, tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>fmt(ctx.parsed.y,selected.currency)}} },
+            scales: {
+                x: { grid:{color:'#0f0f18'}, ticks:{color:'#333',maxTicksLimit:6,font:{size:11}} },
+                y: { position:'right', grid:{color:'#141420'}, ticks:{color:'#444',font:{size:11},callback:v=>selected.currency==='KRW'?(v>=1000?(v/1000).toFixed(0)+'k':v):'$'+v.toFixed(0)} }
             }
         }
     });
 }
-function setRange(days,btn){currentRange=days;document.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');drawChart(days);}
-function applyFilter(market,btn){activeFilter=market;document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));btn.classList.add('active');renderCards(market==='all'?allStocks:allStocks.filter(s=>s.market===market));}
-fetch('stocks.json').then(r=>{if(!r.ok)throw new Error();return r.json();}).then(data=>{
-    allStocks=data.stocks||[];
-    document.getElementById('update-label').textContent='업데이트 '+(data.updated||'—');
-    renderCards(allStocks);if(allStocks.length)selectStock(allStocks[0].code);
-}).catch(()=>{
-    document.getElementById('stock-grid').innerHTML='<div class="state-msg">⚠️ 데이터를 불러올 수 없습니다<br><small style="color:#222">GitHub Actions 실행 후 다시 확인해주세요</small></div>';
-    document.getElementById('update-label').textContent='데이터 없음';
-});
+
+function setRange(days, btn) {
+    currentRange = days;
+    document.querySelectorAll('.range-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    drawChart(days);
+}
+
+function applyFilter(market, btn) {
+    activeFilter = market;
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    const visible = market==='all' ? STOCKS : STOCKS.filter(s=>s.market===market);
+    document.getElementById('stock-grid').innerHTML = visible.map(s => {
+        const data = allStocks.find(d => d.code === s.code);
+        if (!data) return `<div class="stock-card loading" id="card-${s.code}">
+<div class="card-top"><span class="card-name">${s.name}</span><span class="market-badge badge-${s.market.toLowerCase()}">${s.market}</span></div>
+<div class="card-price skeleton" style="height:28px;width:120px;margin-bottom:8px"></div>
+<div class="skeleton" style="height:16px;width:160px;margin-bottom:14px"></div>
+<div class="card-range-bar"></div><div class="card-range-labels"><span>—</span><span>—</span></div></div>`;
+        const sign=data.change>=0?'+':'', cls=chgClass(data.change,data.market);
+        const chg=data.currency==='KRW'?`${sign}${data.change.toLocaleString('ko-KR')}원 (${sign}${data.change_pct.toFixed(2)}%)`:`${sign}$${data.change.toFixed(2)} (${sign}${data.change_pct.toFixed(2)}%)`;
+        const range=data.high_52w-data.low_52w, pos=range>0?Math.min(100,Math.max(0,((data.current-data.low_52w)/range)*100)):50;
+        const bar=data.market==='KR'?(data.change>=0?'#ef4444':'#3b82f6'):(data.change>=0?'#22c55e':'#ef4444');
+        const isSel=selected&&selected.code===data.code;
+        return `<div class="stock-card${isSel?' selected':''}" id="card-${data.code}" onclick="selectStock('${data.code}')">
+<div class="card-top"><span class="card-name">${data.name}</span><span class="market-badge badge-${data.market.toLowerCase()}">${data.market}</span></div>
+<div class="card-price">${fmt(data.current,data.currency)}</div>
+<div class="card-change ${cls}">${chg}</div>
+<div class="card-range-bar"><div class="card-range-fill" style="width:${pos}%;background:${bar}"></div></div>
+<div class="card-range-labels"><span>저 ${fmt(data.low_52w,data.currency)}</span><span>고 ${fmt(data.high_52w,data.currency)}</span></div></div>`;
+    }).join('');
+}
+
+loadAll();
 </script>
 </body>
 </html>
