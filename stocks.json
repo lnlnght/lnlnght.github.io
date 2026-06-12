@@ -1,14 +1,14 @@
 {
-  "updated": "2026-06-12 03:32",
+  "updated": "2026-06-12 08:12",
   "stocks": [
     {
       "code": "005930",
       "name": "삼성전자",
       "market": "KR",
       "currency": "KRW",
-      "current": 334500.0,
-      "change": 35500.0,
-      "change_pct": 11.87,
+      "current": 322500.0,
+      "change": 23500.0,
+      "change_pct": 7.86,
       "high_52w": 370000.0,
       "low_52w": 55913.82,
       "prices": [
@@ -370,7 +370,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 334500.0
+          "close": 322500.0
         }
       ]
     },
@@ -379,9 +379,9 @@
       "name": "SK하이닉스",
       "market": "KR",
       "currency": "KRW",
-      "current": 2275000.0,
-      "change": 180000.0,
-      "change_pct": 8.59,
+      "current": 2150000.0,
+      "change": 49000.0,
+      "change_pct": 2.33,
       "high_52w": 2407000.0,
       "low_52w": 232777.28,
       "prices": [
@@ -403,7 +403,7 @@
         },
         {
           "date": "2026-02-03",
-          "close": 905178.06
+          "close": 905178.12
         },
         {
           "date": "2026-02-04",
@@ -419,7 +419,7 @@
         },
         {
           "date": "2026-02-09",
-          "close": 885218.31
+          "close": 885218.25
         },
         {
           "date": "2026-02-10",
@@ -427,7 +427,7 @@
         },
         {
           "date": "2026-02-11",
-          "close": 858272.5
+          "close": 858272.44
         },
         {
           "date": "2026-02-12",
@@ -447,7 +447,7 @@
         },
         {
           "date": "2026-02-23",
-          "close": 949089.75
+          "close": 949089.69
         },
         {
           "date": "2026-02-24",
@@ -743,7 +743,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 2275000.0
+          "close": 2150000.0
         }
       ]
     },
@@ -752,9 +752,9 @@
       "name": "LG에너지솔루션",
       "market": "KR",
       "currency": "KRW",
-      "current": 402000.0,
-      "change": 12000.0,
-      "change_pct": 3.08,
+      "current": 400000.0,
+      "change": 15500.0,
+      "change_pct": 4.03,
       "high_52w": 527000.0,
       "low_52w": 287000.0,
       "prices": [
@@ -1116,7 +1116,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 402000.0
+          "close": 400000.0
         }
       ]
     },
@@ -1125,9 +1125,9 @@
       "name": "삼성바이오로직스",
       "market": "KR",
       "currency": "KRW",
-      "current": 1311500.0,
-      "change": 8500.0,
-      "change_pct": 0.65,
+      "current": 1295000.0,
+      "change": 9000.0,
+      "change_pct": 0.7,
       "high_52w": 1987000.0,
       "low_52w": 1228000.0,
       "prices": [
@@ -1489,7 +1489,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 1311500.0
+          "close": 1295000.0
         }
       ]
     },
@@ -1498,9 +1498,9 @@
       "name": "현대차",
       "market": "KR",
       "currency": "KRW",
-      "current": 632000.0,
-      "change": 39000.0,
-      "change_pct": 6.58,
+      "current": 607000.0,
+      "change": 10000.0,
+      "change_pct": 1.68,
       "high_52w": 783000.0,
       "low_52w": 190574.21,
       "prices": [
@@ -1862,7 +1862,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 632000.0
+          "close": 607000.0
         }
       ]
     },
@@ -1871,9 +1871,9 @@
       "name": "기아",
       "market": "KR",
       "currency": "KRW",
-      "current": 168200.0,
-      "change": 14400.0,
-      "change_pct": 9.36,
+      "current": 166800.0,
+      "change": 10800.0,
+      "change_pct": 6.92,
       "high_52w": 203563.71,
       "low_52w": 90430.18,
       "prices": [
@@ -2235,7 +2235,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 168200.0
+          "close": 166800.0
         }
       ]
     },
@@ -2244,9 +2244,9 @@
       "name": "KB금융",
       "market": "KR",
       "currency": "KRW",
-      "current": 165500.0,
-      "change": 15100.0,
-      "change_pct": 10.04,
+      "current": 161200.0,
+      "change": 9700.0,
+      "change_pct": 6.4,
       "high_52w": 175700.0,
       "low_52w": 101423.29,
       "prices": [
@@ -2608,7 +2608,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 165500.0
+          "close": 161200.0
         }
       ]
     },
@@ -2617,9 +2617,9 @@
       "name": "셀트리온",
       "market": "KR",
       "currency": "KRW",
-      "current": 174900.0,
-      "change": 8700.0,
-      "change_pct": 5.23,
+      "current": 173000.0,
+      "change": 6800.0,
+      "change_pct": 4.09,
       "high_52w": 239047.62,
       "low_52w": 150228.57,
       "prices": [
@@ -2981,7 +2981,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 174900.0
+          "close": 173000.0
         }
       ]
     },
@@ -2990,11 +2990,11 @@
       "name": "POSCO홀딩스",
       "market": "KR",
       "currency": "KRW",
-      "current": 387000.0,
-      "change": 29500.0,
-      "change_pct": 8.25,
+      "current": 377000.0,
+      "change": 19000.0,
+      "change_pct": 5.31,
       "high_52w": 539577.65,
-      "low_52w": 242817.03,
+      "low_52w": 242817.05,
       "prices": [
         {
           "date": "2026-01-28",
@@ -3006,7 +3006,7 @@
         },
         {
           "date": "2026-01-30",
-          "close": 343819.34
+          "close": 343819.31
         },
         {
           "date": "2026-02-02",
@@ -3022,11 +3022,11 @@
         },
         {
           "date": "2026-02-05",
-          "close": 363112.78
+          "close": 363112.81
         },
         {
           "date": "2026-02-06",
-          "close": 355692.22
+          "close": 355692.25
         },
         {
           "date": "2026-02-09",
@@ -3034,7 +3034,7 @@
         },
         {
           "date": "2026-02-10",
-          "close": 367070.44
+          "close": 367070.41
         },
         {
           "date": "2026-02-11",
@@ -3042,7 +3042,7 @@
         },
         {
           "date": "2026-02-12",
-          "close": 378943.34
+          "close": 378943.31
         },
         {
           "date": "2026-02-13",
@@ -3050,7 +3050,7 @@
         },
         {
           "date": "2026-02-19",
-          "close": 384879.75
+          "close": 384879.78
         },
         {
           "date": "2026-02-20",
@@ -3058,7 +3058,7 @@
         },
         {
           "date": "2026-02-23",
-          "close": 383890.34
+          "close": 383890.38
         },
         {
           "date": "2026-02-24",
@@ -3354,7 +3354,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 387000.0
+          "close": 377000.0
         }
       ]
     },
@@ -3363,9 +3363,9 @@
       "name": "NAVER",
       "market": "KR",
       "currency": "KRW",
-      "current": 255000.0,
-      "change": 33000.0,
-      "change_pct": 14.86,
+      "current": 247000.0,
+      "change": 23000.0,
+      "change_pct": 10.27,
       "high_52w": 304000.0,
       "low_52w": 190800.0,
       "prices": [
@@ -3727,7 +3727,7 @@
         },
         {
           "date": "2026-06-12",
-          "close": 255000.0
+          "close": 247000.0
         }
       ]
     },
@@ -3737,8 +3737,8 @@
       "market": "US",
       "currency": "USD",
       "current": 295.63,
-      "change": 4.8,
-      "change_pct": 1.65,
+      "change": -0.17,
+      "change_pct": -0.06,
       "high_52w": 317.4,
       "low_52w": 194.3,
       "prices": [
@@ -4110,8 +4110,8 @@
       "market": "US",
       "currency": "USD",
       "current": 390.34,
-      "change": -6.16,
-      "change_pct": -1.55,
+      "change": -2.39,
+      "change_pct": -0.61,
       "high_52w": 551.05,
       "low_52w": 355.51,
       "prices": [
@@ -4483,8 +4483,8 @@
       "market": "US",
       "currency": "USD",
       "current": 204.87,
-      "change": 5.67,
-      "change_pct": 2.85,
+      "change": -1.11,
+      "change_pct": -0.54,
       "high_52w": 236.26,
       "low_52w": 140.66,
       "prices": [
@@ -4856,8 +4856,8 @@
       "market": "US",
       "currency": "USD",
       "current": 241.51,
-      "change": 5.43,
-      "change_pct": 2.3,
+      "change": -0.79,
+      "change_pct": -0.33,
       "high_52w": 278.56,
       "low_52w": 196.0,
       "prices": [
@@ -5229,8 +5229,8 @@
       "market": "US",
       "currency": "USD",
       "current": 357.77,
-      "change": 3.15,
-      "change_pct": 0.89,
+      "change": -2.4,
+      "change_pct": -0.67,
       "high_52w": 408.37,
       "low_52w": 161.54,
       "prices": [
@@ -5602,8 +5602,8 @@
       "market": "US",
       "currency": "USD",
       "current": 568.43,
-      "change": 0.31,
-      "change_pct": 0.05,
+      "change": -4.41,
+      "change_pct": -0.77,
       "high_52w": 794.38,
       "low_52w": 520.26,
       "prices": [
@@ -5975,8 +5975,8 @@
       "market": "US",
       "currency": "USD",
       "current": 399.15,
-      "change": 20.35,
-      "change_pct": 5.37,
+      "change": 0.15,
+      "change_pct": 0.04,
       "high_52w": 498.83,
       "low_52w": 288.77,
       "prices": [
@@ -6348,8 +6348,8 @@
       "market": "US",
       "currency": "USD",
       "current": 385.57,
-      "change": 17.89,
-      "change_pct": 4.87,
+      "change": 0.24,
+      "change_pct": 0.06,
       "high_52w": 495.0,
       "low_52w": 242.78,
       "prices": [
@@ -6721,8 +6721,8 @@
       "market": "US",
       "currency": "USD",
       "current": 313.49,
-      "change": 4.39,
-      "change_pct": 1.42,
+      "change": -0.01,
+      "change_pct": -0.0,
       "high_52w": 334.16,
       "low_52w": 257.7,
       "prices": [
@@ -7094,8 +7094,8 @@
       "market": "US",
       "currency": "USD",
       "current": 120.5,
-      "change": 0.1,
-      "change_pct": 0.08,
+      "change": 0.53,
+      "change_pct": 0.44,
       "high_52w": 135.16,
       "low_52w": 92.66,
       "prices": [
