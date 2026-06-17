@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-17 19:14",
+  "updated": "2026-06-17 21:25",
   "stocks": [
     {
       "code": "005930",
@@ -1534,7 +1534,7 @@
         },
         {
           "date": "2026-02-11",
-          "close": 504914.97
+          "close": 504914.94
         },
         {
           "date": "2026-02-12",
@@ -1550,7 +1550,7 @@
         },
         {
           "date": "2026-02-20",
-          "close": 504914.97
+          "close": 504914.94
         },
         {
           "date": "2026-02-23",
@@ -1562,7 +1562,7 @@
         },
         {
           "date": "2026-02-25",
-          "close": 567409.38
+          "close": 567409.31
         },
         {
           "date": "2026-02-26",
@@ -3736,9 +3736,9 @@
       "name": "Apple",
       "market": "US",
       "currency": "USD",
-      "current": 295.81,
-      "change": -3.09,
-      "change_pct": -1.03,
+      "current": 295.95,
+      "change": -2.95,
+      "change_pct": -0.99,
       "high_52w": 317.4,
       "low_52w": 194.3,
       "prices": [
@@ -4100,7 +4100,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 295.81
+          "close": 295.95
         }
       ]
     },
@@ -4109,9 +4109,9 @@
       "name": "Microsoft",
       "market": "US",
       "currency": "USD",
-      "current": 381.55,
-      "change": -11.6,
-      "change_pct": -2.95,
+      "current": 378.91,
+      "change": -14.24,
+      "change_pct": -3.62,
       "high_52w": 551.05,
       "low_52w": 355.51,
       "prices": [
@@ -4473,7 +4473,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 381.55
+          "close": 378.91
         }
       ]
     },
@@ -4482,9 +4482,9 @@
       "name": "NVIDIA",
       "market": "US",
       "currency": "USD",
-      "current": 206.37,
-      "change": -1.18,
-      "change_pct": -0.57,
+      "current": 204.65,
+      "change": -2.9,
+      "change_pct": -1.4,
       "high_52w": 236.26,
       "low_52w": 141.84,
       "prices": [
@@ -4846,7 +4846,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 206.37
+          "close": 204.65
         }
       ]
     },
@@ -4855,9 +4855,9 @@
       "name": "Amazon",
       "market": "US",
       "currency": "USD",
-      "current": 238.51,
-      "change": -7.26,
-      "change_pct": -2.95,
+      "current": 237.5,
+      "change": -8.27,
+      "change_pct": -3.36,
       "high_52w": 278.56,
       "low_52w": 196.0,
       "prices": [
@@ -5219,7 +5219,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 238.51
+          "close": 237.5
         }
       ]
     },
@@ -5228,9 +5228,9 @@
       "name": "Alphabet",
       "market": "US",
       "currency": "USD",
-      "current": 364.97,
-      "change": -7.0,
-      "change_pct": -1.88,
+      "current": 363.79,
+      "change": -8.18,
+      "change_pct": -2.2,
       "high_52w": 408.37,
       "low_52w": 161.54,
       "prices": [
@@ -5592,7 +5592,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 364.97
+          "close": 363.79
         }
       ]
     },
@@ -5601,9 +5601,9 @@
       "name": "Meta",
       "market": "US",
       "currency": "USD",
-      "current": 572.15,
-      "change": -25.53,
-      "change_pct": -4.27,
+      "current": 567.58,
+      "change": -30.1,
+      "change_pct": -5.04,
       "high_52w": 793.65,
       "low_52w": 519.78,
       "prices": [
@@ -5965,7 +5965,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 572.15
+          "close": 567.58
         }
       ]
     },
@@ -5974,9 +5974,9 @@
       "name": "Tesla",
       "market": "US",
       "currency": "USD",
-      "current": 401.18,
-      "change": -1.66,
-      "change_pct": -0.41,
+      "current": 396.38,
+      "change": -6.46,
+      "change_pct": -1.6,
       "high_52w": 498.83,
       "low_52w": 288.77,
       "prices": [
@@ -6338,7 +6338,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 401.18
+          "close": 396.38
         }
       ]
     },
@@ -6347,9 +6347,9 @@
       "name": "Broadcom",
       "market": "US",
       "currency": "USD",
-      "current": 398.27,
-      "change": 20.56,
-      "change_pct": 5.44,
+      "current": 392.9,
+      "change": 15.19,
+      "change_pct": 4.02,
       "high_52w": 495.0,
       "low_52w": 242.78,
       "prices": [
@@ -6711,7 +6711,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 398.27
+          "close": 392.9
         }
       ]
     },
@@ -6720,11 +6720,11 @@
       "name": "JPMorgan",
       "market": "US",
       "currency": "USD",
-      "current": 334.15,
-      "change": 3.65,
-      "change_pct": 1.1,
+      "current": 333.46,
+      "change": 2.96,
+      "change_pct": 0.9,
       "high_52w": 337.77,
-      "low_52w": 262.69,
+      "low_52w": 264.57,
       "prices": [
         {
           "date": "2026-02-09",
@@ -7084,7 +7084,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 334.15
+          "close": 333.46
         }
       ]
     },
@@ -7093,11 +7093,11 @@
       "name": "Walmart",
       "market": "US",
       "currency": "USD",
-      "current": 117.7,
-      "change": -3.2,
-      "change_pct": -2.65,
+      "current": 118.13,
+      "change": -2.77,
+      "change_pct": -2.29,
       "high_52w": 135.16,
-      "low_52w": 92.84,
+      "low_52w": 93.31,
       "prices": [
         {
           "date": "2026-02-09",
@@ -7457,7 +7457,7 @@
         },
         {
           "date": "2026-06-17",
-          "close": 117.7
+          "close": 118.13
         }
       ]
     }
