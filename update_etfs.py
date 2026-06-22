@@ -114,6 +114,7 @@ ETFS = [
 
     # 섹터 (3)
     {"yf": "091160.KS", "code": "091160", "name": "KODEX 반도체",           "category": "섹터",    "market": "KR", "currency": "KRW"},
+    {"yf": "396500.KS", "code": "396500", "name": "TIGER 반도체TOP10",       "category": "섹터",    "market": "KR", "currency": "KRW"},
     {"yf": "448540.KS", "code": "448540", "name": "KODEX 미국반도체MV",     "category": "섹터",    "market": "KR", "currency": "KRW"},
     {"yf": "143850.KS", "code": "143850", "name": "TIGER 미국나스닥바이오", "category": "섹터",    "market": "KR", "currency": "KRW"},
 
