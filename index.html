@@ -3,103 +3,143 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>투자 분석</title>
+    <title>ETF 투자 참고</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e2e2e8; min-height: 100vh; }
-        header { max-width: 1100px; margin: 0 auto; padding: 36px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
-        h1 { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+        header { max-width: 1200px; margin: 0 auto; padding: 36px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+        .header-left h1 { font-size: 26px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header-left p { font-size: 12px; color: #2e2e42; margin-top: 4px; }
         .header-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
         .update-label { font-size: 11px; color: #3a3a4a; }
         .refresh-btn { padding: 5px 14px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
         .refresh-btn:hover { color: #aaa; border-color: #333; }
         .refresh-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-        .filter-bar { max-width: 1100px; margin: 0 auto; padding: 16px 24px 24px; display: flex; gap: 8px; }
+
+        .filter-bar { max-width: 1200px; margin: 0 auto; padding: 16px 24px 24px; display: flex; gap: 8px; flex-wrap: wrap; }
         .filter-btn { padding: 5px 16px; border-radius: 20px; border: 1px solid #1e1e2a; background: transparent; color: #555; font-size: 13px; cursor: pointer; transition: all 0.15s; }
         .filter-btn:hover { color: #999; border-color: #2a2a3a; }
         .filter-btn.active { background: #14141e; color: #e2e2e8; border-color: #6366f1; }
-        .chart-panel { max-width: 1100px; margin: 0 auto 28px; padding: 0 24px; display: none; }
+
+        .chart-panel { max-width: 1200px; margin: 0 auto 28px; padding: 0 24px; display: none; }
         .chart-panel.visible { display: block; }
         .chart-box { background: #0e0e16; border: 1px solid #1a1a28; border-radius: 14px; padding: 24px; }
-        .chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
-        .chart-left .stock-name { font-size: 16px; font-weight: 600; color: #aaa; margin-bottom: 4px; }
-        .chart-left .stock-price { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; }
-        .chart-left .stock-change { font-size: 14px; margin-top: 3px; }
-        .chart-right { text-align: right; font-size: 12px; color: #3a3a50; line-height: 1.8; }
+        .chart-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; gap: 32px; }
+        .chart-left { flex: 1; min-width: 0; }
+        .c-ticker { font-size: 12px; font-weight: 700; color: #6366f1; letter-spacing: 1px; margin-bottom: 4px; }
+        .c-name { font-size: 15px; color: #666; margin-bottom: 10px; }
+        .c-price { font-size: 32px; font-weight: 700; letter-spacing: -0.5px; }
+        .c-change { font-size: 14px; margin-top: 4px; }
+        .chart-meta { display: grid; grid-template-columns: repeat(3, auto); gap: 6px 28px; text-align: right; flex-shrink: 0; }
+        .meta-item .mlabel { font-size: 10px; color: #2e2e42; margin-bottom: 3px; }
+        .meta-item .mvalue { font-size: 13px; color: #aaa; font-weight: 600; }
         .range-btns { display: flex; gap: 6px; margin-bottom: 16px; }
         .range-btn { padding: 4px 12px; border-radius: 6px; border: 1px solid #1e1e2a; background: transparent; color: #444; font-size: 12px; cursor: pointer; transition: all 0.15s; }
         .range-btn.active { background: #6366f1; border-color: #6366f1; color: #fff; }
-        .chart-wrap { height: 230px; position: relative; }
-        .stock-grid { max-width: 1100px; margin: 0 auto; padding: 0 24px 60px; display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 10px; }
-        .stock-card { background: #0e0e16; border: 1px solid #16161f; border-radius: 12px; padding: 18px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
-        .stock-card:hover { background: #121218; border-color: #252535; }
-        .stock-card.selected { border-color: #6366f1; background: #111120; }
-        .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-        .card-name { font-size: 14px; font-weight: 600; }
-        .market-badge { font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
-        .badge-kr { background: #16163a; color: #6366f1; }
-        .badge-us { background: #0f1f0f; color: #22c55e; }
-        .card-price { font-size: 20px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 4px; }
+        .chart-wrap { height: 240px; position: relative; }
+
+        .etf-grid { max-width: 1200px; margin: 0 auto; padding: 0 24px 60px; display: grid; grid-template-columns: repeat(auto-fill, minmax(218px, 1fr)); gap: 10px; }
+        .etf-card { background: #0e0e16; border: 1px solid #16161f; border-radius: 12px; padding: 18px; cursor: pointer; transition: border-color 0.15s, background 0.15s; }
+        .etf-card:hover { background: #121218; border-color: #252535; }
+        .etf-card.selected { border-color: #6366f1; background: #111120; }
+
+        .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+        .card-ticker { font-size: 16px; font-weight: 700; }
+        .cat-badge { font-size: 10px; padding: 2px 8px; border-radius: 4px; font-weight: 600; }
+        .cat-지수   { background: #161630; color: #6366f1; }
+        .cat-배당   { background: #0f1f0f; color: #22c55e; }
+        .cat-채권   { background: #1c1810; color: #f59e0b; }
+        .cat-섹터   { background: #170f20; color: #a78bfa; }
+        .cat-테마   { background: #1a0f16; color: #ec4899; }
+        .cat-원자재 { background: #191910; color: #eab308; }
+
+        .card-name { font-size: 12px; color: #3a3a4a; margin-bottom: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .card-price { font-size: 22px; font-weight: 700; letter-spacing: -0.3px; margin-bottom: 3px; }
         .card-change { font-size: 13px; margin-bottom: 14px; }
+        .card-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+        .mtr-label { font-size: 10px; color: #2a2a3a; margin-bottom: 2px; }
+        .mtr-value { font-size: 12px; color: #666; font-weight: 600; }
         .card-range-bar { height: 3px; background: #1a1a26; border-radius: 2px; margin-bottom: 6px; position: relative; }
         .card-range-fill { height: 100%; border-radius: 2px; position: absolute; top: 0; left: 0; }
-        .card-range-labels { display: flex; justify-content: space-between; font-size: 10px; color: #333; }
-        .up { color: #ef4444; } .down { color: #3b82f6; } .up-us { color: #22c55e; } .down-us { color: #ef4444; } .neutral { color: #555; }
+        .card-range-labels { display: flex; justify-content: space-between; font-size: 10px; color: #2a2a3a; }
+
+        .up { color: #22c55e; } .down { color: #ef4444; } .neutral { color: #555; }
         .state-msg { grid-column: 1/-1; text-align: center; padding: 80px 20px; color: #333; font-size: 14px; line-height: 2; }
         footer { text-align: center; padding: 32px; font-size: 11px; color: #1e1e28; border-top: 1px solid #0e0e16; }
     </style>
 </head>
 <body>
 <header>
-    <h1>투자 분석</h1>
+    <div class="header-left">
+        <h1>ETF 투자 참고</h1>
+        <p>주요 미국 ETF · 장 중 15분 간격 업데이트</p>
+    </div>
     <div class="header-right">
         <span class="update-label" id="update-label">로딩 중…</span>
         <button class="refresh-btn" id="refresh-btn" onclick="loadData()">↻ 새로고침</button>
     </div>
 </header>
+
 <div class="filter-bar">
-    <button class="filter-btn active" onclick="applyFilter('all',this)">전체</button>
-    <button class="filter-btn" onclick="applyFilter('KR',this)">국내</button>
-    <button class="filter-btn" onclick="applyFilter('US',this)">미국</button>
+    <button class="filter-btn active" onclick="applyFilter('전체',this)">전체</button>
+    <button class="filter-btn" onclick="applyFilter('지수',this)">지수</button>
+    <button class="filter-btn" onclick="applyFilter('배당',this)">배당</button>
+    <button class="filter-btn" onclick="applyFilter('채권',this)">채권</button>
+    <button class="filter-btn" onclick="applyFilter('섹터',this)">섹터</button>
+    <button class="filter-btn" onclick="applyFilter('테마',this)">테마</button>
+    <button class="filter-btn" onclick="applyFilter('원자재',this)">원자재</button>
 </div>
+
 <div class="chart-panel" id="chart-panel">
     <div class="chart-box">
         <div class="chart-header">
             <div class="chart-left">
-                <div class="stock-name" id="c-name">—</div>
-                <div class="stock-price" id="c-price">—</div>
-                <div class="stock-change" id="c-change">—</div>
+                <div class="c-ticker" id="c-ticker">—</div>
+                <div class="c-name"   id="c-name">—</div>
+                <div class="c-price"  id="c-price">—</div>
+                <div class="c-change" id="c-change">—</div>
             </div>
-            <div class="chart-right" id="c-meta">—</div>
+            <div class="chart-meta" id="c-meta"></div>
         </div>
         <div class="range-btns">
-            <button class="range-btn active" onclick="setRange(30,this)">1개월</button>
-            <button class="range-btn" onclick="setRange(60,this)">2개월</button>
-            <button class="range-btn" onclick="setRange(90,this)">3개월</button>
+            <button class="range-btn" onclick="setRange(21,this)">1개월</button>
+            <button class="range-btn active" onclick="setRange(63,this)">3개월</button>
+            <button class="range-btn" onclick="setRange(126,this)">6개월</button>
+            <button class="range-btn" onclick="setRange(252,this)">1년</button>
         </div>
         <div class="chart-wrap"><canvas id="price-chart"></canvas></div>
     </div>
 </div>
-<div class="stock-grid" id="stock-grid">
+
+<div class="etf-grid" id="etf-grid">
     <div class="state-msg">📊 데이터 불러오는 중…</div>
 </div>
-<footer>투자 분석 · 15분 간격 자동 업데이트 · 투자 판단의 최종 책임은 본인에게 있습니다</footer>
-<script>
-let allStocks=[], selected=null, currentRange=30, chartInst=null, activeFilter='all';
-let updatedAt=null, timerInterval=null, autoRefreshTimer=null;
 
-const fmt = (v, cur) => cur==='KRW' ? v.toLocaleString('ko-KR')+'원' : '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
-const chgClass = (c, m) => c===0?'neutral':m==='KR'?(c>0?'up':'down'):(c>0?'up-us':'down-us');
+<footer>ETF 투자 참고 · 미국 장 중 15분 간격 자동 업데이트 · 투자 판단의 최종 책임은 본인에게 있습니다</footer>
+
+<script>
+let allEtfs=[], selected=null, currentRange=63, chartInst=null, activeFilter='전체';
+let timerInterval=null, autoRefreshTimer=null;
+
+const fmt    = v => '$'+v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+const fmtPct = v => v ? (v*100).toFixed(2)+'%' : '—';
+const fmtAum = v => {
+    if (!v) return '—';
+    if (v>=1e12) return '$'+(v/1e12).toFixed(1)+'T';
+    if (v>=1e9)  return '$'+(v/1e9).toFixed(1)+'B';
+    return '$'+(v/1e6).toFixed(0)+'M';
+};
+const chgCls = c => c===0?'neutral':c>0?'up':'down';
 
 function startAgeTimer(dateStr) {
     if (timerInterval) clearInterval(timerInterval);
-    updatedAt = new Date(dateStr);
-    function tick() {
-        const mins = Math.floor((Date.now() - updatedAt.getTime()) / 60000);
-        const label = mins < 1 ? '방금 업데이트' : `${mins}분 전 업데이트`;
-        document.getElementById('update-label').textContent = label;
-    }
+    const base = new Date(dateStr);
+    const tick = () => {
+        const m = Math.floor((Date.now()-base.getTime())/60000);
+        document.getElementById('update-label').textContent = m<1?'방금 업데이트':`${m}분 전 업데이트`;
+    };
     tick();
     timerInterval = setInterval(tick, 60000);
 }
@@ -108,74 +148,83 @@ async function loadData() {
     const btn = document.getElementById('refresh-btn');
     btn.disabled = true;
     if (autoRefreshTimer) clearTimeout(autoRefreshTimer);
-
     try {
-        const res = await fetch('stocks.json?t=' + Date.now());
+        const res = await fetch('etfs.json?t='+Date.now());
         if (!res.ok) throw new Error();
         const data = await res.json();
-        allStocks = data.stocks || [];
-
+        allEtfs = data.etfs || [];
         startAgeTimer(data.updated);
-        renderCards(activeFilter==='all' ? allStocks : allStocks.filter(s=>s.market===activeFilter));
-
-        if (allStocks.length && !selected) selectStock(allStocks[0].code);
+        renderCards(filtered());
+        if (allEtfs.length && !selected) selectEtf(allEtfs[0].code);
         else if (selected) {
-            selected = allStocks.find(s=>s.code===selected.code) || null;
-            if (selected) { updateChartPanel(); drawChart(currentRange); }
+            selected = allEtfs.find(e=>e.code===selected.code)||null;
+            if (selected) { updatePanel(); drawChart(currentRange); }
         }
     } catch(e) {
         document.getElementById('update-label').textContent = '데이터 없음';
-        document.getElementById('stock-grid').innerHTML =
+        document.getElementById('etf-grid').innerHTML =
             '<div class="state-msg">⚠️ 데이터를 불러올 수 없습니다<br><small style="color:#222">GitHub Actions가 아직 실행되지 않았을 수 있습니다</small></div>';
     }
-
     btn.disabled = false;
-    autoRefreshTimer = setTimeout(loadData, 5 * 60 * 1000); // 5분마다 자동 갱신
+    autoRefreshTimer = setTimeout(loadData, 5*60*1000);
 }
 
-function renderCards(stocks) {
-    const g = document.getElementById('stock-grid');
-    if (!stocks.length) { g.innerHTML='<div class="state-msg">표시할 종목이 없습니다</div>'; return; }
-    g.innerHTML = stocks.map(s => {
-        const sign=s.change>=0?'+':'', cls=chgClass(s.change,s.market);
-        const chg=s.currency==='KRW'
-            ?`${sign}${s.change.toLocaleString('ko-KR')}원 (${sign}${s.change_pct.toFixed(2)}%)`
-            :`${sign}$${s.change.toFixed(2)} (${sign}${s.change_pct.toFixed(2)}%)`;
-        const range=s.high_52w-s.low_52w, pos=range>0?Math.min(100,Math.max(0,((s.current-s.low_52w)/range)*100)):50;
-        const bar=s.market==='KR'?(s.change>=0?'#ef4444':'#3b82f6'):(s.change>=0?'#22c55e':'#ef4444');
-        const isSel=selected&&selected.code===s.code;
-        return `<div class="stock-card${isSel?' selected':''}" onclick="selectStock('${s.code}')">
-<div class="card-top"><span class="card-name">${s.name}</span><span class="market-badge badge-${s.market.toLowerCase()}">${s.market}</span></div>
-<div class="card-price">${fmt(s.current,s.currency)}</div>
-<div class="card-change ${cls}">${chg}</div>
+const filtered = () => activeFilter==='전체' ? allEtfs : allEtfs.filter(e=>e.category===activeFilter);
+
+function renderCards(etfs) {
+    const g = document.getElementById('etf-grid');
+    if (!etfs.length) { g.innerHTML='<div class="state-msg">표시할 ETF가 없습니다</div>'; return; }
+    g.innerHTML = etfs.map(e => {
+        const sign=e.change>=0?'+':'', c=chgCls(e.change);
+        const range=e.high_52w-e.low_52w, pos=range>0?Math.min(100,Math.max(0,((e.current-e.low_52w)/range)*100)):50;
+        const bar=e.change>=0?'#22c55e':'#ef4444';
+        const isSel=selected&&selected.code===e.code;
+        const fromLow=range>0?(((e.current-e.low_52w)/e.low_52w)*100).toFixed(1):'—';
+        return `<div class="etf-card${isSel?' selected':''}" onclick="selectEtf('${e.code}')">
+<div class="card-top"><span class="card-ticker">${e.code}</span><span class="cat-badge cat-${e.category}">${e.category}</span></div>
+<div class="card-name">${e.name}</div>
+<div class="card-price">${fmt(e.current)}</div>
+<div class="card-change ${c}">${sign}$${Math.abs(e.change).toFixed(2)} (${sign}${e.change_pct.toFixed(2)}%)</div>
+<div class="card-metrics">
+  <div><div class="mtr-label">운용보수</div><div class="mtr-value">${fmtPct(e.expense_ratio)}</div></div>
+  <div><div class="mtr-label">배당수익률</div><div class="mtr-value">${fmtPct(e.dividend_yield)}</div></div>
+  <div><div class="mtr-label">AUM</div><div class="mtr-value">${fmtAum(e.total_assets)}</div></div>
+  <div><div class="mtr-label">저점 대비</div><div class="mtr-value">${fromLow!=='—'?'+'+fromLow+'%':'—'}</div></div>
+</div>
 <div class="card-range-bar"><div class="card-range-fill" style="width:${pos}%;background:${bar}"></div></div>
-<div class="card-range-labels"><span>저 ${fmt(s.low_52w,s.currency)}</span><span>고 ${fmt(s.high_52w,s.currency)}</span></div>
+<div class="card-range-labels"><span>${fmt(e.low_52w)}</span><span>${fmt(e.high_52w)}</span></div>
 </div>`;
     }).join('');
 }
 
-function updateChartPanel() {
+function updatePanel() {
     if (!selected) return;
-    document.getElementById('c-name').textContent = `${selected.name}  ·  ${selected.code}`;
-    document.getElementById('c-price').textContent = fmt(selected.current, selected.currency);
+    document.getElementById('c-ticker').textContent = selected.code;
+    document.getElementById('c-name').textContent   = selected.name;
+    document.getElementById('c-price').textContent  = fmt(selected.current);
     const sign=selected.change>=0?'+':'';
-    const chg=selected.currency==='KRW'
-        ?`${sign}${selected.change.toLocaleString('ko-KR')}원 (${sign}${selected.change_pct.toFixed(2)}%)`
-        :`${sign}$${selected.change.toFixed(2)} (${sign}${selected.change_pct.toFixed(2)}%)`;
     const el=document.getElementById('c-change');
-    el.textContent=chg; el.className='stock-change '+chgClass(selected.change,selected.market);
-    document.getElementById('c-meta').innerHTML=
-        `52주 고점 ${fmt(selected.high_52w,selected.currency)}<br>52주 저점 ${fmt(selected.low_52w,selected.currency)}`;
+    el.textContent=`${sign}$${Math.abs(selected.change).toFixed(2)} (${sign}${selected.change_pct.toFixed(2)}%)`;
+    el.className='c-change '+chgCls(selected.change);
+    const r=selected.high_52w-selected.low_52w;
+    const pos=r>0?(((selected.current-selected.low_52w)/r)*100).toFixed(0)+'%':'—';
+    document.getElementById('c-meta').innerHTML=[
+        ['운용보수',   fmtPct(selected.expense_ratio)],
+        ['배당수익률', fmtPct(selected.dividend_yield)],
+        ['AUM',        fmtAum(selected.total_assets)],
+        ['52주 고점',  fmt(selected.high_52w)],
+        ['52주 저점',  fmt(selected.low_52w)],
+        ['52주 위치',  pos],
+    ].map(([l,v])=>`<div class="meta-item"><div class="mlabel">${l}</div><div class="mvalue">${v}</div></div>`).join('');
 }
 
-function selectStock(code) {
-    selected = allStocks.find(s=>s.code===code);
+function selectEtf(code) {
+    selected = allEtfs.find(e=>e.code===code);
     if (!selected) return;
     document.getElementById('chart-panel').classList.add('visible');
-    updateChartPanel();
+    updatePanel();
     drawChart(currentRange);
-    const visible = activeFilter==='all' ? allStocks : allStocks.filter(s=>s.market===activeFilter);
-    renderCards(visible);
+    renderCards(filtered());
     document.getElementById('chart-panel').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
@@ -183,16 +232,16 @@ function drawChart(days) {
     if (!selected) return;
     const prices=selected.prices.slice(-days), labels=prices.map(p=>p.date.slice(5)), data=prices.map(p=>p.close);
     const isUp=data.length>1&&data[data.length-1]>=data[0];
-    const color=selected.market==='KR'?(isUp?'#ef4444':'#3b82f6'):(isUp?'#22c55e':'#ef4444');
+    const color=isUp?'#22c55e':'#ef4444';
     if (chartInst) chartInst.destroy();
-    chartInst = new Chart(document.getElementById('price-chart'), {
+    chartInst=new Chart(document.getElementById('price-chart'),{
         type:'line',
-        data:{labels,datasets:[{data,borderColor:color,backgroundColor:color+'15',borderWidth:2,pointRadius:0,pointHoverRadius:4,fill:true,tension:0.3}]},
+        data:{labels,datasets:[{data,borderColor:color,backgroundColor:color+'18',borderWidth:2,pointRadius:0,pointHoverRadius:4,fill:true,tension:0.3}]},
         options:{responsive:true,maintainAspectRatio:false,
-            plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>fmt(ctx.parsed.y,selected.currency)}}},
+            plugins:{legend:{display:false},tooltip:{mode:'index',intersect:false,callbacks:{label:ctx=>fmt(ctx.parsed.y)}}},
             scales:{
-                x:{grid:{color:'#0f0f18'},ticks:{color:'#333',maxTicksLimit:6,font:{size:11}}},
-                y:{position:'right',grid:{color:'#141420'},ticks:{color:'#444',font:{size:11},callback:v=>selected.currency==='KRW'?(v>=1000?(v/1000).toFixed(0)+'k':v):'$'+v.toFixed(0)}}
+                x:{grid:{color:'#0f0f18'},ticks:{color:'#2e2e42',maxTicksLimit:8,font:{size:11}}},
+                y:{position:'right',grid:{color:'#141420'},ticks:{color:'#3a3a4a',font:{size:11},callback:v=>'$'+v.toFixed(0)}}
             }
         }
     });
@@ -205,11 +254,11 @@ function setRange(days,btn) {
     drawChart(days);
 }
 
-function applyFilter(market,btn) {
-    activeFilter=market;
+function applyFilter(cat,btn) {
+    activeFilter=cat;
     document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
     btn.classList.add('active');
-    renderCards(market==='all'?allStocks:allStocks.filter(s=>s.market===market));
+    renderCards(filtered());
 }
 
 loadData();

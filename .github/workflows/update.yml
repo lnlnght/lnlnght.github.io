@@ -1,9 +1,9 @@
-name: Stock Data Update
+name: ETF Data Update
 
 on:
   schedule:
-    - cron: '*/15 0-6 * * 1-5'    # 국내 장 중 (KST 09:00-15:30 = UTC 00:00-06:30)
-    - cron: '*/15 13-21 * * 1-5'  # 미국 장 중 (KST 22:30-06:00 = UTC 13:30-21:00)
+    - cron: '0 13 * * 1-5'        # 미국 장 시작 30분 전 (UTC 13:00)
+    - cron: '*/15 14-21 * * 1-5'  # 미국 장 중 (UTC 14:00-21:59 = EST 09:00-16:59)
   workflow_dispatch:
 
 jobs:
@@ -21,12 +21,12 @@ jobs:
         run: pip install yfinance pandas
 
       - name: Run update script
-        run: python update_symbols.py
+        run: python update_etfs.py
 
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add stocks.json
-          git commit -m "Auto update stock data" || echo "No changes to commit"
+          git add etfs.json
+          git commit -m "Auto update ETF data" || echo "No changes to commit"
           git push
