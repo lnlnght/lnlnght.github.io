@@ -2,7 +2,8 @@ name: ETF Data Update
 
 on:
   schedule:
-    - cron: '0 13 * * 1-5'        # 미국 장 시작 30분 전 (UTC 13:00)
+    - cron: '*/15 0-6 * * 1-5'    # 한국 장 중 (KST 09:00-15:30 = UTC 00:00-06:30)
+    - cron: '0 13 * * 1-5'        # 미국 장 시작 전 (UTC 13:00)
     - cron: '*/15 14-21 * * 1-5'  # 미국 장 중 (UTC 14:00-21:59 = EST 09:00-16:59)
   workflow_dispatch:
 
