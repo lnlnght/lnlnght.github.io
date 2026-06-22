@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-22 06:27",
+  "updated": "2026-06-22 10:29",
   "etfs": [
     {
       "code": "SPY",
@@ -8,8 +8,8 @@
       "market": "US",
       "currency": "USD",
       "current": 746.74,
-      "change": 1.1,
-      "change_pct": 0.15,
+      "change": -0.2,
+      "change_pct": -0.03,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0098,
       "total_assets": 783796404224,
@@ -1029,8 +1029,8 @@
       "market": "US",
       "currency": "USD",
       "current": 688.11,
-      "change": 2.56,
-      "change_pct": 0.37,
+      "change": -0.39,
+      "change_pct": -0.06,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0103,
       "total_assets": 1701513003008,
@@ -2050,8 +2050,8 @@
       "market": "US",
       "currency": "USD",
       "current": 740.62,
-      "change": 10.66,
-      "change_pct": 1.46,
+      "change": 0.84,
+      "change_pct": 0.11,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0038,
       "total_assets": 493987528704,
@@ -3071,8 +3071,8 @@
       "market": "US",
       "currency": "USD",
       "current": 369.99,
-      "change": 1.84,
-      "change_pct": 0.5,
+      "change": 0.13,
+      "change_pct": 0.04,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0101,
       "total_assets": 2308925030400,
@@ -4092,8 +4092,8 @@
       "market": "US",
       "currency": "USD",
       "current": 295.59,
-      "change": 3.17,
-      "change_pct": 1.08,
+      "change": 0.46,
+      "change_pct": 0.16,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0087,
       "total_assets": 80933363712,
@@ -5113,8 +5113,8 @@
       "market": "US",
       "currency": "USD",
       "current": 515.52,
-      "change": -3.05,
-      "change_pct": -0.59,
+      "change": -0.28,
+      "change_pct": -0.05,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0137,
       "total_assets": 44786040832,
@@ -5511,7 +5511,7 @@
         },
         {
           "date": "2025-11-06",
-          "close": 464.2
+          "close": 464.19
         },
         {
           "date": "2025-11-07",
@@ -6134,8 +6134,8 @@
       "market": "US",
       "currency": "USD",
       "current": 209.96,
-      "change": 0.61,
-      "change_pct": 0.29,
+      "change": -0.18,
+      "change_pct": -0.09,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0149,
       "total_assets": 89116966912,
@@ -7155,8 +7155,8 @@
       "market": "US",
       "currency": "USD",
       "current": 157.74,
-      "change": 0.99,
-      "change_pct": 0.63,
+      "change": 0.0,
+      "change_pct": 0.0,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0138,
       "total_assets": 32931053568,
@@ -8176,8 +8176,8 @@
       "market": "US",
       "currency": "USD",
       "current": 70.79,
-      "change": 1.91,
-      "change_pct": 2.77,
+      "change": -0.02,
+      "change_pct": -0.03,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0177,
       "total_assets": 30325661696,
@@ -9197,8 +9197,8 @@
       "market": "US",
       "currency": "USD",
       "current": 60.77,
-      "change": 0.52,
-      "change_pct": 0.86,
+      "change": -0.16,
+      "change_pct": -0.26,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0243,
       "total_assets": 162822127616,
@@ -10218,8 +10218,8 @@
       "market": "US",
       "currency": "USD",
       "current": 72.31,
-      "change": -0.42,
-      "change_pct": -0.58,
+      "change": -0.18,
+      "change_pct": -0.25,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0261,
       "total_assets": 317302603776,
@@ -11239,8 +11239,8 @@
       "market": "US",
       "currency": "USD",
       "current": 104.41,
-      "change": -1.09,
-      "change_pct": -1.03,
+      "change": -0.09,
+      "change_pct": -0.09,
       "expense_ratio": 0.0,
       "dividend_yield": 0.031,
       "total_assets": 77424812032,
@@ -12260,8 +12260,8 @@
       "market": "US",
       "currency": "USD",
       "current": 31.86,
-      "change": -0.19,
-      "change_pct": -0.59,
+      "change": -0.06,
+      "change_pct": -0.19,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0325,
       "total_assets": 94946205696,
@@ -13281,8 +13281,8 @@
       "market": "US",
       "currency": "USD",
       "current": 158.21,
-      "change": -1.59,
-      "change_pct": -0.99,
+      "change": -0.29,
+      "change_pct": -0.18,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0221,
       "total_assets": 96060563456,
@@ -14302,8 +14302,8 @@
       "market": "US",
       "currency": "USD",
       "current": 56.1,
-      "change": 0.01,
-      "change_pct": 0.02,
+      "change": -0.08,
+      "change_pct": -0.14,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0845,
       "total_assets": 44585009152,
@@ -15323,8 +15323,8 @@
       "market": "US",
       "currency": "USD",
       "current": 74.82,
-      "change": -0.48,
-      "change_pct": -0.64,
+      "change": -0.04,
+      "change_pct": -0.05,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0196,
       "total_assets": 40455868416,
@@ -16344,8 +16344,8 @@
       "market": "US",
       "currency": "USD",
       "current": 47.5,
-      "change": -0.41,
-      "change_pct": -0.86,
+      "change": -0.5,
+      "change_pct": -1.04,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0418,
       "total_assets": 7260146176,
@@ -17365,8 +17365,8 @@
       "market": "US",
       "currency": "USD",
       "current": 54.95,
-      "change": -0.55,
-      "change_pct": -0.99,
+      "change": -0.29,
+      "change_pct": -0.52,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0212,
       "total_assets": 11069606912,
@@ -18386,8 +18386,8 @@
       "market": "US",
       "currency": "USD",
       "current": 26.99,
-      "change": -0.07,
-      "change_pct": -0.26,
+      "change": 0.19,
+      "change_pct": 0.71,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0291,
       "total_assets": 13406716928,
@@ -19407,8 +19407,8 @@
       "market": "US",
       "currency": "USD",
       "current": 31.23,
-      "change": 0.14,
-      "change_pct": 0.45,
+      "change": 0.07,
+      "change_pct": 0.22,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0554,
       "total_assets": 13820648448,
@@ -20428,8 +20428,8 @@
       "market": "US",
       "currency": "USD",
       "current": 86.75,
-      "change": 0.45,
-      "change_pct": 0.52,
+      "change": 0.02,
+      "change_pct": 0.02,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0455,
       "total_assets": 42895949824,
@@ -21449,8 +21449,8 @@
       "market": "US",
       "currency": "USD",
       "current": 94.36,
-      "change": 0.26,
-      "change_pct": 0.28,
+      "change": 0.1,
+      "change_pct": 0.11,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0387,
       "total_assets": 48318722048,
@@ -21831,7 +21831,7 @@
         },
         {
           "date": "2025-10-31",
-          "close": 94.42
+          "close": 94.41
         },
         {
           "date": "2025-11-03",
@@ -22470,8 +22470,8 @@
       "market": "US",
       "currency": "USD",
       "current": 81.99,
-      "change": 0.04,
-      "change_pct": 0.05,
+      "change": 0.01,
+      "change_pct": 0.01,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0371,
       "total_assets": 25434476544,
@@ -23491,8 +23491,8 @@
       "market": "US",
       "currency": "USD",
       "current": 98.9,
-      "change": 0.35,
-      "change_pct": 0.36,
+      "change": -0.15,
+      "change_pct": -0.15,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0396,
       "total_assets": 136455700480,
@@ -23545,7 +23545,7 @@
         },
         {
           "date": "2025-07-08",
-          "close": 94.59
+          "close": 94.6
         },
         {
           "date": "2025-07-09",
@@ -24512,8 +24512,8 @@
       "market": "US",
       "currency": "USD",
       "current": 73.34,
-      "change": -0.11,
-      "change_pct": -0.15,
+      "change": -0.16,
+      "change_pct": -0.22,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0394,
       "total_assets": 394429661184,
@@ -25533,8 +25533,8 @@
       "market": "US",
       "currency": "USD",
       "current": 109.07,
-      "change": 0.08,
-      "change_pct": 0.07,
+      "change": 0.1,
+      "change_pct": 0.09,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0452,
       "total_assets": 29782712320,
@@ -26554,8 +26554,8 @@
       "market": "US",
       "currency": "USD",
       "current": 80.01,
-      "change": 0.26,
-      "change_pct": 0.33,
+      "change": 0.01,
+      "change_pct": 0.01,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0584,
       "total_assets": 16106322944,
@@ -27575,8 +27575,8 @@
       "market": "US",
       "currency": "USD",
       "current": 96.73,
-      "change": 0.29,
-      "change_pct": 0.3,
+      "change": 0.51,
+      "change_pct": 0.53,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0504,
       "total_assets": 14162584576,
@@ -28596,8 +28596,8 @@
       "market": "US",
       "currency": "USD",
       "current": 109.39,
-      "change": 0.32,
-      "change_pct": 0.29,
+      "change": 0.21,
+      "change_pct": 0.19,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0281,
       "total_assets": 15087474688,
@@ -29617,8 +29617,8 @@
       "market": "US",
       "currency": "USD",
       "current": 191.44,
-      "change": 3.12,
-      "change_pct": 1.66,
+      "change": 0.13,
+      "change_pct": 0.07,
       "expense_ratio": 0.0,
       "dividend_yield": 0.004,
       "total_assets": 124515713024,
@@ -30638,8 +30638,8 @@
       "market": "US",
       "currency": "USD",
       "current": 109.45,
-      "change": -0.15,
-      "change_pct": -0.14,
+      "change": -0.25,
+      "change_pct": -0.23,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0121,
       "total_assets": 25115598848,
@@ -31659,8 +31659,8 @@
       "market": "US",
       "currency": "USD",
       "current": 149.4,
-      "change": -1.12,
-      "change_pct": -0.74,
+      "change": -0.3,
+      "change_pct": -0.2,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0168,
       "total_assets": 38248288256,
@@ -32680,8 +32680,8 @@
       "market": "US",
       "currency": "USD",
       "current": 53.57,
-      "change": -0.62,
-      "change_pct": -1.14,
+      "change": -0.06,
+      "change_pct": -0.11,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0154,
       "total_assets": 49419214848,
@@ -33701,8 +33701,8 @@
       "market": "US",
       "currency": "USD",
       "current": 117.16,
-      "change": 1.01,
-      "change_pct": 0.87,
+      "change": -1.82,
+      "change_pct": -1.53,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0074,
       "total_assets": 23781842944,
@@ -34722,8 +34722,8 @@
       "market": "US",
       "currency": "USD",
       "current": 83.3,
-      "change": -0.58,
-      "change_pct": -0.69,
+      "change": 0.02,
+      "change_pct": 0.02,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0262,
       "total_assets": 14855075840,
@@ -35743,8 +35743,8 @@
       "market": "US",
       "currency": "USD",
       "current": 180.91,
-      "change": -0.33,
-      "change_pct": -0.18,
+      "change": -0.09,
+      "change_pct": -0.05,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0118,
       "total_assets": 30217220096,
@@ -36764,8 +36764,8 @@
       "market": "US",
       "currency": "USD",
       "current": 53.77,
-      "change": -0.88,
-      "change_pct": -1.61,
+      "change": -0.08,
+      "change_pct": -0.15,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0265,
       "total_assets": 38671941632,
@@ -37785,8 +37785,8 @@
       "market": "US",
       "currency": "USD",
       "current": 44.76,
-      "change": 0.25,
-      "change_pct": 0.56,
+      "change": -0.12,
+      "change_pct": -0.27,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0268,
       "total_assets": 22354980864,
@@ -38806,8 +38806,8 @@
       "market": "US",
       "currency": "USD",
       "current": 51.81,
-      "change": 0.63,
-      "change_pct": 1.23,
+      "change": 0.01,
+      "change_pct": 0.02,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0171,
       "total_assets": 7313517056,
@@ -39827,8 +39827,8 @@
       "market": "US",
       "currency": "USD",
       "current": 43.86,
-      "change": -0.19,
-      "change_pct": -0.43,
+      "change": -0.04,
+      "change_pct": -0.09,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0318,
       "total_assets": 7948565504,
@@ -40848,8 +40848,8 @@
       "market": "US",
       "currency": "USD",
       "current": 639.45,
-      "change": 27.24,
-      "change_pct": 4.45,
+      "change": -0.54,
+      "change_pct": -0.08,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0029,
       "total_assets": 38373490688,
@@ -41869,8 +41869,8 @@
       "market": "US",
       "currency": "USD",
       "current": 80.19,
-      "change": 0.69,
-      "change_pct": 0.87,
+      "change": 0.2,
+      "change_pct": 0.25,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 7262198784,
@@ -42890,8 +42890,8 @@
       "market": "US",
       "currency": "USD",
       "current": 38.37,
-      "change": 0.87,
-      "change_pct": 2.32,
+      "change": -0.13,
+      "change_pct": -0.34,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0059,
       "total_assets": 3743227648,
@@ -43911,8 +43911,8 @@
       "market": "US",
       "currency": "USD",
       "current": 21.1,
-      "change": 0.55,
-      "change_pct": 2.68,
+      "change": -0.12,
+      "change_pct": -0.57,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0114,
       "total_assets": 3209411328,
@@ -44932,8 +44932,8 @@
       "market": "US",
       "currency": "USD",
       "current": 35.62,
-      "change": -0.87,
-      "change_pct": -2.38,
+      "change": 0.0,
+      "change_pct": 0.0,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 58118959104,
@@ -45953,8 +45953,8 @@
       "market": "US",
       "currency": "USD",
       "current": 8.56,
-      "change": -0.2,
-      "change_pct": -2.28,
+      "change": 0.0,
+      "change_pct": 0.0,
       "expense_ratio": 0.0,
       "dividend_yield": 0.6988,
       "total_assets": 1698945408,
@@ -46974,8 +46974,8 @@
       "market": "US",
       "currency": "USD",
       "current": 84.54,
-      "change": 0.23,
-      "change_pct": 0.27,
+      "change": 0.04,
+      "change_pct": 0.05,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0046,
       "total_assets": 13681273856,
@@ -47995,8 +47995,8 @@
       "market": "US",
       "currency": "USD",
       "current": 95.56,
-      "change": -0.17,
-      "change_pct": -0.18,
+      "change": -0.53,
+      "change_pct": -0.55,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0364,
       "total_assets": 69802549248,
@@ -48061,7 +48061,7 @@
         },
         {
           "date": "2025-07-11",
-          "close": 87.17
+          "close": 87.18
         },
         {
           "date": "2025-07-14",
@@ -49016,8 +49016,8 @@
       "market": "US",
       "currency": "USD",
       "current": 173.64,
-      "change": 0.13,
-      "change_pct": 0.07,
+      "change": -0.01,
+      "change_pct": -0.01,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0023,
       "total_assets": 7944343040,
@@ -50037,8 +50037,8 @@
       "market": "US",
       "currency": "USD",
       "current": 25.24,
-      "change": -0.29,
-      "change_pct": -1.14,
+      "change": -0.08,
+      "change_pct": -0.32,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0785,
       "total_assets": 6225812480,
@@ -51058,8 +51058,8 @@
       "market": "US",
       "currency": "USD",
       "current": 96.26,
-      "change": 1.47,
-      "change_pct": 1.55,
+      "change": -0.37,
+      "change_pct": -0.38,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0392,
       "total_assets": 21298173952,
@@ -52079,8 +52079,8 @@
       "market": "US",
       "currency": "USD",
       "current": 49.58,
-      "change": 0.38,
-      "change_pct": 0.77,
+      "change": -0.05,
+      "change_pct": -0.1,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 6759351296,
@@ -53100,8 +53100,8 @@
       "market": "US",
       "currency": "USD",
       "current": 31.0,
-      "change": 0.71,
-      "change_pct": 2.34,
+      "change": 0.01,
+      "change_pct": 0.03,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0079,
       "total_assets": 870601280,
@@ -54121,8 +54121,8 @@
       "market": "US",
       "currency": "USD",
       "current": 387.12,
-      "change": -5.59,
-      "change_pct": -1.42,
+      "change": 2.83,
+      "change_pct": 0.74,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 150367518720,
@@ -55142,8 +55142,8 @@
       "market": "US",
       "currency": "USD",
       "current": 79.33,
-      "change": -1.11,
-      "change_pct": -1.38,
+      "change": 0.71,
+      "change_pct": 0.9,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 69916966912,
@@ -56163,8 +56163,8 @@
       "market": "US",
       "currency": "USD",
       "current": 59.51,
-      "change": -2.27,
-      "change_pct": -3.67,
+      "change": 0.43,
+      "change_pct": 0.73,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 36822409216,
@@ -57184,8 +57184,8 @@
       "market": "US",
       "currency": "USD",
       "current": 114.87,
-      "change": 0.6,
-      "change_pct": 0.53,
+      "change": 0.4,
+      "change_pct": 0.35,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 1705716992,
@@ -58205,8 +58205,8 @@
       "market": "US",
       "currency": "USD",
       "current": 26.63,
-      "change": -0.22,
-      "change_pct": -0.82,
+      "change": -0.06,
+      "change_pct": -0.22,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0335,
       "total_assets": 1365882880,
@@ -59226,8 +59226,8 @@
       "market": "US",
       "currency": "USD",
       "current": 11.74,
-      "change": 0.31,
-      "change_pct": 2.71,
+      "change": 0.02,
+      "change_pct": 0.17,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 516927200,
@@ -60247,8 +60247,8 @@
       "market": "US",
       "currency": "USD",
       "current": 16.5,
-      "change": -0.09,
-      "change_pct": -0.54,
+      "change": -0.03,
+      "change_pct": -0.18,
       "expense_ratio": 0.0,
       "dividend_yield": 0.029,
       "total_assets": 6073438208,
@@ -61268,8 +61268,8 @@
       "market": "US",
       "currency": "USD",
       "current": 82.87,
-      "change": 2.99,
-      "change_pct": 3.74,
+      "change": -0.07,
+      "change_pct": -0.08,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0037,
       "total_assets": 39774121984,
@@ -62289,8 +62289,8 @@
       "market": "US",
       "currency": "USD",
       "current": 36.75,
-      "change": -1.57,
-      "change_pct": -4.1,
+      "change": 0.02,
+      "change_pct": 0.05,
       "expense_ratio": 0.0,
       "dividend_yield": 0.1219,
       "total_assets": 2231516928,
@@ -63310,8 +63310,8 @@
       "market": "US",
       "currency": "USD",
       "current": 142.81,
-      "change": 1.47,
-      "change_pct": 1.04,
+      "change": -0.17,
+      "change_pct": -0.12,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0068,
       "total_assets": 5545587200,
@@ -64331,8 +64331,8 @@
       "market": "US",
       "currency": "USD",
       "current": 37.42,
-      "change": -0.38,
-      "change_pct": -1.01,
+      "change": 0.06,
+      "change_pct": 0.16,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0796,
       "total_assets": 463254368,
@@ -65352,8 +65352,8 @@
       "market": "US",
       "currency": "USD",
       "current": 26.0,
-      "change": -0.73,
-      "change_pct": -2.73,
+      "change": -0.09,
+      "change_pct": -0.34,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 398989984,
@@ -66372,9 +66372,9 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 148220.0,
-      "change": 1310.0,
-      "change_pct": 0.89,
+      "current": 148355.0,
+      "change": 1445.0,
+      "change_pct": 0.98,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -66391,7 +66391,7 @@
         },
         {
           "date": "2025-06-25",
-          "close": 41570.02
+          "close": 41570.01
         },
         {
           "date": "2025-06-26",
@@ -66419,11 +66419,11 @@
         },
         {
           "date": "2025-07-04",
-          "close": 40996.91
+          "close": 40996.9
         },
         {
           "date": "2025-07-07",
-          "close": 41061.13
+          "close": 41061.14
         },
         {
           "date": "2025-07-08",
@@ -66471,7 +66471,7 @@
         },
         {
           "date": "2025-07-23",
-          "close": 42731.05
+          "close": 42731.04
         },
         {
           "date": "2025-07-24",
@@ -66479,7 +66479,7 @@
         },
         {
           "date": "2025-07-25",
-          "close": 42795.27
+          "close": 42795.28
         },
         {
           "date": "2025-07-28",
@@ -66487,7 +66487,7 @@
         },
         {
           "date": "2025-07-29",
-          "close": 43309.1
+          "close": 43309.09
         },
         {
           "date": "2025-07-30",
@@ -66515,11 +66515,11 @@
         },
         {
           "date": "2025-08-07",
-          "close": 43205.92
+          "close": 43205.91
         },
         {
           "date": "2025-08-08",
-          "close": 43101.74
+          "close": 43101.75
         },
         {
           "date": "2025-08-11",
@@ -66531,7 +66531,7 @@
         },
         {
           "date": "2025-08-13",
-          "close": 43414.25
+          "close": 43414.26
         },
         {
           "date": "2025-08-14",
@@ -66595,15 +66595,15 @@
         },
         {
           "date": "2025-09-05",
-          "close": 43131.5
+          "close": 43131.51
         },
         {
           "date": "2025-09-08",
-          "close": 43300.16
+          "close": 43300.17
         },
         {
           "date": "2025-09-09",
-          "close": 43890.46
+          "close": 43890.47
         },
         {
           "date": "2025-09-10",
@@ -66635,7 +66635,7 @@
         },
         {
           "date": "2025-09-19",
-          "close": 47109.83
+          "close": 47109.82
         },
         {
           "date": "2025-09-22",
@@ -66647,7 +66647,7 @@
         },
         {
           "date": "2025-09-24",
-          "close": 47804.3
+          "close": 47804.29
         },
         {
           "date": "2025-09-25",
@@ -66691,7 +66691,7 @@
         },
         {
           "date": "2025-10-16",
-          "close": 52169.54
+          "close": 52169.53
         },
         {
           "date": "2025-10-17",
@@ -66715,7 +66715,7 @@
         },
         {
           "date": "2025-10-24",
-          "close": 54818.44
+          "close": 54818.43
         },
         {
           "date": "2025-10-27",
@@ -66731,7 +66731,7 @@
         },
         {
           "date": "2025-10-30",
-          "close": 57130.52
+          "close": 57130.51
         },
         {
           "date": "2025-10-31",
@@ -66755,11 +66755,11 @@
         },
         {
           "date": "2025-11-07",
-          "close": 55638.72
+          "close": 55638.73
         },
         {
           "date": "2025-11-10",
-          "close": 57339.37
+          "close": 57339.36
         },
         {
           "date": "2025-11-11",
@@ -66799,7 +66799,7 @@
         },
         {
           "date": "2025-11-24",
-          "close": 53913.23
+          "close": 53913.22
         },
         {
           "date": "2025-11-25",
@@ -66843,7 +66843,7 @@
         },
         {
           "date": "2025-12-09",
-          "close": 58383.61
+          "close": 58383.62
         },
         {
           "date": "2025-12-10",
@@ -66859,7 +66859,7 @@
         },
         {
           "date": "2025-12-15",
-          "close": 57339.37
+          "close": 57339.36
         },
         {
           "date": "2025-12-16",
@@ -66895,11 +66895,11 @@
         },
         {
           "date": "2025-12-29",
-          "close": 60387.58
+          "close": 60387.59
         },
         {
           "date": "2025-12-30",
-          "close": 60561.62
+          "close": 60561.63
         },
         {
           "date": "2026-01-02",
@@ -66911,7 +66911,7 @@
         },
         {
           "date": "2026-01-06",
-          "close": 65847.53
+          "close": 65847.52
         },
         {
           "date": "2026-01-07",
@@ -66931,7 +66931,7 @@
         },
         {
           "date": "2026-01-13",
-          "close": 68090.19
+          "close": 68090.18
         },
         {
           "date": "2026-01-14",
@@ -66943,11 +66943,11 @@
         },
         {
           "date": "2026-01-16",
-          "close": 70367.65
+          "close": 70367.64
         },
         {
           "date": "2026-01-19",
-          "close": 71387.03
+          "close": 71387.04
         },
         {
           "date": "2026-01-20",
@@ -67355,7 +67355,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 148220.0
+          "close": 148355.0
         }
       ]
     },
@@ -67365,18 +67365,18 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 148360.0,
-      "change": 1110.0,
-      "change_pct": 0.75,
+      "current": 148165.0,
+      "change": 915.0,
+      "change_pct": 0.62,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
       "high_52w": 152560.0,
-      "low_52w": 39355.0,
+      "low_52w": 39355.01,
       "prices": [
         {
           "date": "2025-06-23",
-          "close": 40051.16
+          "close": 40051.17
         },
         {
           "date": "2025-06-24",
@@ -67396,11 +67396,11 @@
         },
         {
           "date": "2025-06-30",
-          "close": 41137.37
+          "close": 41137.36
         },
         {
           "date": "2025-07-01",
-          "close": 41270.67
+          "close": 41270.68
         },
         {
           "date": "2025-07-02",
@@ -67420,11 +67420,11 @@
         },
         {
           "date": "2025-07-08",
-          "close": 41774.28
+          "close": 41774.27
         },
         {
           "date": "2025-07-09",
-          "close": 41882.9
+          "close": 41882.89
         },
         {
           "date": "2025-07-10",
@@ -67452,7 +67452,7 @@
         },
         {
           "date": "2025-07-18",
-          "close": 42771.6
+          "close": 42771.61
         },
         {
           "date": "2025-07-21",
@@ -67468,7 +67468,7 @@
         },
         {
           "date": "2025-07-24",
-          "close": 42628.42
+          "close": 42628.43
         },
         {
           "date": "2025-07-25",
@@ -67484,7 +67484,7 @@
         },
         {
           "date": "2025-07-30",
-          "close": 43622.88
+          "close": 43622.89
         },
         {
           "date": "2025-07-31",
@@ -67492,11 +67492,11 @@
         },
         {
           "date": "2025-08-01",
-          "close": 41716.34
+          "close": 41716.33
         },
         {
           "date": "2025-08-04",
-          "close": 42216.49
+          "close": 42216.5
         },
         {
           "date": "2025-08-05",
@@ -67516,7 +67516,7 @@
         },
         {
           "date": "2025-08-11",
-          "close": 43048.45
+          "close": 43048.44
         },
         {
           "date": "2025-08-12",
@@ -67536,11 +67536,11 @@
         },
         {
           "date": "2025-08-19",
-          "close": 42360.1
+          "close": 42360.11
         },
         {
           "date": "2025-08-20",
-          "close": 42102.59
+          "close": 42102.6
         },
         {
           "date": "2025-08-21",
@@ -67572,7 +67572,7 @@
         },
         {
           "date": "2025-09-01",
-          "close": 42097.65
+          "close": 42097.64
         },
         {
           "date": "2025-09-02",
@@ -67584,7 +67584,7 @@
         },
         {
           "date": "2025-09-04",
-          "close": 42914.73
+          "close": 42914.74
         },
         {
           "date": "2025-09-05",
@@ -67628,7 +67628,7 @@
         },
         {
           "date": "2025-09-19",
-          "close": 47049.72
+          "close": 47049.73
         },
         {
           "date": "2025-09-22",
@@ -67636,7 +67636,7 @@
         },
         {
           "date": "2025-09-23",
-          "close": 47906.43
+          "close": 47906.44
         },
         {
           "date": "2025-09-24",
@@ -67672,7 +67672,7 @@
         },
         {
           "date": "2025-10-13",
-          "close": 49907.08
+          "close": 49907.07
         },
         {
           "date": "2025-10-14",
@@ -67696,7 +67696,7 @@
         },
         {
           "date": "2025-10-21",
-          "close": 53348.77
+          "close": 53348.78
         },
         {
           "date": "2025-10-22",
@@ -67720,7 +67720,7 @@
         },
         {
           "date": "2025-10-29",
-          "close": 56889.52
+          "close": 56889.51
         },
         {
           "date": "2025-10-30",
@@ -67728,7 +67728,7 @@
         },
         {
           "date": "2025-10-31",
-          "close": 57698.74
+          "close": 57698.75
         },
         {
           "date": "2025-11-03",
@@ -67768,7 +67768,7 @@
         },
         {
           "date": "2025-11-14",
-          "close": 56105.11
+          "close": 56105.1
         },
         {
           "date": "2025-11-17",
@@ -67860,7 +67860,7 @@
         },
         {
           "date": "2025-12-17",
-          "close": 57117.88
+          "close": 57117.89
         },
         {
           "date": "2025-12-18",
@@ -67868,7 +67868,7 @@
         },
         {
           "date": "2025-12-19",
-          "close": 56765.39
+          "close": 56765.4
         },
         {
           "date": "2025-12-22",
@@ -67900,11 +67900,11 @@
         },
         {
           "date": "2026-01-05",
-          "close": 64683.95
+          "close": 64683.96
         },
         {
           "date": "2026-01-06",
-          "close": 65786.1
+          "close": 65786.09
         },
         {
           "date": "2026-01-07",
@@ -67916,11 +67916,11 @@
         },
         {
           "date": "2026-01-09",
-          "close": 66764.13
+          "close": 66764.12
         },
         {
           "date": "2026-01-12",
-          "close": 67176.19
+          "close": 67176.2
         },
         {
           "date": "2026-01-13",
@@ -67928,7 +67928,7 @@
         },
         {
           "date": "2026-01-14",
-          "close": 68447.14
+          "close": 68447.13
         },
         {
           "date": "2026-01-15",
@@ -67936,7 +67936,7 @@
         },
         {
           "date": "2026-01-16",
-          "close": 70358.51
+          "close": 70358.52
         },
         {
           "date": "2026-01-19",
@@ -67944,7 +67944,7 @@
         },
         {
           "date": "2026-01-20",
-          "close": 70775.53
+          "close": 70775.54
         },
         {
           "date": "2026-01-21",
@@ -67956,11 +67956,11 @@
         },
         {
           "date": "2026-01-23",
-          "close": 72557.84
+          "close": 72557.83
         },
         {
           "date": "2026-01-26",
-          "close": 71867.75
+          "close": 71867.76
         },
         {
           "date": "2026-01-27",
@@ -68348,7 +68348,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 148360.0
+          "close": 148165.0
         }
       ]
     },
@@ -68358,9 +68358,9 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 17365.0,
-      "change": 400.0,
-      "change_pct": 2.36,
+      "current": 17380.0,
+      "change": 415.0,
+      "change_pct": 2.45,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -69341,7 +69341,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 17365.0
+          "close": 17380.0
         }
       ]
     },
@@ -69351,9 +69351,9 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 28505.0,
-      "change": 150.0,
-      "change_pct": 0.53,
+      "current": 28570.0,
+      "change": 215.0,
+      "change_pct": 0.76,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -69366,7 +69366,7 @@
         },
         {
           "date": "2025-06-24",
-          "close": 20374.14
+          "close": 20374.13
         },
         {
           "date": "2025-06-25",
@@ -69374,7 +69374,7 @@
         },
         {
           "date": "2025-06-26",
-          "close": 20393.94
+          "close": 20393.93
         },
         {
           "date": "2025-06-27",
@@ -69394,11 +69394,11 @@
         },
         {
           "date": "2025-07-03",
-          "close": 20864.18
+          "close": 20864.19
         },
         {
           "date": "2025-07-04",
-          "close": 20978.04
+          "close": 20978.03
         },
         {
           "date": "2025-07-07",
@@ -69594,7 +69594,7 @@
         },
         {
           "date": "2025-09-12",
-          "close": 22551.81
+          "close": 22551.8
         },
         {
           "date": "2025-09-15",
@@ -69758,7 +69758,7 @@
         },
         {
           "date": "2025-11-17",
-          "close": 24358.11
+          "close": 24358.12
         },
         {
           "date": "2025-11-18",
@@ -69774,7 +69774,7 @@
         },
         {
           "date": "2025-11-21",
-          "close": 23880.5
+          "close": 23880.51
         },
         {
           "date": "2025-11-24",
@@ -69782,7 +69782,7 @@
         },
         {
           "date": "2025-11-25",
-          "close": 24368.06
+          "close": 24368.07
         },
         {
           "date": "2025-11-26",
@@ -69826,7 +69826,7 @@
         },
         {
           "date": "2025-12-10",
-          "close": 24885.47
+          "close": 24885.48
         },
         {
           "date": "2025-12-11",
@@ -69858,7 +69858,7 @@
         },
         {
           "date": "2025-12-22",
-          "close": 25059.6
+          "close": 25059.61
         },
         {
           "date": "2025-12-23",
@@ -69930,11 +69930,11 @@
         },
         {
           "date": "2026-01-20",
-          "close": 25059.6
+          "close": 25059.61
         },
         {
           "date": "2026-01-21",
-          "close": 24815.82
+          "close": 24815.83
         },
         {
           "date": "2026-01-22",
@@ -70334,7 +70334,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 28505.0
+          "close": 28570.0
         }
       ]
     },
@@ -70344,13 +70344,13 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 206415.0,
-      "change": 2085.0,
-      "change_pct": 1.02,
+      "current": 207085.0,
+      "change": 2755.0,
+      "change_pct": 1.35,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
-      "high_52w": 206915.0,
+      "high_52w": 207085.0,
       "low_52w": 130525.98,
       "prices": [
         {
@@ -70367,7 +70367,7 @@
         },
         {
           "date": "2025-06-26",
-          "close": 133673.77
+          "close": 133673.75
         },
         {
           "date": "2025-06-27",
@@ -70387,7 +70387,7 @@
         },
         {
           "date": "2025-07-03",
-          "close": 136155.19
+          "close": 136155.17
         },
         {
           "date": "2025-07-04",
@@ -70419,7 +70419,7 @@
         },
         {
           "date": "2025-07-15",
-          "close": 139984.23
+          "close": 139984.25
         },
         {
           "date": "2025-07-16",
@@ -70451,7 +70451,7 @@
         },
         {
           "date": "2025-07-25",
-          "close": 141620.3
+          "close": 141620.28
         },
         {
           "date": "2025-07-28",
@@ -71327,7 +71327,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 206415.0
+          "close": 207085.0
         }
       ]
     },
@@ -71337,14 +71337,14 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 25990.0,
-      "change": 170.0,
-      "change_pct": 0.66,
+      "current": 26050.0,
+      "change": 230.0,
+      "change_pct": 0.89,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
       "high_52w": 26440.0,
-      "low_52w": 18306.7,
+      "low_52w": 18306.69,
       "prices": [
         {
           "date": "2025-06-23",
@@ -71624,7 +71624,7 @@
         },
         {
           "date": "2025-09-29",
-          "close": 20971.56
+          "close": 20971.55
         },
         {
           "date": "2025-09-30",
@@ -71700,7 +71700,7 @@
         },
         {
           "date": "2025-10-31",
-          "close": 22009.59
+          "close": 22009.6
         },
         {
           "date": "2025-11-03",
@@ -71756,7 +71756,7 @@
         },
         {
           "date": "2025-11-20",
-          "close": 22217.46
+          "close": 22217.47
         },
         {
           "date": "2025-11-21",
@@ -71780,7 +71780,7 @@
         },
         {
           "date": "2025-11-28",
-          "close": 22653.01
+          "close": 22653.0
         },
         {
           "date": "2025-12-01",
@@ -71800,7 +71800,7 @@
         },
         {
           "date": "2025-12-05",
-          "close": 22732.19
+          "close": 22732.2
         },
         {
           "date": "2025-12-08",
@@ -71816,7 +71816,7 @@
         },
         {
           "date": "2025-12-11",
-          "close": 22653.01
+          "close": 22653.0
         },
         {
           "date": "2025-12-12",
@@ -72320,7 +72320,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 25990.0
+          "close": 26050.0
         }
       ]
     },
@@ -72330,9 +72330,9 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 16330.0,
-      "change": 245.0,
-      "change_pct": 1.52,
+      "current": 16130.0,
+      "change": 45.0,
+      "change_pct": 0.28,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -73313,7 +73313,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 16330.0
+          "close": 16130.0
         }
       ]
     },
@@ -73323,9 +73323,9 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 41530.0,
-      "change": 760.0,
-      "change_pct": 1.86,
+      "current": 41695.0,
+      "change": 925.0,
+      "change_pct": 2.27,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -74306,7 +74306,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 41530.0
+          "close": 41695.0
         }
       ]
     },
@@ -74316,13 +74316,13 @@
       "category": "지수",
       "market": "KR",
       "currency": "KRW",
-      "current": 15090.0,
-      "change": 345.0,
-      "change_pct": 2.34,
+      "current": 15150.0,
+      "change": 405.0,
+      "change_pct": 2.75,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
-      "high_52w": 15100.0,
+      "high_52w": 15185.0,
       "low_52w": 9368.13,
       "prices": [
         {
@@ -75299,7 +75299,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 15090.0
+          "close": 15150.0
         }
       ]
     },
@@ -75309,9 +75309,9 @@
       "category": "배당",
       "market": "KR",
       "currency": "KRW",
-      "current": 16915.0,
-      "change": -565.0,
-      "change_pct": -3.23,
+      "current": 16885.0,
+      "change": -595.0,
+      "change_pct": -3.4,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -75320,7 +75320,7 @@
       "prices": [
         {
           "date": "2025-06-23",
-          "close": 11839.98
+          "close": 11839.97
         },
         {
           "date": "2025-06-24",
@@ -75364,7 +75364,7 @@
         },
         {
           "date": "2025-07-08",
-          "close": 12762.77
+          "close": 12762.76
         },
         {
           "date": "2025-07-09",
@@ -75468,7 +75468,7 @@
         },
         {
           "date": "2025-08-13",
-          "close": 12535.76
+          "close": 12535.75
         },
         {
           "date": "2025-08-14",
@@ -75540,7 +75540,7 @@
         },
         {
           "date": "2025-09-09",
-          "close": 12692.87
+          "close": 12692.88
         },
         {
           "date": "2025-09-10",
@@ -75608,7 +75608,7 @@
         },
         {
           "date": "2025-10-02",
-          "close": 12730.08
+          "close": 12730.09
         },
         {
           "date": "2025-10-10",
@@ -75644,7 +75644,7 @@
         },
         {
           "date": "2025-10-22",
-          "close": 13114.23
+          "close": 13114.22
         },
         {
           "date": "2025-10-23",
@@ -75704,7 +75704,7 @@
         },
         {
           "date": "2025-11-12",
-          "close": 13938.0
+          "close": 13938.01
         },
         {
           "date": "2025-11-13",
@@ -75780,7 +75780,7 @@
         },
         {
           "date": "2025-12-09",
-          "close": 14032.68
+          "close": 14032.67
         },
         {
           "date": "2025-12-10",
@@ -75988,7 +75988,7 @@
         },
         {
           "date": "2026-02-27",
-          "close": 18982.89
+          "close": 18982.9
         },
         {
           "date": "2026-03-03",
@@ -76088,7 +76088,7 @@
         },
         {
           "date": "2026-04-06",
-          "close": 16760.64
+          "close": 16760.63
         },
         {
           "date": "2026-04-07",
@@ -76292,7 +76292,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 16915.0
+          "close": 16885.0
         }
       ]
     },
@@ -76302,9 +76302,9 @@
       "category": "배당",
       "market": "KR",
       "currency": "KRW",
-      "current": 15485.0,
-      "change": 80.0,
-      "change_pct": 0.52,
+      "current": 15505.0,
+      "change": 100.0,
+      "change_pct": 0.65,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -76317,7 +76317,7 @@
         },
         {
           "date": "2025-06-24",
-          "close": 11248.74
+          "close": 11248.73
         },
         {
           "date": "2025-06-25",
@@ -76357,7 +76357,7 @@
         },
         {
           "date": "2025-07-08",
-          "close": 11486.21
+          "close": 11486.2
         },
         {
           "date": "2025-07-09",
@@ -76389,11 +76389,11 @@
         },
         {
           "date": "2025-07-18",
-          "close": 11738.76
+          "close": 11738.75
         },
         {
           "date": "2025-07-21",
-          "close": 11665.91
+          "close": 11665.9
         },
         {
           "date": "2025-07-22",
@@ -76417,7 +76417,7 @@
         },
         {
           "date": "2025-07-29",
-          "close": 11738.76
+          "close": 11738.75
         },
         {
           "date": "2025-07-30",
@@ -76429,7 +76429,7 @@
         },
         {
           "date": "2025-08-01",
-          "close": 11495.32
+          "close": 11495.31
         },
         {
           "date": "2025-08-04",
@@ -76457,11 +76457,11 @@
         },
         {
           "date": "2025-08-12",
-          "close": 11534.26
+          "close": 11534.27
         },
         {
           "date": "2025-08-13",
-          "close": 11578.08
+          "close": 11578.09
         },
         {
           "date": "2025-08-14",
@@ -76489,7 +76489,7 @@
         },
         {
           "date": "2025-08-25",
-          "close": 11991.94
+          "close": 11991.93
         },
         {
           "date": "2025-08-26",
@@ -76501,7 +76501,7 @@
         },
         {
           "date": "2025-08-28",
-          "close": 12001.64
+          "close": 12001.65
         },
         {
           "date": "2025-08-29",
@@ -76509,7 +76509,7 @@
         },
         {
           "date": "2025-09-01",
-          "close": 12001.64
+          "close": 12001.65
         },
         {
           "date": "2025-09-02",
@@ -76597,7 +76597,7 @@
         },
         {
           "date": "2025-10-01",
-          "close": 11897.13
+          "close": 11897.14
         },
         {
           "date": "2025-10-02",
@@ -76645,11 +76645,11 @@
         },
         {
           "date": "2025-10-24",
-          "close": 12156.72
+          "close": 12156.73
         },
         {
           "date": "2025-10-27",
-          "close": 12137.14
+          "close": 12137.13
         },
         {
           "date": "2025-10-28",
@@ -76661,7 +76661,7 @@
         },
         {
           "date": "2025-10-30",
-          "close": 11916.42
+          "close": 11916.41
         },
         {
           "date": "2025-10-31",
@@ -76669,7 +76669,7 @@
         },
         {
           "date": "2025-11-03",
-          "close": 11911.51
+          "close": 11911.5
         },
         {
           "date": "2025-11-04",
@@ -76793,7 +76793,7 @@
         },
         {
           "date": "2025-12-16",
-          "close": 12887.83
+          "close": 12887.84
         },
         {
           "date": "2025-12-17",
@@ -76801,7 +76801,7 @@
         },
         {
           "date": "2025-12-18",
-          "close": 12823.82
+          "close": 12823.81
         },
         {
           "date": "2025-12-19",
@@ -77017,7 +77017,7 @@
         },
         {
           "date": "2026-03-13",
-          "close": 14498.07
+          "close": 14498.08
         },
         {
           "date": "2026-03-16",
@@ -77053,7 +77053,7 @@
         },
         {
           "date": "2026-03-26",
-          "close": 14498.07
+          "close": 14498.08
         },
         {
           "date": "2026-03-27",
@@ -77285,7 +77285,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 15485.0
+          "close": 15505.0
         }
       ]
     },
@@ -77295,13 +77295,13 @@
       "category": "배당",
       "market": "KR",
       "currency": "KRW",
-      "current": 12125.0,
-      "change": 45.0,
-      "change_pct": 0.37,
+      "current": 12150.0,
+      "change": 70.0,
+      "change_pct": 0.58,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
-      "high_52w": 12125.0,
+      "high_52w": 12150.0,
       "low_52w": 8642.1,
       "prices": [
         {
@@ -77414,7 +77414,7 @@
         },
         {
           "date": "2025-07-30",
-          "close": 9054.17
+          "close": 9054.16
         },
         {
           "date": "2025-07-31",
@@ -77430,11 +77430,11 @@
         },
         {
           "date": "2025-08-05",
-          "close": 9058.68
+          "close": 9058.69
         },
         {
           "date": "2025-08-06",
-          "close": 9045.13
+          "close": 9045.12
         },
         {
           "date": "2025-08-07",
@@ -77478,7 +77478,7 @@
         },
         {
           "date": "2025-08-22",
-          "close": 9045.13
+          "close": 9045.12
         },
         {
           "date": "2025-08-25",
@@ -77502,7 +77502,7 @@
         },
         {
           "date": "2025-09-01",
-          "close": 9099.74
+          "close": 9099.73
         },
         {
           "date": "2025-09-02",
@@ -77566,7 +77566,7 @@
         },
         {
           "date": "2025-09-23",
-          "close": 9364.55
+          "close": 9364.56
         },
         {
           "date": "2025-09-24",
@@ -77574,7 +77574,7 @@
         },
         {
           "date": "2025-09-25",
-          "close": 9373.68
+          "close": 9373.69
         },
         {
           "date": "2025-09-26",
@@ -77602,7 +77602,7 @@
         },
         {
           "date": "2025-10-13",
-          "close": 9601.84
+          "close": 9601.83
         },
         {
           "date": "2025-10-14",
@@ -77614,7 +77614,7 @@
         },
         {
           "date": "2025-10-16",
-          "close": 9624.9
+          "close": 9624.89
         },
         {
           "date": "2025-10-17",
@@ -77630,7 +77630,7 @@
         },
         {
           "date": "2025-10-22",
-          "close": 9906.22
+          "close": 9906.21
         },
         {
           "date": "2025-10-23",
@@ -77686,7 +77686,7 @@
         },
         {
           "date": "2025-11-11",
-          "close": 10225.42
+          "close": 10225.41
         },
         {
           "date": "2025-11-12",
@@ -77698,7 +77698,7 @@
         },
         {
           "date": "2025-11-14",
-          "close": 10127.58
+          "close": 10127.59
         },
         {
           "date": "2025-11-17",
@@ -77706,7 +77706,7 @@
         },
         {
           "date": "2025-11-18",
-          "close": 10132.24
+          "close": 10132.25
         },
         {
           "date": "2025-11-19",
@@ -77718,11 +77718,11 @@
         },
         {
           "date": "2025-11-21",
-          "close": 10132.24
+          "close": 10132.25
         },
         {
           "date": "2025-11-24",
-          "close": 10253.37
+          "close": 10253.36
         },
         {
           "date": "2025-11-25",
@@ -77774,7 +77774,7 @@
         },
         {
           "date": "2025-12-11",
-          "close": 10371.14
+          "close": 10371.15
         },
         {
           "date": "2025-12-12",
@@ -77798,7 +77798,7 @@
         },
         {
           "date": "2025-12-19",
-          "close": 10521.73
+          "close": 10521.72
         },
         {
           "date": "2025-12-22",
@@ -77806,7 +77806,7 @@
         },
         {
           "date": "2025-12-23",
-          "close": 10714.66
+          "close": 10714.65
         },
         {
           "date": "2025-12-24",
@@ -77830,7 +77830,7 @@
         },
         {
           "date": "2026-01-05",
-          "close": 10447.95
+          "close": 10447.96
         },
         {
           "date": "2026-01-06",
@@ -77838,7 +77838,7 @@
         },
         {
           "date": "2026-01-07",
-          "close": 10519.26
+          "close": 10519.25
         },
         {
           "date": "2026-01-08",
@@ -77858,7 +77858,7 @@
         },
         {
           "date": "2026-01-14",
-          "close": 10771.19
+          "close": 10771.18
         },
         {
           "date": "2026-01-15",
@@ -77894,7 +77894,7 @@
         },
         {
           "date": "2026-01-27",
-          "close": 10671.37
+          "close": 10671.36
         },
         {
           "date": "2026-01-28",
@@ -77982,7 +77982,7 @@
         },
         {
           "date": "2026-03-04",
-          "close": 10647.65
+          "close": 10647.64
         },
         {
           "date": "2026-03-05",
@@ -78278,7 +78278,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 12125.0
+          "close": 12150.0
         }
       ]
     },
@@ -78288,9 +78288,9 @@
       "category": "채권",
       "market": "KR",
       "currency": "KRW",
-      "current": 104420.0,
-      "change": -95.0,
-      "change_pct": -0.09,
+      "current": 104450.0,
+      "change": -145.0,
+      "change_pct": -0.14,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -79271,7 +79271,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 104420.0
+          "close": 104450.0
         }
       ]
     },
@@ -79281,9 +79281,9 @@
       "category": "채권",
       "market": "KR",
       "currency": "KRW",
-      "current": 104700.0,
-      "change": -290.0,
-      "change_pct": -0.28,
+      "current": 104790.0,
+      "change": -200.0,
+      "change_pct": -0.19,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -80264,7 +80264,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 104700.0
+          "close": 104790.0
         }
       ]
     },
@@ -80274,9 +80274,9 @@
       "category": "채권",
       "market": "KR",
       "currency": "KRW",
-      "current": 7550.0,
-      "change": 10.0,
-      "change_pct": 0.13,
+      "current": 7545.0,
+      "change": 5.0,
+      "change_pct": 0.07,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -81257,7 +81257,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 7550.0
+          "close": 7545.0
         }
       ]
     },
@@ -81267,9 +81267,9 @@
       "category": "섹터",
       "market": "KR",
       "currency": "KRW",
-      "current": 187655.0,
-      "change": 6640.0,
-      "change_pct": 3.67,
+      "current": 188345.0,
+      "change": 7330.0,
+      "change_pct": 4.05,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -82250,7 +82250,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 187655.0
+          "close": 188345.0
         }
       ]
     },
@@ -82260,9 +82260,9 @@
       "category": "섹터",
       "market": "KR",
       "currency": "KRW",
-      "current": 55495.0,
-      "change": 1745.0,
-      "change_pct": 3.25,
+      "current": 55670.0,
+      "change": 1920.0,
+      "change_pct": 3.57,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -83243,7 +83243,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 55495.0
+          "close": 55670.0
         }
       ]
     },
@@ -83253,9 +83253,9 @@
       "category": "섹터",
       "market": "KR",
       "currency": "KRW",
-      "current": 26780.0,
-      "change": 55.0,
-      "change_pct": 0.21,
+      "current": 26795.0,
+      "change": 70.0,
+      "change_pct": 0.26,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -84236,7 +84236,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 26780.0
+          "close": 26795.0
         }
       ]
     },
@@ -84246,9 +84246,9 @@
       "category": "섹터",
       "market": "KR",
       "currency": "KRW",
-      "current": 75935.0,
-      "change": 15.0,
-      "change_pct": 0.02,
+      "current": 75985.0,
+      "change": 65.0,
+      "change_pct": 0.09,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -85229,7 +85229,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 75935.0
+          "close": 75985.0
         }
       ]
     },
@@ -85239,9 +85239,9 @@
       "category": "테마",
       "market": "KR",
       "currency": "KRW",
-      "current": 16535.0,
-      "change": -400.0,
-      "change_pct": -2.36,
+      "current": 16575.0,
+      "change": -360.0,
+      "change_pct": -2.13,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -86222,7 +86222,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 16535.0
+          "close": 16575.0
         }
       ]
     },
@@ -86232,9 +86232,9 @@
       "category": "테마",
       "market": "KR",
       "currency": "KRW",
-      "current": 33210.0,
-      "change": 290.0,
-      "change_pct": 0.88,
+      "current": 33305.0,
+      "change": 385.0,
+      "change_pct": 1.17,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -87215,7 +87215,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 33210.0
+          "close": 33305.0
         }
       ]
     },
@@ -87225,9 +87225,9 @@
       "category": "테마",
       "market": "KR",
       "currency": "KRW",
-      "current": 10915.0,
-      "change": -340.0,
-      "change_pct": -3.02,
+      "current": 10940.0,
+      "change": -315.0,
+      "change_pct": -2.8,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -88208,7 +88208,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 10915.0
+          "close": 10940.0
         }
       ]
     },
@@ -88218,9 +88218,9 @@
       "category": "원자재",
       "market": "KR",
       "currency": "KRW",
-      "current": 23650.0,
-      "change": 250.0,
-      "change_pct": 1.07,
+      "current": 23685.0,
+      "change": 285.0,
+      "change_pct": 1.22,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -89201,7 +89201,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 23650.0
+          "close": 23685.0
         }
       ]
     },
@@ -89211,9 +89211,9 @@
       "category": "원자재",
       "market": "KR",
       "currency": "KRW",
-      "current": 6150.0,
-      "change": -80.0,
-      "change_pct": -1.28,
+      "current": 6120.0,
+      "change": -110.0,
+      "change_pct": -1.77,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -90194,7 +90194,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 6150.0
+          "close": 6120.0
         }
       ]
     },
@@ -90204,9 +90204,9 @@
       "category": "레버리지",
       "market": "KR",
       "currency": "KRW",
-      "current": 239080.0,
-      "change": 3950.0,
-      "change_pct": 1.68,
+      "current": 239000.0,
+      "change": 3870.0,
+      "change_pct": 1.65,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -91187,7 +91187,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 239080.0
+          "close": 239000.0
         }
       ]
     },
@@ -91197,9 +91197,9 @@
       "category": "레버리지",
       "market": "KR",
       "currency": "KRW",
-      "current": 853.0,
-      "change": -6.0,
-      "change_pct": -0.7,
+      "current": 852.0,
+      "change": -7.0,
+      "change_pct": -0.81,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -92180,7 +92180,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 853.0
+          "close": 852.0
         }
       ]
     },
@@ -92190,9 +92190,9 @@
       "category": "레버리지",
       "market": "KR",
       "currency": "KRW",
-      "current": 12070.0,
-      "change": 515.0,
-      "change_pct": 4.46,
+      "current": 12085.0,
+      "change": 530.0,
+      "change_pct": 4.59,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 0,
@@ -93173,7 +93173,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 12070.0
+          "close": 12085.0
         }
       ]
     },
