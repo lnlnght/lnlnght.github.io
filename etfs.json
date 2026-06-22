@@ -1,5 +1,5 @@
 {
-  "updated": "2026-06-22 17:23",
+  "updated": "2026-06-22 18:16",
   "etfs": [
     {
       "code": "SPY",
@@ -7,9 +7,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 744.73,
-      "change": -2.21,
-      "change_pct": -0.3,
+      "current": 745.11,
+      "change": -1.83,
+      "change_pct": -0.24,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0098,
       "total_assets": 783796404224,
@@ -1018,7 +1018,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 744.73
+          "close": 745.11
         }
       ]
     },
@@ -1028,9 +1028,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 686.52,
-      "change": -1.98,
-      "change_pct": -0.29,
+      "current": 686.82,
+      "change": -1.68,
+      "change_pct": -0.24,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0103,
       "total_assets": 1701513003008,
@@ -2039,7 +2039,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 686.52
+          "close": 686.82
         }
       ]
     },
@@ -2049,9 +2049,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 736.49,
-      "change": -3.29,
-      "change_pct": -0.44,
+      "current": 737.62,
+      "change": -2.16,
+      "change_pct": -0.29,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0038,
       "total_assets": 493987528704,
@@ -3060,7 +3060,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 736.49
+          "close": 737.62
         }
       ]
     },
@@ -3070,9 +3070,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 368.97,
-      "change": -0.89,
-      "change_pct": -0.24,
+      "current": 369.18,
+      "change": -0.68,
+      "change_pct": -0.18,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0101,
       "total_assets": 2308925030400,
@@ -4081,7 +4081,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 368.97
+          "close": 369.18
         }
       ]
     },
@@ -4091,9 +4091,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 297.66,
-      "change": 2.53,
-      "change_pct": 0.86,
+      "current": 298.74,
+      "change": 3.61,
+      "change_pct": 1.22,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0087,
       "total_assets": 80933363712,
@@ -5102,7 +5102,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 297.66
+          "close": 298.74
         }
       ]
     },
@@ -5112,9 +5112,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 517.23,
-      "change": 1.43,
-      "change_pct": 0.28,
+      "current": 517.14,
+      "change": 1.34,
+      "change_pct": 0.26,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0137,
       "total_assets": 44786040832,
@@ -6123,7 +6123,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 517.23
+          "close": 517.14
         }
       ]
     },
@@ -6133,9 +6133,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 209.82,
-      "change": -0.32,
-      "change_pct": -0.15,
+      "current": 209.77,
+      "change": -0.37,
+      "change_pct": -0.18,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0149,
       "total_assets": 89116966912,
@@ -7144,7 +7144,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 209.82
+          "close": 209.77
         }
       ]
     },
@@ -7154,9 +7154,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 157.64,
-      "change": -0.1,
-      "change_pct": -0.06,
+      "current": 157.68,
+      "change": -0.06,
+      "change_pct": -0.04,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0138,
       "total_assets": 32931053568,
@@ -8165,7 +8165,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 157.64
+          "close": 157.68
         }
       ]
     },
@@ -8175,9 +8175,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 71.33,
-      "change": 0.52,
-      "change_pct": 0.73,
+      "current": 71.25,
+      "change": 0.44,
+      "change_pct": 0.62,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0177,
       "total_assets": 30325661696,
@@ -9186,7 +9186,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 71.33
+          "close": 71.25
         }
       ]
     },
@@ -9196,9 +9196,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 61.33,
-      "change": 0.4,
-      "change_pct": 0.66,
+      "current": 61.29,
+      "change": 0.36,
+      "change_pct": 0.59,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0243,
       "total_assets": 162822127616,
@@ -10207,7 +10207,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 61.33
+          "close": 61.29
         }
       ]
     },
@@ -11238,9 +11238,9 @@
       "category": "지수",
       "market": "US",
       "currency": "USD",
-      "current": 104.56,
-      "change": 0.06,
-      "change_pct": 0.06,
+      "current": 104.57,
+      "change": 0.07,
+      "change_pct": 0.07,
       "expense_ratio": 0.0,
       "dividend_yield": 0.031,
       "total_assets": 77424812032,
@@ -12249,7 +12249,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 104.56
+          "close": 104.57
         }
       ]
     },
@@ -12259,9 +12259,9 @@
       "category": "배당",
       "market": "US",
       "currency": "USD",
-      "current": 31.98,
-      "change": 0.06,
-      "change_pct": 0.19,
+      "current": 31.93,
+      "change": 0.01,
+      "change_pct": 0.03,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0325,
       "total_assets": 94946205696,
@@ -13270,7 +13270,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 31.98
+          "close": 31.93
         }
       ]
     },
@@ -13280,9 +13280,9 @@
       "category": "배당",
       "market": "US",
       "currency": "USD",
-      "current": 158.71,
-      "change": 0.21,
-      "change_pct": 0.13,
+      "current": 158.59,
+      "change": 0.09,
+      "change_pct": 0.06,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0221,
       "total_assets": 96060563456,
@@ -14291,7 +14291,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 158.71
+          "close": 158.59
         }
       ]
     },
@@ -14301,9 +14301,9 @@
       "category": "배당",
       "market": "US",
       "currency": "USD",
-      "current": 56.09,
-      "change": -0.09,
-      "change_pct": -0.16,
+      "current": 56.08,
+      "change": -0.1,
+      "change_pct": -0.18,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0845,
       "total_assets": 44585009152,
@@ -15312,7 +15312,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 56.09
+          "close": 56.08
         }
       ]
     },
@@ -15322,9 +15322,9 @@
       "category": "배당",
       "market": "US",
       "currency": "USD",
-      "current": 75.08,
-      "change": 0.22,
-      "change_pct": 0.29,
+      "current": 74.98,
+      "change": 0.12,
+      "change_pct": 0.16,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0196,
       "total_assets": 40455868416,
@@ -16333,7 +16333,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 75.08
+          "close": 74.98
         }
       ]
     },
@@ -16343,9 +16343,9 @@
       "category": "배당",
       "market": "US",
       "currency": "USD",
-      "current": 47.39,
-      "change": -0.61,
-      "change_pct": -1.27,
+      "current": 47.31,
+      "change": -0.69,
+      "change_pct": -1.44,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0418,
       "total_assets": 7260146176,
@@ -17354,7 +17354,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 47.39
+          "close": 47.31
         }
       ]
     },
@@ -17364,9 +17364,9 @@
       "category": "배당",
       "market": "US",
       "currency": "USD",
-      "current": 54.99,
-      "change": -0.25,
-      "change_pct": -0.45,
+      "current": 54.87,
+      "change": -0.37,
+      "change_pct": -0.67,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0212,
       "total_assets": 11069606912,
@@ -18375,7 +18375,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 54.99
+          "close": 54.87
         }
       ]
     },
@@ -18385,9 +18385,9 @@
       "category": "배당",
       "market": "US",
       "currency": "USD",
-      "current": 27.13,
-      "change": 0.33,
-      "change_pct": 1.23,
+      "current": 27.08,
+      "change": 0.28,
+      "change_pct": 1.04,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0291,
       "total_assets": 13406716928,
@@ -19396,7 +19396,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 27.13
+          "close": 27.08
         }
       ]
     },
@@ -19406,9 +19406,9 @@
       "category": "배당",
       "market": "US",
       "currency": "USD",
-      "current": 30.97,
-      "change": -0.19,
-      "change_pct": -0.61,
+      "current": 30.95,
+      "change": -0.21,
+      "change_pct": -0.67,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0554,
       "total_assets": 13820648448,
@@ -20417,7 +20417,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 30.97
+          "close": 30.95
         }
       ]
     },
@@ -20427,9 +20427,9 @@
       "category": "채권",
       "market": "US",
       "currency": "USD",
-      "current": 86.06,
-      "change": -0.67,
-      "change_pct": -0.77,
+      "current": 86.07,
+      "change": -0.66,
+      "change_pct": -0.76,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0455,
       "total_assets": 42895949824,
@@ -21438,7 +21438,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 86.06
+          "close": 86.07
         }
       ]
     },
@@ -21448,9 +21448,9 @@
       "category": "채권",
       "market": "US",
       "currency": "USD",
-      "current": 94.01,
-      "change": -0.25,
-      "change_pct": -0.27,
+      "current": 94.03,
+      "change": -0.23,
+      "change_pct": -0.24,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0387,
       "total_assets": 48318722048,
@@ -22459,7 +22459,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 94.01
+          "close": 94.03
         }
       ]
     },
@@ -24511,9 +24511,9 @@
       "category": "채권",
       "market": "US",
       "currency": "USD",
-      "current": 73.13,
-      "change": -0.37,
-      "change_pct": -0.5,
+      "current": 73.14,
+      "change": -0.36,
+      "change_pct": -0.49,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0394,
       "total_assets": 394429661184,
@@ -25522,7 +25522,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 73.13
+          "close": 73.14
         }
       ]
     },
@@ -25532,9 +25532,9 @@
       "category": "채권",
       "market": "US",
       "currency": "USD",
-      "current": 108.65,
-      "change": -0.32,
-      "change_pct": -0.29,
+      "current": 108.69,
+      "change": -0.28,
+      "change_pct": -0.26,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0452,
       "total_assets": 29782712320,
@@ -26543,7 +26543,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 108.65
+          "close": 108.69
         }
       ]
     },
@@ -26553,9 +26553,9 @@
       "category": "채권",
       "market": "US",
       "currency": "USD",
-      "current": 79.91,
-      "change": -0.09,
-      "change_pct": -0.11,
+      "current": 79.92,
+      "change": -0.08,
+      "change_pct": -0.1,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0584,
       "total_assets": 16106322944,
@@ -27564,7 +27564,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 79.91
+          "close": 79.92
         }
       ]
     },
@@ -27574,9 +27574,9 @@
       "category": "채권",
       "market": "US",
       "currency": "USD",
-      "current": 96.44,
-      "change": 0.22,
-      "change_pct": 0.23,
+      "current": 96.45,
+      "change": 0.23,
+      "change_pct": 0.24,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0504,
       "total_assets": 14162584576,
@@ -28585,7 +28585,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 96.44
+          "close": 96.45
         }
       ]
     },
@@ -28595,9 +28595,9 @@
       "category": "채권",
       "market": "US",
       "currency": "USD",
-      "current": 109.08,
-      "change": -0.1,
-      "change_pct": -0.09,
+      "current": 109.01,
+      "change": -0.17,
+      "change_pct": -0.16,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0281,
       "total_assets": 15087474688,
@@ -29606,7 +29606,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 109.08
+          "close": 109.01
         }
       ]
     },
@@ -29616,9 +29616,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 191.72,
-      "change": 0.41,
-      "change_pct": 0.21,
+      "current": 191.96,
+      "change": 0.65,
+      "change_pct": 0.34,
       "expense_ratio": 0.0,
       "dividend_yield": 0.004,
       "total_assets": 124515713024,
@@ -30627,7 +30627,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 191.72
+          "close": 191.96
         }
       ]
     },
@@ -30637,9 +30637,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 106.57,
-      "change": -3.13,
-      "change_pct": -2.85,
+      "current": 106.97,
+      "change": -2.73,
+      "change_pct": -2.49,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0121,
       "total_assets": 25115598848,
@@ -31648,7 +31648,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 106.57
+          "close": 106.97
         }
       ]
     },
@@ -31658,8 +31658,8 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 150.38,
-      "change": 0.68,
+      "current": 150.37,
+      "change": 0.67,
       "change_pct": 0.45,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0168,
@@ -32669,7 +32669,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 150.38
+          "close": 150.37
         }
       ]
     },
@@ -32679,9 +32679,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 53.75,
-      "change": 0.12,
-      "change_pct": 0.22,
+      "current": 53.72,
+      "change": 0.09,
+      "change_pct": 0.17,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0154,
       "total_assets": 49419214848,
@@ -33690,7 +33690,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 53.75
+          "close": 53.72
         }
       ]
     },
@@ -33700,9 +33700,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 115.5,
-      "change": -3.48,
-      "change_pct": -2.92,
+      "current": 115.54,
+      "change": -3.44,
+      "change_pct": -2.89,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0074,
       "total_assets": 23781842944,
@@ -34711,7 +34711,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 115.5
+          "close": 115.54
         }
       ]
     },
@@ -34721,9 +34721,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 82.64,
-      "change": -0.64,
-      "change_pct": -0.77,
+      "current": 82.42,
+      "change": -0.86,
+      "change_pct": -1.03,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0262,
       "total_assets": 14855075840,
@@ -35732,7 +35732,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 82.64
+          "close": 82.42
         }
       ]
     },
@@ -35742,9 +35742,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 181.95,
-      "change": 0.95,
-      "change_pct": 0.52,
+      "current": 181.77,
+      "change": 0.77,
+      "change_pct": 0.43,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0118,
       "total_assets": 30217220096,
@@ -36753,7 +36753,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 181.95
+          "close": 181.77
         }
       ]
     },
@@ -36763,9 +36763,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 53.87,
-      "change": 0.02,
-      "change_pct": 0.04,
+      "current": 53.81,
+      "change": -0.04,
+      "change_pct": -0.07,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0265,
       "total_assets": 38671941632,
@@ -37774,7 +37774,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 53.87
+          "close": 53.81
         }
       ]
     },
@@ -37784,9 +37784,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 44.87,
-      "change": -0.01,
-      "change_pct": -0.02,
+      "current": 44.88,
+      "change": 0.0,
+      "change_pct": 0.0,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0268,
       "total_assets": 22354980864,
@@ -38795,7 +38795,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 44.87
+          "close": 44.88
         }
       ]
     },
@@ -38805,9 +38805,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 51.74,
-      "change": -0.06,
-      "change_pct": -0.12,
+      "current": 51.65,
+      "change": -0.15,
+      "change_pct": -0.29,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0171,
       "total_assets": 7313517056,
@@ -39816,7 +39816,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 51.74
+          "close": 51.65
         }
       ]
     },
@@ -39826,9 +39826,9 @@
       "category": "섹터",
       "market": "US",
       "currency": "USD",
-      "current": 44.17,
-      "change": 0.27,
-      "change_pct": 0.62,
+      "current": 44.16,
+      "change": 0.26,
+      "change_pct": 0.59,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0318,
       "total_assets": 7948565504,
@@ -40837,7 +40837,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 44.17
+          "close": 44.16
         }
       ]
     },
@@ -40847,9 +40847,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 650.22,
-      "change": 10.23,
-      "change_pct": 1.6,
+      "current": 650.76,
+      "change": 10.77,
+      "change_pct": 1.68,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0029,
       "total_assets": 38373490688,
@@ -41858,7 +41858,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 650.22
+          "close": 650.76
         }
       ]
     },
@@ -41868,9 +41868,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 78.86,
-      "change": -1.13,
-      "change_pct": -1.41,
+      "current": 79.22,
+      "change": -0.77,
+      "change_pct": -0.96,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 7262198784,
@@ -42879,7 +42879,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 78.86
+          "close": 79.22
         }
       ]
     },
@@ -42889,9 +42889,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 38.35,
-      "change": -0.15,
-      "change_pct": -0.39,
+      "current": 38.36,
+      "change": -0.14,
+      "change_pct": -0.36,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0059,
       "total_assets": 3743227648,
@@ -43900,7 +43900,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 38.35
+          "close": 38.36
         }
       ]
     },
@@ -43910,9 +43910,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 21.61,
-      "change": 0.39,
-      "change_pct": 1.84,
+      "current": 21.69,
+      "change": 0.47,
+      "change_pct": 2.21,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0114,
       "total_assets": 3209411328,
@@ -44921,7 +44921,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 21.61
+          "close": 21.69
         }
       ]
     },
@@ -44931,9 +44931,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 36.53,
-      "change": 0.91,
-      "change_pct": 2.55,
+      "current": 36.61,
+      "change": 0.99,
+      "change_pct": 2.78,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 58118959104,
@@ -45942,7 +45942,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 36.53
+          "close": 36.61
         }
       ]
     },
@@ -45952,9 +45952,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 8.77,
-      "change": 0.21,
-      "change_pct": 2.45,
+      "current": 8.79,
+      "change": 0.23,
+      "change_pct": 2.69,
       "expense_ratio": 0.0,
       "dividend_yield": 0.6988,
       "total_assets": 1698945408,
@@ -46963,7 +46963,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 8.77
+          "close": 8.79
         }
       ]
     },
@@ -46973,9 +46973,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 83.09,
-      "change": -1.41,
-      "change_pct": -1.67,
+      "current": 83.28,
+      "change": -1.22,
+      "change_pct": -1.44,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0046,
       "total_assets": 13681273856,
@@ -47984,7 +47984,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 83.09
+          "close": 83.28
         }
       ]
     },
@@ -47994,9 +47994,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 96.89,
-      "change": 0.8,
-      "change_pct": 0.83,
+      "current": 96.9,
+      "change": 0.81,
+      "change_pct": 0.84,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0364,
       "total_assets": 69802549248,
@@ -48057,7 +48057,7 @@
         },
         {
           "date": "2025-07-11",
-          "close": 87.18
+          "close": 87.17
         },
         {
           "date": "2025-07-14",
@@ -49005,7 +49005,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 96.89
+          "close": 96.9
         }
       ]
     },
@@ -49015,9 +49015,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 176.75,
-      "change": 3.1,
-      "change_pct": 1.79,
+      "current": 177.32,
+      "change": 3.67,
+      "change_pct": 2.11,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0023,
       "total_assets": 7944343040,
@@ -50026,7 +50026,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 176.75
+          "close": 177.32
         }
       ]
     },
@@ -50036,9 +50036,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 25.17,
-      "change": -0.15,
-      "change_pct": -0.59,
+      "current": 25.13,
+      "change": -0.19,
+      "change_pct": -0.75,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0785,
       "total_assets": 6225812480,
@@ -51047,7 +51047,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 25.17
+          "close": 25.13
         }
       ]
     },
@@ -51057,9 +51057,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 97.02,
-      "change": 0.39,
-      "change_pct": 0.4,
+      "current": 97.03,
+      "change": 0.4,
+      "change_pct": 0.41,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0392,
       "total_assets": 21298173952,
@@ -52068,7 +52068,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 97.02
+          "close": 97.03
         }
       ]
     },
@@ -52078,9 +52078,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 49.94,
-      "change": 0.31,
-      "change_pct": 0.62,
+      "current": 49.88,
+      "change": 0.25,
+      "change_pct": 0.5,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 6759351296,
@@ -53089,7 +53089,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 49.94
+          "close": 49.88
         }
       ]
     },
@@ -53099,9 +53099,9 @@
       "category": "테마",
       "market": "US",
       "currency": "USD",
-      "current": 31.23,
-      "change": 0.24,
-      "change_pct": 0.77,
+      "current": 31.26,
+      "change": 0.27,
+      "change_pct": 0.87,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0079,
       "total_assets": 870601280,
@@ -54110,7 +54110,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 31.23
+          "close": 31.26
         }
       ]
     },
@@ -54120,9 +54120,9 @@
       "category": "원자재",
       "market": "US",
       "currency": "USD",
-      "current": 384.64,
-      "change": 0.35,
-      "change_pct": 0.09,
+      "current": 384.19,
+      "change": -0.1,
+      "change_pct": -0.03,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 150367518720,
@@ -55131,7 +55131,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 384.64
+          "close": 384.19
         }
       ]
     },
@@ -55141,9 +55141,9 @@
       "category": "원자재",
       "market": "US",
       "currency": "USD",
-      "current": 78.82,
-      "change": 0.2,
-      "change_pct": 0.25,
+      "current": 78.73,
+      "change": 0.11,
+      "change_pct": 0.14,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 69916966912,
@@ -56152,7 +56152,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 78.82
+          "close": 78.73
         }
       ]
     },
@@ -56162,9 +56162,9 @@
       "category": "원자재",
       "market": "US",
       "currency": "USD",
-      "current": 59.28,
-      "change": 0.2,
-      "change_pct": 0.34,
+      "current": 59.12,
+      "change": 0.04,
+      "change_pct": 0.07,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 36822409216,
@@ -57173,7 +57173,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 59.28
+          "close": 59.12
         }
       ]
     },
@@ -57183,9 +57183,9 @@
       "category": "원자재",
       "market": "US",
       "currency": "USD",
-      "current": 111.6,
-      "change": -2.87,
-      "change_pct": -2.51,
+      "current": 111.7,
+      "change": -2.77,
+      "change_pct": -2.42,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 1705716992,
@@ -58194,7 +58194,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 111.6
+          "close": 111.7
         }
       ]
     },
@@ -58204,9 +58204,9 @@
       "category": "원자재",
       "market": "US",
       "currency": "USD",
-      "current": 26.68,
-      "change": -0.01,
-      "change_pct": -0.04,
+      "current": 26.66,
+      "change": -0.03,
+      "change_pct": -0.11,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0335,
       "total_assets": 1365882880,
@@ -59215,7 +59215,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 26.68
+          "close": 26.66
         }
       ]
     },
@@ -59225,9 +59225,9 @@
       "category": "원자재",
       "market": "US",
       "currency": "USD",
-      "current": 11.93,
-      "change": 0.21,
-      "change_pct": 1.79,
+      "current": 11.84,
+      "change": 0.12,
+      "change_pct": 1.02,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 516927200,
@@ -60236,7 +60236,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 11.93
+          "close": 11.84
         }
       ]
     },
@@ -60246,9 +60246,9 @@
       "category": "원자재",
       "market": "US",
       "currency": "USD",
-      "current": 16.35,
-      "change": -0.18,
-      "change_pct": -1.09,
+      "current": 16.33,
+      "change": -0.2,
+      "change_pct": -1.21,
       "expense_ratio": 0.0,
       "dividend_yield": 0.029,
       "total_assets": 6073438208,
@@ -61257,7 +61257,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 16.35
+          "close": 16.33
         }
       ]
     },
@@ -61267,9 +61267,9 @@
       "category": "레버리지",
       "market": "US",
       "currency": "USD",
-      "current": 82.18,
-      "change": -0.76,
-      "change_pct": -0.92,
+      "current": 82.48,
+      "change": -0.46,
+      "change_pct": -0.55,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0037,
       "total_assets": 39774121984,
@@ -62278,7 +62278,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 82.18
+          "close": 82.48
         }
       ]
     },
@@ -62288,9 +62288,9 @@
       "category": "레버리지",
       "market": "US",
       "currency": "USD",
-      "current": 37.1,
-      "change": 0.37,
-      "change_pct": 1.01,
+      "current": 36.97,
+      "change": 0.24,
+      "change_pct": 0.65,
       "expense_ratio": 0.0,
       "dividend_yield": 0.1219,
       "total_assets": 2231516928,
@@ -63299,7 +63299,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 37.1
+          "close": 36.97
         }
       ]
     },
@@ -63309,9 +63309,9 @@
       "category": "레버리지",
       "market": "US",
       "currency": "USD",
-      "current": 141.78,
-      "change": -1.2,
-      "change_pct": -0.84,
+      "current": 141.9,
+      "change": -1.08,
+      "change_pct": -0.76,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0068,
       "total_assets": 5545587200,
@@ -64320,7 +64320,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 141.78
+          "close": 141.9
         }
       ]
     },
@@ -64330,9 +64330,9 @@
       "category": "레버리지",
       "market": "US",
       "currency": "USD",
-      "current": 37.7,
-      "change": 0.34,
-      "change_pct": 0.91,
+      "current": 37.65,
+      "change": 0.29,
+      "change_pct": 0.78,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0796,
       "total_assets": 463254368,
@@ -65341,7 +65341,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 37.7
+          "close": 37.65
         }
       ]
     },
@@ -65351,9 +65351,9 @@
       "category": "레버리지",
       "market": "US",
       "currency": "USD",
-      "current": 25.73,
-      "change": -0.36,
-      "change_pct": -1.38,
+      "current": 25.61,
+      "change": -0.48,
+      "change_pct": -1.84,
       "expense_ratio": 0.0,
       "dividend_yield": 0.0,
       "total_assets": 398989984,
@@ -66362,7 +66362,7 @@
         },
         {
           "date": "2026-06-22",
-          "close": 25.73
+          "close": 25.61
         }
       ]
     },
@@ -66387,7 +66387,7 @@
         },
         {
           "date": "2025-06-24",
-          "close": 41441.55
+          "close": 41441.56
         },
         {
           "date": "2025-06-25",
@@ -66411,7 +66411,7 @@
         },
         {
           "date": "2025-07-02",
-          "close": 41164.89
+          "close": 41164.88
         },
         {
           "date": "2025-07-03",
@@ -66419,11 +66419,11 @@
         },
         {
           "date": "2025-07-04",
-          "close": 40996.91
+          "close": 40996.9
         },
         {
           "date": "2025-07-07",
-          "close": 41061.14
+          "close": 41061.13
         },
         {
           "date": "2025-07-08",
@@ -66443,7 +66443,7 @@
         },
         {
           "date": "2025-07-14",
-          "close": 42908.9
+          "close": 42908.91
         },
         {
           "date": "2025-07-15",
@@ -66451,7 +66451,7 @@
         },
         {
           "date": "2025-07-16",
-          "close": 42785.39
+          "close": 42785.4
         },
         {
           "date": "2025-07-17",
@@ -66471,7 +66471,7 @@
         },
         {
           "date": "2025-07-23",
-          "close": 42731.04
+          "close": 42731.05
         },
         {
           "date": "2025-07-24",
@@ -66479,7 +66479,7 @@
         },
         {
           "date": "2025-07-25",
-          "close": 42795.28
+          "close": 42795.27
         },
         {
           "date": "2025-07-28",
@@ -66499,7 +66499,7 @@
         },
         {
           "date": "2025-08-01",
-          "close": 41807.05
+          "close": 41807.06
         },
         {
           "date": "2025-08-04",
@@ -66515,7 +66515,7 @@
         },
         {
           "date": "2025-08-07",
-          "close": 43205.92
+          "close": 43205.91
         },
         {
           "date": "2025-08-08",
@@ -66551,7 +66551,7 @@
         },
         {
           "date": "2025-08-21",
-          "close": 42268.38
+          "close": 42268.39
         },
         {
           "date": "2025-08-22",
@@ -66595,7 +66595,7 @@
         },
         {
           "date": "2025-09-05",
-          "close": 43131.5
+          "close": 43131.51
         },
         {
           "date": "2025-09-08",
@@ -66631,7 +66631,7 @@
         },
         {
           "date": "2025-09-18",
-          "close": 47283.45
+          "close": 47283.44
         },
         {
           "date": "2025-09-19",
@@ -66691,7 +66691,7 @@
         },
         {
           "date": "2025-10-16",
-          "close": 52169.54
+          "close": 52169.53
         },
         {
           "date": "2025-10-17",
@@ -66707,7 +66707,7 @@
         },
         {
           "date": "2025-10-22",
-          "close": 53994.99
+          "close": 53995.0
         },
         {
           "date": "2025-10-23",
@@ -67392,7 +67392,7 @@
         },
         {
           "date": "2025-06-27",
-          "close": 40925.06
+          "close": 40925.07
         },
         {
           "date": "2025-06-30",
@@ -67408,7 +67408,7 @@
         },
         {
           "date": "2025-07-03",
-          "close": 41734.77
+          "close": 41734.78
         },
         {
           "date": "2025-07-04",
@@ -67428,7 +67428,7 @@
         },
         {
           "date": "2025-07-10",
-          "close": 42465.49
+          "close": 42465.5
         },
         {
           "date": "2025-07-11",
@@ -67472,7 +67472,7 @@
         },
         {
           "date": "2025-07-25",
-          "close": 42737.05
+          "close": 42737.04
         },
         {
           "date": "2025-07-28",
@@ -67480,7 +67480,7 @@
         },
         {
           "date": "2025-07-29",
-          "close": 43260.39
+          "close": 43260.4
         },
         {
           "date": "2025-07-30",
@@ -67492,7 +67492,7 @@
         },
         {
           "date": "2025-08-01",
-          "close": 41716.33
+          "close": 41716.34
         },
         {
           "date": "2025-08-04",
@@ -67508,7 +67508,7 @@
         },
         {
           "date": "2025-08-07",
-          "close": 43167.29
+          "close": 43167.3
         },
         {
           "date": "2025-08-08",
@@ -67516,7 +67516,7 @@
         },
         {
           "date": "2025-08-11",
-          "close": 43048.44
+          "close": 43048.45
         },
         {
           "date": "2025-08-12",
@@ -67676,7 +67676,7 @@
         },
         {
           "date": "2025-10-14",
-          "close": 49397.01
+          "close": 49397.02
         },
         {
           "date": "2025-10-15",
@@ -67692,15 +67692,15 @@
         },
         {
           "date": "2025-10-20",
-          "close": 53234.88
+          "close": 53234.87
         },
         {
           "date": "2025-10-21",
-          "close": 53348.78
+          "close": 53348.77
         },
         {
           "date": "2025-10-22",
-          "close": 53943.03
+          "close": 53943.02
         },
         {
           "date": "2025-10-23",
@@ -67728,7 +67728,7 @@
         },
         {
           "date": "2025-10-31",
-          "close": 57698.75
+          "close": 57698.74
         },
         {
           "date": "2025-11-03",
@@ -67768,7 +67768,7 @@
         },
         {
           "date": "2025-11-14",
-          "close": 56105.1
+          "close": 56105.11
         },
         {
           "date": "2025-11-17",
@@ -67860,7 +67860,7 @@
         },
         {
           "date": "2025-12-17",
-          "close": 57117.89
+          "close": 57117.88
         },
         {
           "date": "2025-12-18",
@@ -67868,7 +67868,7 @@
         },
         {
           "date": "2025-12-19",
-          "close": 56765.4
+          "close": 56765.39
         },
         {
           "date": "2025-12-22",
@@ -67900,11 +67900,11 @@
         },
         {
           "date": "2026-01-05",
-          "close": 64683.96
+          "close": 64683.95
         },
         {
           "date": "2026-01-06",
-          "close": 65786.09
+          "close": 65786.1
         },
         {
           "date": "2026-01-07",
@@ -67916,11 +67916,11 @@
         },
         {
           "date": "2026-01-09",
-          "close": 66764.12
+          "close": 66764.13
         },
         {
           "date": "2026-01-12",
-          "close": 67176.2
+          "close": 67176.19
         },
         {
           "date": "2026-01-13",
@@ -67928,7 +67928,7 @@
         },
         {
           "date": "2026-01-14",
-          "close": 68447.13
+          "close": 68447.14
         },
         {
           "date": "2026-01-15",
@@ -67936,7 +67936,7 @@
         },
         {
           "date": "2026-01-16",
-          "close": 70358.52
+          "close": 70358.51
         },
         {
           "date": "2026-01-19",
@@ -67944,7 +67944,7 @@
         },
         {
           "date": "2026-01-20",
-          "close": 70775.54
+          "close": 70775.53
         },
         {
           "date": "2026-01-21",
@@ -67956,11 +67956,11 @@
         },
         {
           "date": "2026-01-23",
-          "close": 72557.83
+          "close": 72557.84
         },
         {
           "date": "2026-01-26",
-          "close": 71867.76
+          "close": 71867.75
         },
         {
           "date": "2026-01-27",
@@ -69374,7 +69374,7 @@
         },
         {
           "date": "2025-06-26",
-          "close": 20393.93
+          "close": 20393.94
         },
         {
           "date": "2025-06-27",
@@ -69382,11 +69382,11 @@
         },
         {
           "date": "2025-06-30",
-          "close": 20616.68
+          "close": 20616.69
         },
         {
           "date": "2025-07-01",
-          "close": 20676.09
+          "close": 20676.08
         },
         {
           "date": "2025-07-02",
@@ -69394,7 +69394,7 @@
         },
         {
           "date": "2025-07-03",
-          "close": 20864.18
+          "close": 20864.19
         },
         {
           "date": "2025-07-04",
@@ -69526,7 +69526,7 @@
         },
         {
           "date": "2025-08-20",
-          "close": 22030.69
+          "close": 22030.7
         },
         {
           "date": "2025-08-21",
@@ -69554,7 +69554,7 @@
         },
         {
           "date": "2025-08-29",
-          "close": 22263.95
+          "close": 22263.96
         },
         {
           "date": "2025-09-01",
@@ -69566,7 +69566,7 @@
         },
         {
           "date": "2025-09-03",
-          "close": 22050.54
+          "close": 22050.55
         },
         {
           "date": "2025-09-04",
@@ -69594,7 +69594,7 @@
         },
         {
           "date": "2025-09-12",
-          "close": 22551.8
+          "close": 22551.81
         },
         {
           "date": "2025-09-15",
@@ -69686,7 +69686,7 @@
         },
         {
           "date": "2025-10-22",
-          "close": 23812.4
+          "close": 23812.41
         },
         {
           "date": "2025-10-23",
@@ -69758,7 +69758,7 @@
         },
         {
           "date": "2025-11-17",
-          "close": 24358.12
+          "close": 24358.11
         },
         {
           "date": "2025-11-18",
@@ -69774,7 +69774,7 @@
         },
         {
           "date": "2025-11-21",
-          "close": 23880.51
+          "close": 23880.5
         },
         {
           "date": "2025-11-24",
@@ -69782,7 +69782,7 @@
         },
         {
           "date": "2025-11-25",
-          "close": 24368.07
+          "close": 24368.06
         },
         {
           "date": "2025-11-26",
@@ -69826,7 +69826,7 @@
         },
         {
           "date": "2025-12-10",
-          "close": 24885.48
+          "close": 24885.47
         },
         {
           "date": "2025-12-11",
@@ -69858,7 +69858,7 @@
         },
         {
           "date": "2025-12-22",
-          "close": 25059.61
+          "close": 25059.6
         },
         {
           "date": "2025-12-23",
@@ -69930,11 +69930,11 @@
         },
         {
           "date": "2026-01-20",
-          "close": 25059.61
+          "close": 25059.6
         },
         {
           "date": "2026-01-21",
-          "close": 24815.83
+          "close": 24815.82
         },
         {
           "date": "2026-01-22",
@@ -70359,7 +70359,7 @@
         },
         {
           "date": "2025-06-24",
-          "close": 133106.86
+          "close": 133106.84
         },
         {
           "date": "2025-06-25",
@@ -70383,11 +70383,11 @@
         },
         {
           "date": "2025-07-02",
-          "close": 135354.58
+          "close": 135354.56
         },
         {
           "date": "2025-07-03",
-          "close": 136155.19
+          "close": 136155.17
         },
         {
           "date": "2025-07-04",
@@ -70395,11 +70395,11 @@
         },
         {
           "date": "2025-07-07",
-          "close": 137398.39
+          "close": 137398.38
         },
         {
           "date": "2025-07-08",
-          "close": 137403.34
+          "close": 137403.36
         },
         {
           "date": "2025-07-09",
@@ -70407,11 +70407,11 @@
         },
         {
           "date": "2025-07-10",
-          "close": 138029.94
+          "close": 138029.92
         },
         {
           "date": "2025-07-11",
-          "close": 138482.45
+          "close": 138482.44
         },
         {
           "date": "2025-07-14",
@@ -70419,27 +70419,27 @@
         },
         {
           "date": "2025-07-15",
-          "close": 139984.23
+          "close": 139984.25
         },
         {
           "date": "2025-07-16",
-          "close": 139700.78
+          "close": 139700.8
         },
         {
           "date": "2025-07-17",
-          "close": 141277.16
+          "close": 141277.17
         },
         {
           "date": "2025-07-18",
-          "close": 142321.45
+          "close": 142321.44
         },
         {
           "date": "2025-07-21",
-          "close": 141898.77
+          "close": 141898.75
         },
         {
           "date": "2025-07-22",
-          "close": 141938.53
+          "close": 141938.55
         },
         {
           "date": "2025-07-23",
@@ -70463,11 +70463,11 @@
         },
         {
           "date": "2025-07-30",
-          "close": 142789.45
+          "close": 142789.44
         },
         {
           "date": "2025-07-31",
-          "close": 144995.56
+          "close": 144995.55
         },
         {
           "date": "2025-08-01",
@@ -70475,7 +70475,7 @@
         },
         {
           "date": "2025-08-04",
-          "close": 139985.75
+          "close": 139985.73
         },
         {
           "date": "2025-08-05",
@@ -70491,15 +70491,15 @@
         },
         {
           "date": "2025-08-08",
-          "close": 143850.17
+          "close": 143850.16
         },
         {
           "date": "2025-08-11",
-          "close": 144876.05
+          "close": 144876.03
         },
         {
           "date": "2025-08-12",
-          "close": 144651.94
+          "close": 144651.92
         },
         {
           "date": "2025-08-13",
@@ -70519,11 +70519,11 @@
         },
         {
           "date": "2025-08-20",
-          "close": 143820.28
+          "close": 143820.3
         },
         {
           "date": "2025-08-21",
-          "close": 143820.28
+          "close": 143820.3
         },
         {
           "date": "2025-08-22",
@@ -70531,7 +70531,7 @@
         },
         {
           "date": "2025-08-25",
-          "close": 143740.61
+          "close": 143740.62
         },
         {
           "date": "2025-08-26",
@@ -70547,11 +70547,11 @@
         },
         {
           "date": "2025-08-29",
-          "close": 145433.8
+          "close": 145433.78
         },
         {
           "date": "2025-09-01",
-          "close": 143780.47
+          "close": 143780.45
         },
         {
           "date": "2025-09-02",
@@ -70559,11 +70559,11 @@
         },
         {
           "date": "2025-09-03",
-          "close": 143426.88
+          "close": 143426.86
         },
         {
           "date": "2025-09-04",
-          "close": 144203.77
+          "close": 144203.75
         },
         {
           "date": "2025-09-05",
@@ -70571,7 +70571,7 @@
         },
         {
           "date": "2025-09-08",
-          "close": 145837.16
+          "close": 145837.17
         },
         {
           "date": "2025-09-09",
@@ -70583,7 +70583,7 @@
         },
         {
           "date": "2025-09-11",
-          "close": 146917.81
+          "close": 146917.8
         },
         {
           "date": "2025-09-12",
@@ -70603,7 +70603,7 @@
         },
         {
           "date": "2025-09-18",
-          "close": 149387.84
+          "close": 149387.86
         },
         {
           "date": "2025-09-19",
@@ -70623,7 +70623,7 @@
         },
         {
           "date": "2025-09-25",
-          "close": 151698.55
+          "close": 151698.53
         },
         {
           "date": "2025-09-26",
@@ -70635,7 +70635,7 @@
         },
         {
           "date": "2025-09-30",
-          "close": 152709.45
+          "close": 152709.47
         },
         {
           "date": "2025-10-01",
@@ -70643,7 +70643,7 @@
         },
         {
           "date": "2025-10-02",
-          "close": 153854.84
+          "close": 153854.83
         },
         {
           "date": "2025-10-10",
@@ -70663,11 +70663,11 @@
         },
         {
           "date": "2025-10-16",
-          "close": 155632.67
+          "close": 155632.69
         },
         {
           "date": "2025-10-17",
-          "close": 153770.19
+          "close": 153770.2
         },
         {
           "date": "2025-10-20",
@@ -70695,7 +70695,7 @@
         },
         {
           "date": "2025-10-28",
-          "close": 164188.19
+          "close": 164188.2
         },
         {
           "date": "2025-10-29",
@@ -71372,7 +71372,7 @@
         },
         {
           "date": "2025-07-01",
-          "close": 18840.8
+          "close": 18840.81
         },
         {
           "date": "2025-07-02",
@@ -71412,7 +71412,7 @@
         },
         {
           "date": "2025-07-15",
-          "close": 19472.91
+          "close": 19472.92
         },
         {
           "date": "2025-07-16",
@@ -71604,7 +71604,7 @@
         },
         {
           "date": "2025-09-22",
-          "close": 20809.03
+          "close": 20809.02
         },
         {
           "date": "2025-09-23",
@@ -71624,7 +71624,7 @@
         },
         {
           "date": "2025-09-29",
-          "close": 20971.56
+          "close": 20971.55
         },
         {
           "date": "2025-09-30",
@@ -71688,7 +71688,7 @@
         },
         {
           "date": "2025-10-28",
-          "close": 22227.48
+          "close": 22227.49
         },
         {
           "date": "2025-10-29",
@@ -71700,7 +71700,7 @@
         },
         {
           "date": "2025-10-31",
-          "close": 22009.59
+          "close": 22009.6
         },
         {
           "date": "2025-11-03",
@@ -71756,7 +71756,7 @@
         },
         {
           "date": "2025-11-20",
-          "close": 22217.46
+          "close": 22217.47
         },
         {
           "date": "2025-11-21",
@@ -71780,7 +71780,7 @@
         },
         {
           "date": "2025-11-28",
-          "close": 22653.01
+          "close": 22653.0
         },
         {
           "date": "2025-12-01",
@@ -71800,7 +71800,7 @@
         },
         {
           "date": "2025-12-05",
-          "close": 22732.19
+          "close": 22732.2
         },
         {
           "date": "2025-12-08",
@@ -71816,7 +71816,7 @@
         },
         {
           "date": "2025-12-11",
-          "close": 22653.01
+          "close": 22653.0
         },
         {
           "date": "2025-12-12",
@@ -75364,7 +75364,7 @@
         },
         {
           "date": "2025-07-08",
-          "close": 12762.77
+          "close": 12762.76
         },
         {
           "date": "2025-07-09",
@@ -75380,7 +75380,7 @@
         },
         {
           "date": "2025-07-14",
-          "close": 13612.34
+          "close": 13612.33
         },
         {
           "date": "2025-07-15",
@@ -75396,7 +75396,7 @@
         },
         {
           "date": "2025-07-18",
-          "close": 13069.96
+          "close": 13069.95
         },
         {
           "date": "2025-07-21",
@@ -75408,7 +75408,7 @@
         },
         {
           "date": "2025-07-23",
-          "close": 13069.96
+          "close": 13069.95
         },
         {
           "date": "2025-07-24",
@@ -75468,7 +75468,7 @@
         },
         {
           "date": "2025-08-13",
-          "close": 12535.75
+          "close": 12535.76
         },
         {
           "date": "2025-08-14",
@@ -75676,7 +75676,7 @@
         },
         {
           "date": "2025-11-03",
-          "close": 12893.27
+          "close": 12893.26
         },
         {
           "date": "2025-11-04",
@@ -75688,7 +75688,7 @@
         },
         {
           "date": "2025-11-06",
-          "close": 13142.24
+          "close": 13142.25
         },
         {
           "date": "2025-11-07",
@@ -75780,7 +75780,7 @@
         },
         {
           "date": "2025-12-09",
-          "close": 14032.67
+          "close": 14032.68
         },
         {
           "date": "2025-12-10",
@@ -75964,7 +75964,7 @@
         },
         {
           "date": "2026-02-19",
-          "close": 18808.94
+          "close": 18808.93
         },
         {
           "date": "2026-02-20",
@@ -75988,7 +75988,7 @@
         },
         {
           "date": "2026-02-27",
-          "close": 18982.9
+          "close": 18982.89
         },
         {
           "date": "2026-03-03",
@@ -76088,7 +76088,7 @@
         },
         {
           "date": "2026-04-06",
-          "close": 16760.63
+          "close": 16760.64
         },
         {
           "date": "2026-04-07",
@@ -76421,7 +76421,7 @@
         },
         {
           "date": "2025-07-30",
-          "close": 11665.72
+          "close": 11665.73
         },
         {
           "date": "2025-07-31",
@@ -76457,7 +76457,7 @@
         },
         {
           "date": "2025-08-12",
-          "close": 11534.27
+          "close": 11534.26
         },
         {
           "date": "2025-08-13",
@@ -76529,7 +76529,7 @@
         },
         {
           "date": "2025-09-08",
-          "close": 11908.88
+          "close": 11908.87
         },
         {
           "date": "2025-09-09",
@@ -76541,11 +76541,11 @@
         },
         {
           "date": "2025-09-11",
-          "close": 11855.17
+          "close": 11855.16
         },
         {
           "date": "2025-09-12",
-          "close": 11908.88
+          "close": 11908.87
         },
         {
           "date": "2025-09-15",
@@ -76553,7 +76553,7 @@
         },
         {
           "date": "2025-09-16",
-          "close": 11689.15
+          "close": 11689.16
         },
         {
           "date": "2025-09-17",
@@ -76649,7 +76649,7 @@
         },
         {
           "date": "2025-10-27",
-          "close": 12137.13
+          "close": 12137.14
         },
         {
           "date": "2025-10-28",
@@ -76669,7 +76669,7 @@
         },
         {
           "date": "2025-11-03",
-          "close": 11911.51
+          "close": 11911.5
         },
         {
           "date": "2025-11-04",
@@ -76677,7 +76677,7 @@
         },
         {
           "date": "2025-11-05",
-          "close": 11955.7
+          "close": 11955.69
         },
         {
           "date": "2025-11-06",
@@ -76753,7 +76753,7 @@
         },
         {
           "date": "2025-12-02",
-          "close": 12582.5
+          "close": 12582.51
         },
         {
           "date": "2025-12-03",
@@ -76793,7 +76793,7 @@
         },
         {
           "date": "2025-12-16",
-          "close": 12887.84
+          "close": 12887.83
         },
         {
           "date": "2025-12-17",
@@ -76805,7 +76805,7 @@
         },
         {
           "date": "2025-12-19",
-          "close": 12804.11
+          "close": 12804.12
         },
         {
           "date": "2025-12-22",
@@ -76853,7 +76853,7 @@
         },
         {
           "date": "2026-01-09",
-          "close": 13017.13
+          "close": 13017.12
         },
         {
           "date": "2026-01-12",
@@ -76873,7 +76873,7 @@
         },
         {
           "date": "2026-01-16",
-          "close": 13506.19
+          "close": 13506.2
         },
         {
           "date": "2026-01-19",
@@ -76933,7 +76933,7 @@
         },
         {
           "date": "2026-02-06",
-          "close": 14350.84
+          "close": 14350.85
         },
         {
           "date": "2026-02-09",
@@ -76969,7 +76969,7 @@
         },
         {
           "date": "2026-02-24",
-          "close": 14326.08
+          "close": 14326.09
         },
         {
           "date": "2026-02-25",
@@ -77017,7 +77017,7 @@
         },
         {
           "date": "2026-03-13",
-          "close": 14498.07
+          "close": 14498.08
         },
         {
           "date": "2026-03-16",
@@ -77053,7 +77053,7 @@
         },
         {
           "date": "2026-03-26",
-          "close": 14498.07
+          "close": 14498.08
         },
         {
           "date": "2026-03-27",
@@ -77338,7 +77338,7 @@
         },
         {
           "date": "2025-07-03",
-          "close": 8758.47
+          "close": 8758.46
         },
         {
           "date": "2025-07-04",
@@ -77410,7 +77410,7 @@
         },
         {
           "date": "2025-07-29",
-          "close": 9112.03
+          "close": 9112.02
         },
         {
           "date": "2025-07-30",
@@ -77434,7 +77434,7 @@
         },
         {
           "date": "2025-08-06",
-          "close": 9045.13
+          "close": 9045.12
         },
         {
           "date": "2025-08-07",
@@ -77478,7 +77478,7 @@
         },
         {
           "date": "2025-08-22",
-          "close": 9045.13
+          "close": 9045.12
         },
         {
           "date": "2025-08-25",
@@ -77526,7 +77526,7 @@
         },
         {
           "date": "2025-09-09",
-          "close": 9177.36
+          "close": 9177.35
         },
         {
           "date": "2025-09-10",
@@ -77538,7 +77538,7 @@
         },
         {
           "date": "2025-09-12",
-          "close": 9232.14
+          "close": 9232.15
         },
         {
           "date": "2025-09-15",
@@ -77582,7 +77582,7 @@
         },
         {
           "date": "2025-09-29",
-          "close": 9426.58
+          "close": 9426.59
         },
         {
           "date": "2025-09-30",
@@ -77602,7 +77602,7 @@
         },
         {
           "date": "2025-10-13",
-          "close": 9601.83
+          "close": 9601.84
         },
         {
           "date": "2025-10-14",
@@ -77618,7 +77618,7 @@
         },
         {
           "date": "2025-10-17",
-          "close": 9629.5
+          "close": 9629.51
         },
         {
           "date": "2025-10-20",
@@ -77798,7 +77798,7 @@
         },
         {
           "date": "2025-12-19",
-          "close": 10521.73
+          "close": 10521.72
         },
         {
           "date": "2025-12-22",
@@ -77806,7 +77806,7 @@
         },
         {
           "date": "2025-12-23",
-          "close": 10714.65
+          "close": 10714.66
         },
         {
           "date": "2025-12-24",
@@ -77854,11 +77854,11 @@
         },
         {
           "date": "2026-01-13",
-          "close": 10742.67
+          "close": 10742.66
         },
         {
           "date": "2026-01-14",
-          "close": 10771.19
+          "close": 10771.18
         },
         {
           "date": "2026-01-15",
@@ -78014,7 +78014,7 @@
         },
         {
           "date": "2026-03-16",
-          "close": 10875.64
+          "close": 10875.63
         },
         {
           "date": "2026-03-17",
@@ -82287,7 +82287,7 @@
         },
         {
           "date": "2025-06-27",
-          "close": 11947.48
+          "close": 11947.49
         },
         {
           "date": "2025-06-30",
