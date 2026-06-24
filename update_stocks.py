@@ -11,6 +11,81 @@ from datetime import datetime
 # ── DART API (한국 주식 재무데이터) ──────────────────────────────
 DART_API_KEY = os.environ.get('DART_API_KEY', '')
 
+# ── 네이버 금융 컨센서스 ────────────────────────────────────────
+_NAVER_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    'Referer': 'https://finance.naver.com/',
+}
+
+def naver_get_forward_income(code):
+    """네이버 금융 컨센서스에서 다음 회계연도 순이익 예상치 조회 (원)"""
+    try:
+        # Naver mobile stock API - consensus annual
+        url = f'https://m.stock.naver.com/api/stock/{code}/consensus/annual'
+        res = requests.get(url, headers=_NAVER_HEADERS, timeout=10)
+        if res.status_code == 200:
+            data = res.json()
+            # 응답 구조 파악용 로그 (첫 실행 시 확인)
+            print(f'  [NAVER] {code} annual consensus keys: {list(data.keys()) if isinstance(data, dict) else type(data).__name__}')
+            income = _parse_naver_consensus(data, code)
+            if income is not None:
+                return income
+        # fallback: financeSummary endpoint
+        url2 = f'https://m.stock.naver.com/api/stock/{code}/financeSummary'
+        res2 = requests.get(url2, headers=_NAVER_HEADERS, timeout=10)
+        if res2.status_code == 200:
+            data2 = res2.json()
+            print(f'  [NAVER] {code} financeSummary keys: {list(data2.keys()) if isinstance(data2, dict) else type(data2).__name__}')
+            income = _parse_naver_consensus(data2, code)
+            if income is not None:
+                return income
+    except Exception as e:
+        print(f'  [NAVER] {code} 조회 실패: {e}')
+    return None
+
+def _parse_naver_consensus(data, code):
+    """네이버 컨센서스 응답에서 다음 연도 순이익 추출"""
+    try:
+        cur_year = datetime.now().year
+        target_years = [str(cur_year + 1), str(cur_year)]  # 내년 우선, 없으면 올해
+        # 리스트 형태: [{year, netIncome, ...}, ...]
+        if isinstance(data, list):
+            items = data
+        elif isinstance(data, dict):
+            # 여러 가능한 키 탐색
+            for key in ('annualEstimate', 'estimate', 'consensus', 'list', 'data'):
+                if key in data and isinstance(data[key], list):
+                    items = data[key]
+                    break
+            else:
+                return None
+        else:
+            return None
+
+        # 연도별 순이익 매핑
+        by_year = {}
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
+            # 순이익 후보 키
+            for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
+                v = item.get(ni_key)
+                if v is not None:
+                    try:
+                        by_year[year_val] = int(float(v))
+                    except (TypeError, ValueError):
+                        pass
+                    break
+
+        print(f'  [NAVER] {code} by_year={by_year}')
+        for y in target_years:
+            if y in by_year and by_year[y] != 0:
+                return by_year[y]
+    except Exception as e:
+        print(f'  [NAVER] {code} parse 실패: {e}')
+    return None
+
 def dart_load_corp_codes(api_key):
     """DART 기업코드 목록 다운로드 (stock_code → corp_code 매핑)"""
     try:
@@ -249,6 +324,12 @@ for s in STOCKS:
         forward_net_income = int(forward_eps * shares) if (forward_eps is not None and shares is not None) else None
         operating_income = None
         net_income_ttm   = None
+
+        # 한국 주식: DART + 네이버 금융 컨센서스
+        if s['market'] == 'KR':
+            naver_forward = naver_get_forward_income(s['code'])
+            if naver_forward is not None:
+                forward_net_income = naver_forward
 
         # 한국 주식: DART 우선 조회
         if s['market'] == 'KR' and dart_corp_map:
