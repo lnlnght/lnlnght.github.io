@@ -16,18 +16,25 @@ _NAVER_HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
     'Referer': 'https://finance.naver.com/',
 }
+_NAVER_BLOCKED = False  # 첫 403/차단 감지 시 이후 호출 건너뜀
 
 def naver_get_forward_income(code):
     """네이버 금융 컨센서스에서 다음 회계연도 순이익 예상치 조회 (원)"""
+    global _NAVER_BLOCKED
+    if _NAVER_BLOCKED:
+        return None
     endpoints = [
         f'https://m.stock.naver.com/api/stock/{code}/consensus/annual',
         f'https://m.stock.naver.com/api/stock/{code}/financeSummary',
-        f'https://finance.naver.com/item/coinfo.naver?code={code}&target=finsum_more',
     ]
     try:
         for url in endpoints:
-            res = requests.get(url, headers=_NAVER_HEADERS, timeout=10)
+            res = requests.get(url, headers=_NAVER_HEADERS, timeout=5)
             print(f'  [NAVER] {code} {url.split("/")[-1].split("?")[0]} status={res.status_code}')
+            if res.status_code in (403, 401, 429):
+                print(f'  [NAVER] 차단됨 ({res.status_code}) — 이후 모든 Naver 호출 건너뜀')
+                _NAVER_BLOCKED = True
+                return None
             if res.status_code != 200:
                 continue
             try:
