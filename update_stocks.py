@@ -121,6 +121,11 @@ for s in STOCKS:
         psr = safe_float(info.get('priceToSalesTrailing12Months'))
         roe = safe_float(info.get('returnOnEquity'))
         eps = safe_float(info.get('trailingEps'))
+        operating_income = info.get('operatingIncome')
+        try:
+            operating_income = int(operating_income) if operating_income else None
+        except (TypeError, ValueError):
+            operating_income = None
         market_cap = info.get('marketCap')
         try:
             market_cap = int(market_cap) if market_cap else None
@@ -142,9 +147,10 @@ for s in STOCKS:
             "forward_per":  round(forward_per, 2)  if forward_per  is not None else None,
             "pbr":        round(pbr, 2) if pbr is not None else None,
             "psr":        round(psr, 2) if psr is not None else None,
-            "roe":        round(roe * 100, 2) if roe is not None else None,
-            "eps":        round(eps, 2) if eps is not None else None,
-            "market_cap": market_cap,
+            "roe":              round(roe * 100, 2) if roe is not None else None,
+            "eps":              round(eps, 2) if eps is not None else None,
+            "operating_income": operating_income,
+            "market_cap":       market_cap,
         })
         cur = "₩" if currency == "KRW" else "$"
         tper_s = f"{trailing_per:.1f}" if trailing_per else "N/A"
