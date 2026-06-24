@@ -113,7 +113,8 @@
                 <th>섹터</th>
                 <th onclick="sortBy('current')">현재가</th>
                 <th onclick="sortBy('change_pct')">등락률</th>
-                <th onclick="sortBy('per')">PER</th>
+                <th onclick="sortBy('trailing_per')">PER (T)</th>
+                <th onclick="sortBy('forward_per')">PER (F)</th>
                 <th onclick="sortBy('pbr')">PBR</th>
                 <th onclick="sortBy('psr')">PSR</th>
                 <th onclick="sortBy('roe')">ROE</th>
@@ -210,7 +211,8 @@ function renderTable() {
             <td><span class="sector-badge s-${s.sector}">${s.sector}</span></td>
             <td>${fmt(s.current, s.currency)}</td>
             <td class="${chgCls}">${sign}${s.change_pct.toFixed(2)}%</td>
-            <td class="${perClass(s.per)}">${s.per != null ? s.per.toFixed(1) : '—'}</td>
+            <td class="${perClass(s.trailing_per)}">${s.trailing_per != null ? s.trailing_per.toFixed(1) : '—'}</td>
+            <td class="${perClass(s.forward_per)}">${s.forward_per != null ? s.forward_per.toFixed(1) : '—'}</td>
             <td class="${pbrClass(s.pbr)}">${s.pbr != null ? s.pbr.toFixed(2) : '—'}</td>
             <td class="${psrClass(s.psr)}">${s.psr != null ? s.psr.toFixed(2) : '—'}</td>
             <td class="${roeClass(s.roe)}">${s.roe != null ? s.roe.toFixed(1)+'%' : '—'}</td>
@@ -220,7 +222,7 @@ function renderTable() {
     document.querySelectorAll('thead th').forEach(th => {
         th.classList.remove('sort-asc','sort-desc');
     });
-    const thMap = ['code','','current','change_pct','per','pbr','psr','roe','market_cap'];
+    const thMap = ['code','','current','change_pct','trailing_per','forward_per','pbr','psr','roe','market_cap'];
     const idx = thMap.indexOf(sortKey);
     if (idx >= 0) {
         document.querySelectorAll('thead th')[idx].classList.add(sortDir > 0 ? 'sort-asc' : 'sort-desc');
