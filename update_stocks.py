@@ -21,6 +21,8 @@ STOCKS = [
     {"yf": "ORCL",  "code": "ORCL",  "name": "오라클",          "sector": "기술",    "market": "US"},
     {"yf": "CRM",   "code": "CRM",   "name": "세일즈포스",      "sector": "기술",    "market": "US"},
     {"yf": "AMD",   "code": "AMD",   "name": "AMD",             "sector": "기술",    "market": "US"},
+    {"yf": "MU",    "code": "MU",    "name": "마이크론",         "sector": "기술",    "market": "US"},
+    {"yf": "INTC",  "code": "INTC",  "name": "인텔",            "sector": "기술",    "market": "US"},
 
     # 금융
     {"yf": "BRK-B", "code": "BRK-B", "name": "버크셔 해서웨이", "sector": "금융",   "market": "US"},
