@@ -115,7 +115,8 @@ for s in STOCKS:
         change      = round(current - prev_close, 2)
         change_pct  = round((change / prev_close) * 100, 2) if prev_close else 0
 
-        per = safe_float(info.get('trailingPE') or info.get('forwardPE'))
+        trailing_per = safe_float(info.get('trailingPE'))
+        forward_per  = safe_float(info.get('forwardPE'))
         pbr = safe_float(info.get('priceToBook'))
         psr = safe_float(info.get('priceToSalesTrailing12Months'))
         roe = safe_float(info.get('returnOnEquity'))
@@ -137,7 +138,8 @@ for s in STOCKS:
             "current":    round(current, 2),
             "change":     change,
             "change_pct": change_pct,
-            "per":        round(per, 2) if per is not None else None,
+            "trailing_per": round(trailing_per, 2) if trailing_per is not None else None,
+            "forward_per":  round(forward_per, 2)  if forward_per  is not None else None,
             "pbr":        round(pbr, 2) if pbr is not None else None,
             "psr":        round(psr, 2) if psr is not None else None,
             "roe":        round(roe * 100, 2) if roe is not None else None,
@@ -145,9 +147,10 @@ for s in STOCKS:
             "market_cap": market_cap,
         })
         cur = "₩" if currency == "KRW" else "$"
-        per_s = f"{per:.1f}" if per else "N/A"
-        pbr_s = f"{pbr:.2f}" if pbr else "N/A"
-        print(f"✓ {s['code']:12s} ({s['name']:16s})  {cur}{current:>12,.2f}  PER:{per_s:>7}  PBR:{pbr_s}")
+        tper_s = f"{trailing_per:.1f}" if trailing_per else "N/A"
+        fper_s = f"{forward_per:.1f}"  if forward_per  else "N/A"
+        pbr_s  = f"{pbr:.2f}"          if pbr          else "N/A"
+        print(f"✓ {s['code']:12s} ({s['name']:16s})  {cur}{current:>12,.2f}  T.PER:{tper_s:>7}  F.PER:{fper_s:>7}  PBR:{pbr_s}")
     except Exception as e:
         print(f"✗ {s['code']}: {e}")
 
