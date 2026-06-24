@@ -18,125 +18,44 @@ _NAVER_HEADERS = {
 }
 _NAVER_BLOCKED = False  # 첫 403/차단 감지 시 이후 호출 건너뜀
 
-def naver_get_forward_income(code):
-    """네이버 금융 컨센서스에서 다음 회계연도 순이익 예상치 조회 (원)"""
+def naver_get_forward_eps(code):
+    """네이버 finance/summary에서 분기별 EPS 합산으로 연간 forward EPS 반환 (원/주)"""
     global _NAVER_BLOCKED
     if _NAVER_BLOCKED:
         return None
-    endpoints = [
-        f'https://m.stock.naver.com/api/stock/{code}/investOpinion',
-        f'https://m.stock.naver.com/api/stock/{code}/consensus',
-        f'https://m.stock.naver.com/api/stock/{code}/finance/summary',
-    ]
+    url = f'https://m.stock.naver.com/api/stock/{code}/finance/summary'
     try:
-        for url in endpoints:
-            res = requests.get(url, headers=_NAVER_HEADERS, timeout=5)
-            print(f'  [NAVER] {code} {url.split("/")[-1].split("?")[0]} status={res.status_code}')
-            if res.status_code in (403, 401, 429):
-                print(f'  [NAVER] 차단됨 ({res.status_code}) — 이후 모든 Naver 호출 건너뜀')
-                _NAVER_BLOCKED = True
-                return None
-            if res.status_code != 200:
-                continue
+        res = requests.get(url, headers=_NAVER_HEADERS, timeout=5)
+        if res.status_code in (403, 401, 429):
+            _NAVER_BLOCKED = True
+            return None
+        if res.status_code != 200:
+            return None
+        data = res.json()
+        eps_data = data.get('chartEps') if isinstance(data, dict) else None
+        if not eps_data or not isinstance(eps_data, dict):
+            return None
+        # columns: [['x', 'Q1', 'Q2', ...], ['EPS', v1, v2, ...]]
+        cols = eps_data.get('columns', [])
+        if len(cols) < 2:
+            return None
+        eps_row = cols[1]  # ['EPS', '733', '1783', ...]
+        if not eps_row or eps_row[0] != 'EPS':
+            return None
+        vals = []
+        for v in eps_row[1:]:
             try:
-                data = res.json()
-            except Exception:
-                print(f'  [NAVER] {code} JSON 파싱 실패 (HTML?), len={len(res.text)}')
-                continue
-            print(f'  [NAVER] {code} keys: {list(data.keys()) if isinstance(data, dict) else (type(data).__name__ + f"[{len(data)}]")}')
-            income = _parse_naver_consensus(data, code)
-            if income is not None:
-                print(f'  [NAVER] {code} 순이익 예상치={income:,}원')
-                return income
+                vals.append(int(str(v).replace(',', '')))
+            except (ValueError, TypeError):
+                pass
+        if len(vals) < 4:
+            return None
+        # 최근 4분기 합산 = 연간 forward EPS
+        annual_eps = sum(vals[-4:])
+        print(f'  [NAVER] {code} chartEps 4Q={vals[-4:]} 연간EPS={annual_eps}')
+        return annual_eps if annual_eps != 0 else None
     except Exception as e:
         print(f'  [NAVER] {code} 조회 실패: {e}')
-    return None
-
-def _parse_naver_consensus(data, code):
-    """네이버 컨센서스 응답에서 다음 연도 순이익 추출"""
-    try:
-        cur_year = datetime.now().year
-        target_years = [str(cur_year + 1), str(cur_year)]
-
-        # finance/summary 응답: {'chartEps': [...], 'chartIncomeStatement': [...], ...}
-        if isinstance(data, dict):
-            # chartIncomeStatement: [{year, netIncome/당기순이익, ...}]
-            for stmt_key in ('chartIncomeStatement', 'incomeStatement'):
-                items = data.get(stmt_key)
-                if isinstance(items, list) and items:
-                    by_year = {}
-                    for item in items:
-                        if not isinstance(item, dict):
-                            continue
-                        year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
-                        if not year_val:
-                            continue
-                        for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
-                            v = item.get(ni_key)
-                            if v is not None:
-                                try:
-                                    # Naver 단위: 억원 → 원 변환
-                                    val = int(float(v))
-                                    if abs(val) < 1_000_000:  # 억원 단위 추정
-                                        val = val * 100_000_000
-                                    by_year[year_val] = val
-                                except (TypeError, ValueError):
-                                    pass
-                                break
-                    if by_year:
-                        print(f'  [NAVER] {code} incomeStatement by_year={by_year}')
-                        for y in target_years:
-                            if y in by_year and by_year[y] != 0:
-                                return by_year[y]
-
-            # chartEps: [{year, estimate/actual EPS, ...}] — EPS×주식수로 순이익 추정 불가, 스킵
-            # 대신 chartEps 구조 로그만 출력
-            eps_data = data.get('chartEps')
-            if eps_data:
-                print(f'  [NAVER] {code} chartEps sample={eps_data[:2] if isinstance(eps_data, list) else eps_data}')
-
-            # 기존 리스트 키 탐색
-            for key in ('annualEstimate', 'estimate', 'consensus', 'list', 'data'):
-                items = data.get(key)
-                if isinstance(items, list) and items:
-                    by_year = {}
-                    for item in items:
-                        if not isinstance(item, dict):
-                            continue
-                        year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
-                        for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
-                            v = item.get(ni_key)
-                            if v is not None:
-                                try:
-                                    by_year[year_val] = int(float(v))
-                                except (TypeError, ValueError):
-                                    pass
-                                break
-                    if by_year:
-                        print(f'  [NAVER] {code} by_year={by_year}')
-                        for y in target_years:
-                            if y in by_year and by_year[y] != 0:
-                                return by_year[y]
-        elif isinstance(data, list):
-            by_year = {}
-            for item in data:
-                if not isinstance(item, dict):
-                    continue
-                year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
-                for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
-                    v = item.get(ni_key)
-                    if v is not None:
-                        try:
-                            by_year[year_val] = int(float(v))
-                        except (TypeError, ValueError):
-                            pass
-                        break
-            print(f'  [NAVER] {code} by_year={by_year}')
-            for y in target_years:
-                if y in by_year and by_year[y] != 0:
-                    return by_year[y]
-    except Exception as e:
-        print(f'  [NAVER] {code} parse 실패: {e}')
     return None
 
 def dart_load_corp_codes(api_key):
@@ -378,11 +297,10 @@ for s in STOCKS:
         operating_income = None
         net_income_ttm   = None
 
-        # 한국 주식: DART + 네이버 금융 컨센서스
+        # 한국 주식: 네이버 finance/summary에서 chartEps로 forward EPS 조회
+        naver_forward_eps = None
         if s['market'] == 'KR':
-            naver_forward = naver_get_forward_income(s['code'])
-            if naver_forward is not None:
-                forward_net_income = naver_forward
+            naver_forward_eps = naver_get_forward_eps(s['code'])
 
         # 한국 주식: DART 우선 조회
         if s['market'] == 'KR' and dart_corp_map:
@@ -404,10 +322,10 @@ for s in STOCKS:
                     # Trailing PER = 시가총액 / TTM순이익 (yfinance는 KR PER 미제공)
                     if _mc and net_income_ttm and net_income_ttm > 0:
                         trailing_per = round(_mc / net_income_ttm, 2)
-                    # yfinance forwardPE는 KR 주식에서 부정확 → forward_net_income으로 재계산
+                    # Forward PER = 현재가 / 연간 forward EPS (네이버 chartEps 4분기 합산)
                     forward_per = None
-                    if forward_net_income and forward_net_income > 0 and _mc:
-                        forward_per = round(_mc / forward_net_income, 2)
+                    if naver_forward_eps and naver_forward_eps > 0:
+                        forward_per = round(current / naver_forward_eps, 2)
                     # PSR = 시가총액 / 매출액
                     if dart_revenue and dart_revenue > 0 and _mc:
                         psr = round(_mc / dart_revenue, 2)
@@ -484,6 +402,7 @@ for s in STOCKS:
             "operating_income":   operating_income,
             "net_income_ttm":     net_income_ttm,
             "forward_net_income": forward_net_income,
+            "forward_eps_krw":    naver_forward_eps if s['market'] == 'KR' else None,
             "market_cap":       market_cap,
         })
         cur = "₩" if currency == "KRW" else "$"
