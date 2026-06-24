@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주요 종목 밸류에이션</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e2e2e8; min-height: 100vh; }
+
+        header { max-width: 1200px; margin: 0 auto; padding: 36px 24px 16px; display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
+        .header-left h1 { font-size: 26px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header-left p { font-size: 12px; color: #2e2e42; margin-top: 4px; }
+        .header-right { display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+        .update-label { font-size: 11px; color: #3a3a4a; }
+        .nav-link { padding: 5px 14px; border-radius: 8px; border: 1px solid #222; color: #555; font-size: 12px; text-decoration: none; transition: all 0.15s; }
+        .nav-link:hover { color: #aaa; border-color: #333; }
+        .refresh-btn { padding: 5px 14px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+        .refresh-btn:hover { color: #aaa; border-color: #333; }
+        .refresh-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+        .filter-area { max-width: 1200px; margin: 0 auto; padding: 12px 24px 20px; display: flex; flex-direction: column; gap: 8px; }
+        .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+        .filter-label { font-size: 10px; color: #2e2e42; min-width: 28px; }
+        .filter-btn { padding: 5px 14px; border-radius: 20px; border: 1px solid #1e1e2a; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+        .filter-btn:hover { color: #999; border-color: #2a2a3a; }
+        .filter-btn.active { background: #14141e; color: #e2e2e8; border-color: #6366f1; }
+        .market-btn { padding: 4px 12px; border-radius: 20px; border: 1px solid #1e1e2a; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+        .market-btn:hover { color: #999; border-color: #2a2a3a; }
+        .market-btn.active-all { background: #14141e; color: #e2e2e8; border-color: #6366f1; }
+        .market-btn.active-us  { background: #0f1f0f; color: #22c55e; border-color: #22c55e; }
+        .market-btn.active-kr  { background: #161630; color: #6366f1; border-color: #6366f1; }
+
+        .table-wrap { max-width: 1200px; margin: 0 auto; padding: 0 24px 60px; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; font-size: 13px; }
+        thead th {
+            padding: 10px 14px; text-align: right; color: #3a3a4a; font-size: 11px; font-weight: 600;
+            border-bottom: 1px solid #14141e; cursor: pointer; white-space: nowrap; user-select: none;
+        }
+        thead th:first-child, thead th:nth-child(2) { text-align: left; }
+        thead th:hover { color: #888; }
+        thead th.sort-asc::after  { content: ' ↑'; color: #6366f1; }
+        thead th.sort-desc::after { content: ' ↓'; color: #6366f1; }
+        tbody tr { border-bottom: 1px solid #0e0e16; transition: background 0.1s; cursor: default; }
+        tbody tr:hover { background: #0e0e18; }
+        td { padding: 12px 14px; text-align: right; color: #888; }
+        td:first-child { text-align: left; }
+        td:nth-child(2) { text-align: left; color: #555; font-size: 12px; }
+
+        .td-code { font-weight: 700; color: #c8c8d8; font-size: 13px; }
+        .market-badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 5px; vertical-align: middle; }
+        .badge-us { background: #0f1f0f; color: #22c55e; }
+        .badge-kr { background: #161630; color: #6366f1; }
+        .sector-badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
+        .s-기술       { background: #16162a; color: #818cf8; }
+        .s-금융       { background: #0f1f14; color: #4ade80; }
+        .s-헬스케어   { background: #170f22; color: #c084fc; }
+        .s-소비재     { background: #1c1a10; color: #fbbf24; }
+        .s-에너지     { background: #191910; color: #facc15; }
+        .s-산업재     { background: #1c0f18; color: #f472b6; }
+        .s-반도체·IT  { background: #16162a; color: #818cf8; }
+        .s-자동차     { background: #1c1a10; color: #fbbf24; }
+        .s-배터리·화학{ background: #0f1f14; color: #4ade80; }
+        .s-바이오·헬스{ background: #170f22; color: #c084fc; }
+        .s-지주·유통  { background: #1c0f18; color: #f472b6; }
+
+        .up   { color: #22c55e; }
+        .down { color: #ef4444; }
+        .neutral { color: #555; }
+
+        .val-high { color: #ef4444; }
+        .val-mid  { color: #fbbf24; }
+        .val-low  { color: #22c55e; }
+        .val-na   { color: #2a2a3a; }
+
+        .state-msg { text-align: center; padding: 80px 20px; color: #333; font-size: 14px; line-height: 2; }
+
+        footer { text-align: center; padding: 32px; font-size: 11px; color: #1e1e28; border-top: 1px solid #0e0e16; }
+    </style>
+</head>
+<body>
+<header>
+    <div class="header-left">
+        <h1>주요 종목 밸류에이션</h1>
+        <p>미국·한국 주요 종목 PER · PBR · ROE</p>
+    </div>
+    <div class="header-right">
+        <a href="/" class="nav-link">ETF</a>
+        <a href="https://lnlnght.github.io/my-profile-site/" class="nav-link">자기소개</a>
+        <span class="update-label" id="update-label">로딩 중…</span>
+        <button class="refresh-btn" id="refresh-btn" onclick="loadData()">↻ 새로고침</button>
+    </div>
+</header>
+
+<div class="filter-area">
+    <div class="filter-row">
+        <span class="filter-label">시장</span>
+        <button class="market-btn active-all" onclick="applyMarket('전체',this)">전체</button>
+        <button class="market-btn" onclick="applyMarket('US',this)">미국</button>
+        <button class="market-btn" onclick="applyMarket('KR',this)">한국</button>
+    </div>
+    <div class="filter-row" id="sector-row">
+        <span class="filter-label">섹터</span>
+        <button class="filter-btn active" onclick="applySector('전체',this)">전체</button>
+    </div>
+</div>
+
+<div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th onclick="sortBy('code')">종목</th>
+                <th>섹터</th>
+                <th onclick="sortBy('current')">현재가</th>
+                <th onclick="sortBy('change_pct')">등락률</th>
+                <th onclick="sortBy('per')">PER</th>
+                <th onclick="sortBy('pbr')">PBR</th>
+                <th onclick="sortBy('psr')">PSR</th>
+                <th onclick="sortBy('roe')">ROE</th>
+                <th onclick="sortBy('market_cap')">시가총액</th>
+            </tr>
+        </thead>
+        <tbody id="stock-tbody">
+            <tr><td colspan="9" class="state-msg">로딩 중…</td></tr>
+        </tbody>
+    </table>
+</div>
+
+<footer>데이터 출처: Yahoo Finance · 투자 참고용, 투자 권유 아님</footer>
+
+<script>
+let allStocks = [], activeMarket = '전체', activeSector = '전체';
+let sortKey = 'market_cap', sortDir = -1;
+let timerInterval, autoRefreshTimer;
+
+const fmt = (v, cur) => {
+    if (v == null) return '—';
+    if (cur === 'KRW') return '₩' + Math.round(v).toLocaleString('ko-KR');
+    return '$' + v.toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+};
+const fmtCap = (v, cur) => {
+    if (!v) return '—';
+    if (cur === 'KRW') {
+        if (v >= 1e12) return '₩'+(v/1e12).toFixed(1)+'조';
+        return '₩'+(v/1e8).toFixed(0)+'억';
+    }
+    if (v >= 1e12) return '$'+(v/1e12).toFixed(2)+'T';
+    if (v >= 1e9)  return '$'+(v/1e9).toFixed(1)+'B';
+    return '$'+(v/1e6).toFixed(0)+'M';
+};
+const fmtNum = v => v != null ? v.toFixed(2) : null;
+const perClass  = v => v == null ? 'val-na' : v > 40 ? 'val-high' : v > 20 ? 'val-mid' : 'val-low';
+const pbrClass  = v => v == null ? 'val-na' : v > 5  ? 'val-high' : v > 2  ? 'val-mid' : 'val-low';
+const psrClass  = v => v == null ? 'val-na' : v > 10 ? 'val-high' : v > 3  ? 'val-mid' : 'val-low';
+const roeClass  = v => v == null ? 'val-na' : v > 20 ? 'val-low'  : v > 10 ? 'val-mid' : 'val-high';
+
+function startAgeTimer(dateStr) {
+    if (timerInterval) clearInterval(timerInterval);
+    const base = new Date(dateStr);
+    const tick = () => {
+        const m = Math.floor((Date.now() - base.getTime()) / 60000);
+        document.getElementById('update-label').textContent = m < 1 ? '방금 업데이트' : `${m}분 전 업데이트`;
+    };
+    tick();
+    timerInterval = setInterval(tick, 60000);
+}
+
+function buildSectorButtons() {
+    const sectors = [...new Set(allStocks.map(s => s.sector))].sort();
+    const row = document.getElementById('sector-row');
+    const existing = [...row.querySelectorAll('.filter-btn')].map(b => b.textContent);
+    sectors.forEach(sec => {
+        if (!existing.includes(sec)) {
+            const btn = document.createElement('button');
+            btn.className = 'filter-btn';
+            btn.textContent = sec;
+            btn.onclick = () => applySector(sec, btn);
+            row.appendChild(btn);
+        }
+    });
+}
+
+function filtered() {
+    return allStocks.filter(s =>
+        (activeMarket === '전체' || s.market === activeMarket) &&
+        (activeSector === '전체' || s.sector === activeSector)
+    );
+}
+
+function renderTable() {
+    const list = [...filtered()].sort((a, b) => {
+        const av = a[sortKey], bv = b[sortKey];
+        if (av == null && bv == null) return 0;
+        if (av == null) return 1;
+        if (bv == null) return -1;
+        return sortDir * (av > bv ? 1 : av < bv ? -1 : 0);
+    });
+    const tbody = document.getElementById('stock-tbody');
+    if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="9" class="state-msg">표시할 종목이 없습니다</td></tr>';
+        return;
+    }
+    tbody.innerHTML = list.map(s => {
+        const sign = s.change_pct >= 0 ? '+' : '';
+        const chgCls = s.change_pct > 0 ? 'up' : s.change_pct < 0 ? 'down' : 'neutral';
+        const badgeCls = s.market === 'US' ? 'badge-us' : 'badge-kr';
+        const sectorKey = s.sector.replace(/[·\s]/g, '-').replace(/[^a-zA-Z0-9가-힣-]/g,'');
+        return `<tr>
+            <td><span class="td-code">${s.code}</span><span class="market-badge ${badgeCls}">${s.market}</span><br><span style="font-size:11px;color:#444">${s.name}</span></td>
+            <td><span class="sector-badge s-${s.sector}">${s.sector}</span></td>
+            <td>${fmt(s.current, s.currency)}</td>
+            <td class="${chgCls}">${sign}${s.change_pct.toFixed(2)}%</td>
+            <td class="${perClass(s.per)}">${s.per != null ? s.per.toFixed(1) : '—'}</td>
+            <td class="${pbrClass(s.pbr)}">${s.pbr != null ? s.pbr.toFixed(2) : '—'}</td>
+            <td class="${psrClass(s.psr)}">${s.psr != null ? s.psr.toFixed(2) : '—'}</td>
+            <td class="${roeClass(s.roe)}">${s.roe != null ? s.roe.toFixed(1)+'%' : '—'}</td>
+            <td>${fmtCap(s.market_cap, s.currency)}</td>
+        </tr>`;
+    }).join('');
+    document.querySelectorAll('thead th').forEach(th => {
+        th.classList.remove('sort-asc','sort-desc');
+    });
+    const thMap = ['code','','current','change_pct','per','pbr','psr','roe','market_cap'];
+    const idx = thMap.indexOf(sortKey);
+    if (idx >= 0) {
+        document.querySelectorAll('thead th')[idx].classList.add(sortDir > 0 ? 'sort-asc' : 'sort-desc');
+    }
+}
+
+async function loadData() {
+    const btn = document.getElementById('refresh-btn');
+    btn.disabled = true;
+    if (autoRefreshTimer) clearTimeout(autoRefreshTimer);
+    try {
+        const res = await fetch('stocks.json?t=' + Date.now());
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const data = await res.json();
+        allStocks = data.stocks || [];
+        startAgeTimer(data.updated);
+        buildSectorButtons();
+        renderTable();
+    } catch(e) {
+        document.getElementById('update-label').textContent = '데이터 없음';
+        document.getElementById('stock-tbody').innerHTML =
+            '<tr><td colspan="9" class="state-msg">⚠️ 데이터를 불러올 수 없습니다<br><small style="color:#555">'+e.message+'</small></td></tr>';
+        btn.disabled = false;
+        autoRefreshTimer = setTimeout(loadData, 5*60*1000);
+        return;
+    }
+    btn.disabled = false;
+    autoRefreshTimer = setTimeout(loadData, 5*60*1000);
+}
+
+function sortBy(key) {
+    if (sortKey === key) sortDir *= -1;
+    else { sortKey = key; sortDir = key === 'code' ? 1 : -1; }
+    renderTable();
+}
+
+function applyMarket(mkt, btn) {
+    activeMarket = mkt;
+    document.querySelectorAll('.market-btn').forEach(b => b.className = 'market-btn');
+    btn.className = 'market-btn ' + (mkt==='전체'?'active-all':mkt==='US'?'active-us':'active-kr');
+    renderTable();
+}
+
+function applySector(sec, btn) {
+    activeSector = sec;
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderTable();
+}
+
+loadData();
+</script>
+</body>
+</html>
