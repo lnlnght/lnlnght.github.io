@@ -183,20 +183,26 @@ async function loadData() {
     if (autoRefreshTimer) clearTimeout(autoRefreshTimer);
     try {
         const res = await fetch('etfs.json?t='+Date.now());
-        if (!res.ok) throw new Error();
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         const data = await res.json();
         allEtfs = data.etfs || [];
         startAgeTimer(data.updated);
         renderCards(filtered());
-        if (allEtfs.length && !selected) selectEtf(allEtfs[0].code);
-        else if (selected) {
-            selected = allEtfs.find(e=>e.code===selected.code)||null;
-            if (selected) { updatePanel(); drawChart(currentRange); }
-        }
     } catch(e) {
         document.getElementById('update-label').textContent = '데이터 없음';
         document.getElementById('etf-grid').innerHTML =
             '<div class="state-msg">⚠️ 데이터를 불러올 수 없습니다<br><small style="color:#222">GitHub Actions가 아직 실행되지 않았을 수 있습니다</small></div>';
+        btn.disabled = false;
+        autoRefreshTimer = setTimeout(loadData, 5*60*1000);
+        return;
+    }
+    if (allEtfs.length && !selected) {
+        try { selectEtf(allEtfs[0].code); } catch(e) { /* 차트 오류 무시 */ }
+    } else if (selected) {
+        selected = allEtfs.find(e=>e.code===selected.code)||null;
+        if (selected) {
+            try { updatePanel(); drawChart(currentRange); } catch(e) { /* 차트 오류 무시 */ }
+        }
     }
     btn.disabled = false;
     autoRefreshTimer = setTimeout(loadData, 5*60*1000);
