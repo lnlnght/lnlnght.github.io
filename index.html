@@ -17,6 +17,8 @@
         .refresh-btn { padding: 5px 14px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
         .refresh-btn:hover { color: #aaa; border-color: #333; }
         .refresh-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+        .profile-link { padding: 5px 14px; border-radius: 8px; border: 1px solid #222; color: #555; font-size: 12px; text-decoration: none; transition: all 0.15s; }
+        .profile-link:hover { color: #aaa; border-color: #333; }
 
         .filter-area { max-width: 1200px; margin: 0 auto; padding: 12px 24px 24px; display: flex; flex-direction: column; gap: 8px; }
         .filter-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
@@ -89,6 +91,7 @@
         <p>미국·한국 주요 ETF · 장 중 15분 간격 업데이트</p>
     </div>
     <div class="header-right">
+        <a href="https://lnlnght.github.io/my-profile-site/" class="profile-link">자기소개</a>
         <span class="update-label" id="update-label">로딩 중…</span>
         <button class="refresh-btn" id="refresh-btn" onclick="loadData()">↻ 새로고침</button>
     </div>
