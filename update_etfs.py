@@ -4,8 +4,9 @@ import math
 import requests
 from datetime import datetime, timedelta
 
-def fetch_kr_etf_aum():
-    """KRX 데이터 API에서 한국 ETF 순자산총액(AUM) 일괄 조회. {종목코드: AUM(원)} 반환"""
+def fetch_kr_etf_data():
+    """KRX 데이터 API에서 한국 ETF 순자산총액·배당수익률 일괄 조회.
+    {종목코드: {'aum': 원, 'dividend_yield': float}} 반환"""
     today = datetime.now()
     for offset in range(7):
         date_str = (today - timedelta(days=offset)).strftime('%Y%m%d')
@@ -30,24 +31,41 @@ def fetch_kr_etf_aum():
             if not items:
                 print(f"[KRX] {date_str} 데이터 없음 (주말/공휴일?)")
                 continue
-            aum_map = {}
+            # 첫 항목의 키 출력 (디버그용, 한 번만)
+            if items:
+                print(f"[KRX] 응답 필드: {list(items[0].keys())}")
+            result = {}
             for item in items:
                 code = item.get('ISU_SRT_CD', '').strip()
-                # 순자산총액 필드명: NETASST_TOTAMT
-                raw = item.get('NETASST_TOTAMT', '').replace(',', '').strip()
-                if code and raw:
+                if not code:
+                    continue
+                aum = 0
+                raw_aum = item.get('NETASST_TOTAMT', '').replace(',', '').strip()
+                if raw_aum:
                     try:
-                        v = int(raw)
+                        v = int(raw_aum)
                         if v > 0:
-                            aum_map[code] = v * 1000  # KRX 단위: 천원 → 원
+                            aum = v * 1000  # 천원 → 원
                     except ValueError:
                         pass
-            if aum_map:
-                print(f"[KRX] ETF AUM {len(aum_map)}개 로드 ({date_str})")
-                return aum_map
+                # 배당수익률 필드 탐색 (필드명이 버전마다 다를 수 있음)
+                div_yield = 0.0
+                for dy_key in ('DVDND_YD', 'DVD_YD', 'DVDNDYD', 'YELD'):
+                    raw_dy = item.get(dy_key, '').replace(',', '').replace('%', '').strip()
+                    if raw_dy:
+                        try:
+                            div_yield = float(raw_dy) / 100  # % → 소수
+                            break
+                        except ValueError:
+                            pass
+                if aum > 0 or div_yield > 0:
+                    result[code] = {'aum': aum, 'dividend_yield': div_yield}
+            if result:
+                print(f"[KRX] ETF {len(result)}개 로드 ({date_str})")
+                return result
         except Exception as e:
             print(f"[KRX] {date_str} 조회 실패: {e}")
-    print("[KRX] AUM 조회 실패: 최근 7일 모두 데이터 없음")
+    print("[KRX] 조회 실패: 최근 7일 모두 데이터 없음")
     return {}
 
 ETFS = [
@@ -169,65 +187,65 @@ ETFS = [
     # ============================================================
 
     # 지수 — 국내 (3)
-    {"yf": "069500.KS", "code": "069500", "name": "KODEX 200",            "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "102110.KS", "code": "102110", "name": "TIGER 200",            "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "229200.KS", "code": "229200", "name": "KODEX KOSDAQ150",      "category": "지수",    "market": "KR", "currency": "KRW"},
+    {"yf": "069500.KS", "code": "069500", "name": "KODEX 200",            "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0015},
+    {"yf": "102110.KS", "code": "102110", "name": "TIGER 200",            "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0005},
+    {"yf": "229200.KS", "code": "229200", "name": "KODEX KOSDAQ150",      "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0026},
     # 지수 — 해외 (9)
-    {"yf": "360750.KS", "code": "360750", "name": "TIGER 미국S&P500",         "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "133690.KS", "code": "133690", "name": "TIGER 미국나스닥100",      "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "379800.KS", "code": "379800", "name": "KODEX 미국S&P500TR",       "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "195980.KS", "code": "195980", "name": "TIGER 유로STOXX50",        "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "241180.KS", "code": "241180", "name": "TIGER 일본니케이225",      "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "192090.KS", "code": "192090", "name": "TIGER 차이나CSI300",       "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "411060.KS", "code": "411060", "name": "ACE 미국S&P500",           "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "367380.KS", "code": "367380", "name": "KODEX 미국나스닥100TR",    "category": "지수",    "market": "KR", "currency": "KRW"},
-    {"yf": "352560.KS", "code": "352560", "name": "TIGER 미국테크TOP10 INDXX","category": "지수",    "market": "KR", "currency": "KRW"},
+    {"yf": "360750.KS", "code": "360750", "name": "TIGER 미국S&P500",         "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.00045},
+    {"yf": "133690.KS", "code": "133690", "name": "TIGER 미국나스닥100",      "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0007},
+    {"yf": "379800.KS", "code": "379800", "name": "KODEX 미국S&P500TR",       "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0005},
+    {"yf": "195980.KS", "code": "195980", "name": "TIGER 유로STOXX50",        "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0035},
+    {"yf": "241180.KS", "code": "241180", "name": "TIGER 일본니케이225",      "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "192090.KS", "code": "192090", "name": "TIGER 차이나CSI300",       "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0053},
+    {"yf": "411060.KS", "code": "411060", "name": "ACE 미국S&P500",           "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0007},
+    {"yf": "367380.KS", "code": "367380", "name": "KODEX 미국나스닥100TR",    "category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0005},
+    {"yf": "352560.KS", "code": "352560", "name": "TIGER 미국테크TOP10 INDXX","category": "지수",    "market": "KR", "currency": "KRW", "er": 0.0049},
 
     # 배당 (6)
-    {"yf": "279530.KS", "code": "279530", "name": "KODEX 배당가치",            "category": "배당",    "market": "KR", "currency": "KRW"},
-    {"yf": "458730.KS", "code": "458730", "name": "TIGER 미국배당다우존스",    "category": "배당",    "market": "KR", "currency": "KRW"},
-    {"yf": "441680.KS", "code": "441680", "name": "KODEX 미국배당프리미엄",    "category": "배당",    "market": "KR", "currency": "KRW"},
-    {"yf": "266160.KS", "code": "266160", "name": "KODEX 고배당",              "category": "배당",    "market": "KR", "currency": "KRW"},
-    {"yf": "319640.KS", "code": "319640", "name": "TIGER 배당성장",            "category": "배당",    "market": "KR", "currency": "KRW"},
-    {"yf": "455890.KS", "code": "455890", "name": "TIGER 미국배당+7%프리미엄", "category": "배당",    "market": "KR", "currency": "KRW"},
+    {"yf": "279530.KS", "code": "279530", "name": "KODEX 배당가치",            "category": "배당",    "market": "KR", "currency": "KRW", "er": 0.0037},
+    {"yf": "458730.KS", "code": "458730", "name": "TIGER 미국배당다우존스",    "category": "배당",    "market": "KR", "currency": "KRW", "er": 0.0013},
+    {"yf": "441680.KS", "code": "441680", "name": "KODEX 미국배당프리미엄",    "category": "배당",    "market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "266160.KS", "code": "266160", "name": "KODEX 고배당",              "category": "배당",    "market": "KR", "currency": "KRW", "er": 0.002},
+    {"yf": "319640.KS", "code": "319640", "name": "TIGER 배당성장",            "category": "배당",    "market": "KR", "currency": "KRW", "er": 0.0015},
+    {"yf": "455890.KS", "code": "455890", "name": "TIGER 미국배당+7%프리미엄", "category": "배당",    "market": "KR", "currency": "KRW", "er": 0.0049},
 
     # 채권 (5)
-    {"yf": "114820.KS", "code": "114820", "name": "KODEX 국고채3년",           "category": "채권",    "market": "KR", "currency": "KRW"},
-    {"yf": "148070.KS", "code": "148070", "name": "KOSEF 국고채10년",           "category": "채권",    "market": "KR", "currency": "KRW"},
-    {"yf": "304660.KS", "code": "304660", "name": "KODEX 미국채30년선물(H)",    "category": "채권",    "market": "KR", "currency": "KRW"},
-    {"yf": "453850.KS", "code": "453850", "name": "KODEX 미국채10년선물",       "category": "채권",    "market": "KR", "currency": "KRW"},
+    {"yf": "114820.KS", "code": "114820", "name": "KODEX 국고채3년",           "category": "채권",    "market": "KR", "currency": "KRW", "er": 0.0015},
+    {"yf": "148070.KS", "code": "148070", "name": "KOSEF 국고채10년",           "category": "채권",    "market": "KR", "currency": "KRW", "er": 0.0015},
+    {"yf": "304660.KS", "code": "304660", "name": "KODEX 미국채30년선물(H)",    "category": "채권",    "market": "KR", "currency": "KRW", "er": 0.003},
+    {"yf": "453850.KS", "code": "453850", "name": "KODEX 미국채10년선물",       "category": "채권",    "market": "KR", "currency": "KRW", "er": 0.0007},
 
     # 섹터 (7)
-    {"yf": "091160.KS", "code": "091160", "name": "KODEX 반도체",               "category": "섹터",    "market": "KR", "currency": "KRW"},
-    {"yf": "396500.KS", "code": "396500", "name": "TIGER 반도체TOP10",           "category": "섹터",    "market": "KR", "currency": "KRW"},
-    {"yf": "448540.KS", "code": "448540", "name": "KODEX 미국반도체MV",         "category": "섹터",    "market": "KR", "currency": "KRW"},
-    {"yf": "143850.KS", "code": "143850", "name": "TIGER 미국나스닥바이오",     "category": "섹터",    "market": "KR", "currency": "KRW"},
-    {"yf": "139290.KS", "code": "139290", "name": "TIGER 200 IT",               "category": "섹터",    "market": "KR", "currency": "KRW"},
-    {"yf": "227550.KS", "code": "227550", "name": "TIGER 200 헬스케어",         "category": "섹터",    "market": "KR", "currency": "KRW"},
-    {"yf": "091180.KS", "code": "091180", "name": "KODEX 자동차",               "category": "섹터",    "market": "KR", "currency": "KRW"},
+    {"yf": "091160.KS", "code": "091160", "name": "KODEX 반도체",               "category": "섹터",    "market": "KR", "currency": "KRW", "er": 0.0045},
+    {"yf": "396500.KS", "code": "396500", "name": "TIGER 반도체TOP10",           "category": "섹터",    "market": "KR", "currency": "KRW", "er": 0.0045},
+    {"yf": "448540.KS", "code": "448540", "name": "KODEX 미국반도체MV",         "category": "섹터",    "market": "KR", "currency": "KRW", "er": 0.0005},
+    {"yf": "143850.KS", "code": "143850", "name": "TIGER 미국나스닥바이오",     "category": "섹터",    "market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "139290.KS", "code": "139290", "name": "TIGER 200 IT",               "category": "섹터",    "market": "KR", "currency": "KRW", "er": 0.0015},
+    {"yf": "227550.KS", "code": "227550", "name": "TIGER 200 헬스케어",         "category": "섹터",    "market": "KR", "currency": "KRW", "er": 0.0015},
+    {"yf": "091180.KS", "code": "091180", "name": "KODEX 자동차",               "category": "섹터",    "market": "KR", "currency": "KRW", "er": 0.0045},
 
     # 테마 (7)
-    {"yf": "305720.KS", "code": "305720", "name": "KODEX 2차전지산업",          "category": "테마",    "market": "KR", "currency": "KRW"},
-    {"yf": "381170.KS", "code": "381170", "name": "TIGER 미국테크TOP10",        "category": "테마",    "market": "KR", "currency": "KRW"},
-    {"yf": "364980.KS", "code": "364980", "name": "TIGER 글로벌사이버보안",     "category": "테마",    "market": "KR", "currency": "KRW"},
-    {"yf": "371460.KS", "code": "371460", "name": "TIGER 글로벌AI",             "category": "테마",    "market": "KR", "currency": "KRW"},
-    {"yf": "334700.KS", "code": "334700", "name": "KODEX 바이오",               "category": "테마",    "market": "KR", "currency": "KRW"},
+    {"yf": "305720.KS", "code": "305720", "name": "KODEX 2차전지산업",          "category": "테마",    "market": "KR", "currency": "KRW", "er": 0.0045},
+    {"yf": "381170.KS", "code": "381170", "name": "TIGER 미국테크TOP10",        "category": "테마",    "market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "364980.KS", "code": "364980", "name": "TIGER 글로벌사이버보안",     "category": "테마",    "market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "371460.KS", "code": "371460", "name": "TIGER 글로벌AI",             "category": "테마",    "market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "334700.KS", "code": "334700", "name": "KODEX 바이오",               "category": "테마",    "market": "KR", "currency": "KRW", "er": 0.0045},
 
     # 원자재 (4)
-    {"yf": "132030.KS", "code": "132030", "name": "KODEX 골드선물(H)",          "category": "원자재",  "market": "KR", "currency": "KRW"},
-    {"yf": "130680.KS", "code": "130680", "name": "TIGER 원유선물Enhanced",     "category": "원자재",  "market": "KR", "currency": "KRW"},
-    {"yf": "292050.KS", "code": "292050", "name": "TIGER 구리실물",             "category": "원자재",  "market": "KR", "currency": "KRW"},
+    {"yf": "132030.KS", "code": "132030", "name": "KODEX 골드선물(H)",          "category": "원자재",  "market": "KR", "currency": "KRW", "er": 0.0068},
+    {"yf": "130680.KS", "code": "130680", "name": "TIGER 원유선물Enhanced",     "category": "원자재",  "market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "292050.KS", "code": "292050", "name": "TIGER 구리실물",             "category": "원자재",  "market": "KR", "currency": "KRW", "er": 0.0049},
 
     # 레버리지·인버스 (6)
-    {"yf": "122630.KS", "code": "122630", "name": "KODEX 레버리지 2x",          "category": "레버리지","market": "KR", "currency": "KRW"},
-    {"yf": "114800.KS", "code": "114800", "name": "KODEX 인버스",                "category": "레버리지","market": "KR", "currency": "KRW"},
-    {"yf": "233740.KS", "code": "233740", "name": "KODEX 코스닥150 레버리지",    "category": "레버리지","market": "KR", "currency": "KRW"},
-    {"yf": "252670.KS", "code": "252670", "name": "KODEX 200선물인버스2X",       "category": "레버리지","market": "KR", "currency": "KRW"},
-    {"yf": "251340.KS", "code": "251340", "name": "KODEX 코스닥150 인버스",      "category": "레버리지","market": "KR", "currency": "KRW"},
-    {"yf": "275980.KS", "code": "275980", "name": "TIGER 200선물레버리지",       "category": "레버리지","market": "KR", "currency": "KRW"},
+    {"yf": "122630.KS", "code": "122630", "name": "KODEX 레버리지 2x",          "category": "레버리지","market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "114800.KS", "code": "114800", "name": "KODEX 인버스",                "category": "레버리지","market": "KR", "currency": "KRW", "er": 0.0015},
+    {"yf": "233740.KS", "code": "233740", "name": "KODEX 코스닥150 레버리지",    "category": "레버리지","market": "KR", "currency": "KRW", "er": 0.0064},
+    {"yf": "252670.KS", "code": "252670", "name": "KODEX 200선물인버스2X",       "category": "레버리지","market": "KR", "currency": "KRW", "er": 0.0064},
+    {"yf": "251340.KS", "code": "251340", "name": "KODEX 코스닥150 인버스",      "category": "레버리지","market": "KR", "currency": "KRW", "er": 0.0049},
+    {"yf": "275980.KS", "code": "275980", "name": "TIGER 200선물레버리지",       "category": "레버리지","market": "KR", "currency": "KRW", "er": 0.0064},
 ]
 
-kr_etf_aum = fetch_kr_etf_aum()
+kr_etf_data = fetch_kr_etf_data()
 
 result = []
 for s in ETFS:
@@ -249,9 +267,9 @@ for s in ETFS:
         low_52w  = round(float(hist['Low'].min()), 2)
 
         try:
-            expense_ratio = float(info.get('annualReportExpenseRatio') or info.get('expenseRatio') or 0)
+            expense_ratio = s.get('er') or float(info.get('annualReportExpenseRatio') or info.get('expenseRatio') or 0)
         except (TypeError, ValueError):
-            expense_ratio = 0
+            expense_ratio = s.get('er') or 0
 
         try:
             dividend_yield = float(info.get('yield') or info.get('trailingAnnualDividendYield') or 0)
@@ -262,9 +280,13 @@ for s in ETFS:
             total_assets = int(info.get('totalAssets') or 0)
         except (TypeError, ValueError):
             total_assets = 0
-        # 한국 ETF: KRX 순자산총액으로 덮어씀
-        if s['market'] == 'KR' and s['code'] in kr_etf_aum:
-            total_assets = kr_etf_aum[s['code']]
+        # 한국 ETF: KRX 데이터로 덮어씀
+        if s['market'] == 'KR' and s['code'] in kr_etf_data:
+            kd = kr_etf_data[s['code']]
+            if kd['aum'] > 0:
+                total_assets = kd['aum']
+            if kd['dividend_yield'] > 0:
+                dividend_yield = kd['dividend_yield']
 
         result.append({
             "code":           s["code"],

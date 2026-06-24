@@ -352,8 +352,10 @@ for s in STOCKS:
                     # Trailing PER = 시가총액 / TTM순이익 (yfinance는 KR PER 미제공)
                     if _mc and net_income_ttm and net_income_ttm > 0:
                         trailing_per = round(_mc / net_income_ttm, 2)
-                    # yfinance forwardPE는 KR 주식에서 부정확 → 무효화
+                    # yfinance forwardPE는 KR 주식에서 부정확 → forward_net_income으로 재계산
                     forward_per = None
+                    if forward_net_income and forward_net_income > 0 and _mc:
+                        forward_per = round(_mc / forward_net_income, 2)
                     # PSR = 시가총액 / 매출액
                     if dart_revenue and dart_revenue > 0 and _mc:
                         psr = round(_mc / dart_revenue, 2)
