@@ -54,8 +54,8 @@ def dart_get_financials(api_key, corp_code, year):
             return None
         operating_income = net_income = revenue = total_equity = None
         for item in data.get('list', []):
-            sj  = item.get('sj_div', '')
-            nm  = item.get('account_nm', '')
+            sj  = item.get('sj_div', '').strip()
+            nm  = item.get('account_nm', '').strip()
             raw = item.get('thstrm_amount', '').replace(',', '').strip()
             if not raw:
                 continue
@@ -63,8 +63,8 @@ def dart_get_financials(api_key, corp_code, year):
                 val = int(raw) * 1_000_000  # DART 단위: 백만원 → 원
             except ValueError:
                 continue
-            # 손익계산서(IS)
-            if sj == 'IS':
+            # 손익계산서(IS) 또는 포괄손익계산서(CIS)
+            if sj in ('IS', 'CIS'):
                 if operating_income is None and '영업이익' in nm:
                     operating_income = val
                 if net_income is None and '당기순이익' in nm and '지배기업' not in nm and '비지배' not in nm:
