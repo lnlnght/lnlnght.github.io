@@ -262,27 +262,25 @@ for s in STOCKS:
                     net_income_ttm   = dart.get('net_income')
                     dart_revenue     = dart.get('revenue')
                     dart_equity      = dart.get('total_equity')
+                    _mc = info.get('marketCap')
+                    try:
+                        _mc = int(_mc) if _mc else None
+                    except (TypeError, ValueError):
+                        _mc = None
+                    # Trailing PER = 시가총액 / TTM순이익 (yfinance는 KR PER 미제공)
+                    if _mc and net_income_ttm and net_income_ttm > 0:
+                        trailing_per = round(_mc / net_income_ttm, 2)
+                    # yfinance forwardPE는 KR 주식에서 부정확 → 무효화
+                    forward_per = None
                     # PSR = 시가총액 / 매출액
-                    if dart_revenue and dart_revenue > 0:
-                        _mc = info.get('marketCap')
-                        try:
-                            _mc = int(_mc) if _mc else None
-                        except (TypeError, ValueError):
-                            _mc = None
-                        if _mc:
-                            psr = round(_mc / dart_revenue, 2)
+                    if dart_revenue and dart_revenue > 0 and _mc:
+                        psr = round(_mc / dart_revenue, 2)
                     # ROE = 순이익 / 자본총계
                     if dart_equity and dart_equity > 0 and net_income_ttm is not None:
                         roe = round(net_income_ttm / dart_equity * 100, 2)
                     # PBR = 시가총액 / 자본총계
-                    if dart_equity and dart_equity > 0:
-                        _mc = info.get('marketCap')
-                        try:
-                            _mc = int(_mc) if _mc else None
-                        except (TypeError, ValueError):
-                            _mc = None
-                        if _mc:
-                            pbr = round(_mc / dart_equity, 2)
+                    if dart_equity and dart_equity > 0 and _mc:
+                        pbr = round(_mc / dart_equity, 2)
                     if operating_income or net_income_ttm:
                         print(f"  [DART] 영업이익={operating_income} 순이익={net_income_ttm} 매출={dart_revenue} 자본={dart_equity}")
 
