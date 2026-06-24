@@ -11,6 +11,90 @@ from datetime import datetime
 # ── DART API (한국 주식 재무데이터) ──────────────────────────────
 DART_API_KEY = os.environ.get('DART_API_KEY', '')
 
+# ── 네이버 금융 컨센서스 ────────────────────────────────────────
+_NAVER_HEADERS = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
+    'Referer': 'https://finance.naver.com/',
+}
+_NAVER_BLOCKED = False  # 첫 403/차단 감지 시 이후 호출 건너뜀
+
+def naver_get_forward_income(code):
+    """네이버 금융 컨센서스에서 다음 회계연도 순이익 예상치 조회 (원)"""
+    global _NAVER_BLOCKED
+    if _NAVER_BLOCKED:
+        return None
+    endpoints = [
+        f'https://m.stock.naver.com/api/stock/{code}/investOpinion',
+        f'https://m.stock.naver.com/api/stock/{code}/consensus',
+        f'https://m.stock.naver.com/api/stock/{code}/finance/summary',
+    ]
+    try:
+        for url in endpoints:
+            res = requests.get(url, headers=_NAVER_HEADERS, timeout=5)
+            print(f'  [NAVER] {code} {url.split("/")[-1].split("?")[0]} status={res.status_code}')
+            if res.status_code in (403, 401, 429):
+                print(f'  [NAVER] 차단됨 ({res.status_code}) — 이후 모든 Naver 호출 건너뜀')
+                _NAVER_BLOCKED = True
+                return None
+            if res.status_code != 200:
+                continue
+            try:
+                data = res.json()
+            except Exception:
+                print(f'  [NAVER] {code} JSON 파싱 실패 (HTML?), len={len(res.text)}')
+                continue
+            print(f'  [NAVER] {code} keys: {list(data.keys()) if isinstance(data, dict) else (type(data).__name__ + f"[{len(data)}]")}')
+            income = _parse_naver_consensus(data, code)
+            if income is not None:
+                print(f'  [NAVER] {code} 순이익 예상치={income:,}원')
+                return income
+    except Exception as e:
+        print(f'  [NAVER] {code} 조회 실패: {e}')
+    return None
+
+def _parse_naver_consensus(data, code):
+    """네이버 컨센서스 응답에서 다음 연도 순이익 추출"""
+    try:
+        cur_year = datetime.now().year
+        target_years = [str(cur_year + 1), str(cur_year)]  # 내년 우선, 없으면 올해
+        # 리스트 형태: [{year, netIncome, ...}, ...]
+        if isinstance(data, list):
+            items = data
+        elif isinstance(data, dict):
+            # 여러 가능한 키 탐색
+            for key in ('annualEstimate', 'estimate', 'consensus', 'list', 'data'):
+                if key in data and isinstance(data[key], list):
+                    items = data[key]
+                    break
+            else:
+                return None
+        else:
+            return None
+
+        # 연도별 순이익 매핑
+        by_year = {}
+        for item in items:
+            if not isinstance(item, dict):
+                continue
+            year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
+            # 순이익 후보 키
+            for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
+                v = item.get(ni_key)
+                if v is not None:
+                    try:
+                        by_year[year_val] = int(float(v))
+                    except (TypeError, ValueError):
+                        pass
+                    break
+
+        print(f'  [NAVER] {code} by_year={by_year}')
+        for y in target_years:
+            if y in by_year and by_year[y] != 0:
+                return by_year[y]
+    except Exception as e:
+        print(f'  [NAVER] {code} parse 실패: {e}')
+    return None
+
 def dart_load_corp_codes(api_key):
     """DART 기업코드 목록 다운로드 (stock_code → corp_code 매핑)"""
     try:
@@ -250,6 +334,12 @@ for s in STOCKS:
         operating_income = None
         net_income_ttm   = None
 
+        # 한국 주식: DART + 네이버 금융 컨센서스
+        if s['market'] == 'KR':
+            naver_forward = naver_get_forward_income(s['code'])
+            if naver_forward is not None:
+                forward_net_income = naver_forward
+
         # 한국 주식: DART 우선 조회
         if s['market'] == 'KR' and dart_corp_map:
             corp_code = dart_corp_map.get(s['code'])
@@ -270,8 +360,10 @@ for s in STOCKS:
                     # Trailing PER = 시가총액 / TTM순이익 (yfinance는 KR PER 미제공)
                     if _mc and net_income_ttm and net_income_ttm > 0:
                         trailing_per = round(_mc / net_income_ttm, 2)
-                    # yfinance forwardPE는 KR 주식에서 부정확 → 무효화
+                    # yfinance forwardPE는 KR 주식에서 부정확 → forward_net_income으로 재계산
                     forward_per = None
+                    if forward_net_income and forward_net_income > 0 and _mc:
+                        forward_per = round(_mc / forward_net_income, 2)
                     # PSR = 시가총액 / 매출액
                     if dart_revenue and dart_revenue > 0 and _mc:
                         psr = round(_mc / dart_revenue, 2)
