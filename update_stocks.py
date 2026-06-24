@@ -118,6 +118,10 @@ for s in STOCKS:
         trailing_per = safe_float(info.get('trailingPE'))
         forward_per  = safe_float(info.get('forwardPE'))
         pbr = safe_float(info.get('priceToBook'))
+        if pbr is None:
+            book_value = safe_float(info.get('bookValue'))
+            if book_value and book_value > 0:
+                pbr = round(current / book_value, 2)
         psr = safe_float(info.get('priceToSalesTrailing12Months'))
         roe = safe_float(info.get('returnOnEquity'))
         eps = safe_float(info.get('trailingEps'))
