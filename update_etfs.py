@@ -192,7 +192,7 @@ for s in ETFS:
         change     = round(current - prev_close, 2)
         change_pct = round((change / prev_close) * 100, 2)
 
-        hist = ticker.history(period="3mo")
+        hist = ticker.history(period="1y")
         if hist.empty:
             print(f"✗ {s['code']}: 히스토리 없음"); continue
 
