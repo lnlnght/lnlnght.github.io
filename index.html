@@ -285,7 +285,8 @@ function selectEtf(code) {
 
 function drawChart(days) {
     if (!selected) return;
-    const prices=selected.prices.slice(-days), labels=prices.map(p=>p.date.slice(5)), data=prices.map(p=>p.close);
+    const dates=selected.dates.slice(-days), closes=selected.closes.slice(-days);
+    const labels=dates.map(d=>d.slice(5)), data=closes;
     const isUp=data.length>1&&data[data.length-1]>=data[0];
     const color=isUp?'#22c55e':'#ef4444';
     if (chartInst) chartInst.destroy();

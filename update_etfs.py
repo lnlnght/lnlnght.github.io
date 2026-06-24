@@ -198,10 +198,8 @@ for s in ETFS:
         high_52w = round(float(hist['High'].max()), 2)
         low_52w  = round(float(hist['Low'].min()), 2)
 
-        prices = [
-            {"date": str(d.date()), "close": round(float(r['Close']), 2)}
-            for d, r in hist.iterrows()
-        ]
+        dates  = [str(d.date()) for d in hist.index]
+        closes = [round(float(r['Close']), 2) for _, r in hist.iterrows()]
 
         try:
             expense_ratio = float(info.get('annualReportExpenseRatio') or info.get('expenseRatio') or 0)
@@ -232,7 +230,8 @@ for s in ETFS:
             "total_assets":   total_assets,
             "high_52w":       high_52w,
             "low_52w":        low_52w,
-            "prices":         prices,
+            "dates":          dates,
+            "closes":         closes,
         })
         cur_sym = "₩" if s["currency"] == "KRW" else "$"
         print(f"✓ {s['code']:8s} ({s['name']:20s})  {cur_sym}{current:>12,.2f}  {change:+.2f} ({change_pct:+.2f}%)")
