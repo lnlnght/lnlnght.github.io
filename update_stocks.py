@@ -33,10 +33,8 @@ def dart_load_corp_codes(api_key):
         print(f"[DART] 기업코드 로드 실패: {e}")
         return {}
 
-def dart_get_financials(api_key, corp_code, year):
-    """DART 연간 연결재무제표에서 주요 항목 추출 (단위: 원)
-    반환: operating_income, net_income, revenue, total_equity
-    """
+def dart_fetch_report(api_key, corp_code, year, reprt_code):
+    """DART API 단일 보고서 조회. 손익계산서 항목만 반환 (단위: 원)"""
     try:
         res = requests.get(
             "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json",
@@ -44,8 +42,8 @@ def dart_get_financials(api_key, corp_code, year):
                 'crtfc_key': api_key,
                 'corp_code':  corp_code,
                 'bsns_year':  str(year),
-                'reprt_code': '11011',  # 사업보고서(연간)
-                'fs_div':     'CFS',    # 연결재무제표
+                'reprt_code': reprt_code,
+                'fs_div':     'CFS',
             },
             timeout=30
         )
@@ -53,7 +51,7 @@ def dart_get_financials(api_key, corp_code, year):
         if data.get('status') != '000':
             return None
         operating_income = net_income = revenue = total_equity = None
-        revenue_fuzzy = None  # 정확한 매출 계정명이 없을 때 fallback
+        revenue_fuzzy = None
         for item in data.get('list', []):
             sj  = item.get('sj_div', '').strip()
             nm  = item.get('account_nm', '').strip()
@@ -64,18 +62,15 @@ def dart_get_financials(api_key, corp_code, year):
                 val = int(raw)  # DART 단위: 원(KRW)
             except ValueError:
                 continue
-            # 손익계산서(IS) 또는 포괄손익계산서(CIS)
             if sj in ('IS', 'CIS'):
                 if operating_income is None and '영업이익' in nm:
                     operating_income = val
                 if net_income is None and '당기순이익' in nm and '지배기업' not in nm and '비지배' not in nm:
                     net_income = val
-                # 매출: 정확한 계정명 우선, 이후 fuzzy fallback (하위항목 오매칭 방지)
                 if nm in ('수익(매출액)', '매출액', '영업수익'):
-                    revenue = val  # 정확한 매칭은 항상 덮어씀
+                    revenue = val
                 elif revenue_fuzzy is None and '매출' in nm and '원가' not in nm:
                     revenue_fuzzy = val
-            # 재무상태표(BS)
             elif sj == 'BS':
                 if total_equity is None and nm in ('자본총계', '지배기업 소유주지분'):
                     total_equity = val
@@ -88,8 +83,33 @@ def dart_get_financials(api_key, corp_code, year):
             'total_equity':     total_equity,
         }
     except Exception as e:
-        print(f"[DART] {corp_code} {year} 조회 실패: {e}")
+        print(f"[DART] {corp_code} {year}/{reprt_code} 조회 실패: {e}")
         return None
+
+def dart_get_financials(api_key, corp_code, annual_year):
+    """연간 데이터 + Q1 조정으로 TTM 산출.
+    TTM = FY(annual_year) + Q1(annual_year+1) - Q1(annual_year)
+    Q1 데이터가 없으면 연간 데이터를 그대로 반환.
+    """
+    annual = dart_fetch_report(api_key, corp_code, annual_year, '11011')
+    if annual is None:
+        return None
+
+    # Q1(올해) - Q1(작년) 차분으로 TTM 보정
+    q1_curr = dart_fetch_report(api_key, corp_code, annual_year + 1, '11013')
+    q1_prev = dart_fetch_report(api_key, corp_code, annual_year,     '11013')
+
+    result = dict(annual)  # annual 기본값
+
+    if q1_curr and q1_prev:
+        for key in ('operating_income', 'net_income', 'revenue'):
+            a = annual.get(key)
+            c = q1_curr.get(key)
+            p = q1_prev.get(key)
+            if a is not None and c is not None and p is not None:
+                result[key] = a + c - p  # TTM 보정
+
+    return result
 
 # DART 기업코드 매핑 로드 (API 키가 있을 때만)
 dart_corp_map = dart_load_corp_codes(DART_API_KEY) if DART_API_KEY else {}
