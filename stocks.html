@@ -121,6 +121,7 @@
                 <th onclick="sortBy('psr')">PSR</th>
                 <th onclick="sortBy('roe')">ROE</th>
                 <th onclick="sortBy('operating_income')">영업이익 (TTM)</th>
+                <th onclick="sortBy('net_income_ttm')">순이익 (TTM)</th>
                 <th onclick="sortBy('forward_net_income')">순이익 예상</th>
                 <th onclick="sortBy('market_cap')">시가총액</th>
             </tr>
@@ -221,6 +222,7 @@ function renderTable() {
             <td class="${psrClass(s.psr)}">${s.psr != null ? s.psr.toFixed(2) : '—'}</td>
             <td class="${roeClass(s.roe)}">${s.roe != null ? s.roe.toFixed(1)+'%' : '—'}</td>
             <td>${fmtCap(s.operating_income, s.currency)}</td>
+            <td>${fmtCap(s.net_income_ttm, s.currency)}</td>
             <td>${fmtCap(s.forward_net_income, s.currency)}</td>
             <td>${fmtCap(s.market_cap, s.currency)}</td>
         </tr>`;
@@ -228,7 +230,7 @@ function renderTable() {
     document.querySelectorAll('thead th').forEach(th => {
         th.classList.remove('sort-asc','sort-desc');
     });
-    const thMap = ['code','','current','change_pct','trailing_per','forward_per','pbr','psr','roe','operating_income','forward_net_income','market_cap'];
+    const thMap = ['code','','current','change_pct','trailing_per','forward_per','pbr','psr','roe','operating_income','net_income_ttm','forward_net_income','market_cap'];
     const idx = thMap.indexOf(sortKey);
     if (idx >= 0) {
         document.querySelectorAll('thead th')[idx].classList.add(sortDir > 0 ? 'sort-asc' : 'sort-desc');
