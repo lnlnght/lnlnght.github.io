@@ -1,7 +1,51 @@
 import yfinance as yf
 import json
 import math
-from datetime import datetime
+from datetime import datetime, timedelta
+
+try:
+    from pykrx import stock as krx_stock
+    PYKRX_AVAILABLE = True
+except ImportError:
+    PYKRX_AVAILABLE = False
+
+def fetch_kr_etf_aum():
+    """KRX에서 한국 ETF 순자산총액(AUM) 일괄 조회. {종목코드: AUM(원)} 반환"""
+    if not PYKRX_AVAILABLE:
+        return {}
+    try:
+        today = datetime.now()
+        # 최근 영업일 찾기 (주말/공휴일이면 전날로)
+        for offset in range(7):
+            date_str = (today - timedelta(days=offset)).strftime('%Y%m%d')
+            df = krx_stock.get_etf_ohlcv_by_ticker(date_str)
+            if df is not None and not df.empty:
+                break
+        else:
+            return {}
+        # 순자산총액 컬럼 탐색 (pykrx 버전에 따라 컬럼명 다를 수 있음)
+        aum_col = None
+        for col in df.columns:
+            if '순자산' in str(col):
+                aum_col = col
+                break
+        if aum_col is None:
+            print(f"[KRX] 순자산총액 컬럼 없음. 컬럼목록: {list(df.columns)}")
+            return {}
+        aum_map = {}
+        for ticker, row in df.iterrows():
+            val = row.get(aum_col, 0)
+            try:
+                v = int(val)
+                if v > 0:
+                    aum_map[str(ticker)] = v
+            except (TypeError, ValueError):
+                pass
+        print(f"[KRX] ETF AUM {len(aum_map)}개 로드 ({date_str})")
+        return aum_map
+    except Exception as e:
+        print(f"[KRX] AUM 조회 실패: {e}")
+        return {}
 
 ETFS = [
     # ============================================================
@@ -180,6 +224,8 @@ ETFS = [
     {"yf": "275980.KS", "code": "275980", "name": "TIGER 200선물레버리지",       "category": "레버리지","market": "KR", "currency": "KRW"},
 ]
 
+kr_etf_aum = fetch_kr_etf_aum()
+
 result = []
 for s in ETFS:
     try:
@@ -213,6 +259,9 @@ for s in ETFS:
             total_assets = int(info.get('totalAssets') or 0)
         except (TypeError, ValueError):
             total_assets = 0
+        # 한국 ETF: KRX 순자산총액으로 덮어씀
+        if s['market'] == 'KR' and s['code'] in kr_etf_aum:
+            total_assets = kr_etf_aum[s['code']]
 
         result.append({
             "code":           s["code"],

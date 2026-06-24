@@ -19,7 +19,7 @@ jobs:
           python-version: '3.10'
 
       - name: Install dependencies
-        run: pip install yfinance pandas requests
+        run: pip install yfinance pandas requests pykrx
 
       - name: Run update script
         run: python update_etfs.py
