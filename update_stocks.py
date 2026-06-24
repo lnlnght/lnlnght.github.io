@@ -53,6 +53,7 @@ def dart_get_financials(api_key, corp_code, year):
         if data.get('status') != '000':
             return None
         operating_income = net_income = revenue = total_equity = None
+        revenue_fuzzy = None  # 정확한 매출 계정명이 없을 때 fallback
         for item in data.get('list', []):
             sj  = item.get('sj_div', '').strip()
             nm  = item.get('account_nm', '').strip()
@@ -69,12 +70,17 @@ def dart_get_financials(api_key, corp_code, year):
                     operating_income = val
                 if net_income is None and '당기순이익' in nm and '지배기업' not in nm and '비지배' not in nm:
                     net_income = val
-                if revenue is None and (nm in ('수익(매출액)', '매출액', '영업수익') or ('매출' in nm and '원가' not in nm)):
-                    revenue = val
+                # 매출: 정확한 계정명 우선, 이후 fuzzy fallback (하위항목 오매칭 방지)
+                if nm in ('수익(매출액)', '매출액', '영업수익'):
+                    revenue = val  # 정확한 매칭은 항상 덮어씀
+                elif revenue_fuzzy is None and '매출' in nm and '원가' not in nm:
+                    revenue_fuzzy = val
             # 재무상태표(BS)
             elif sj == 'BS':
                 if total_equity is None and nm in ('자본총계', '지배기업 소유주지분'):
                     total_equity = val
+        if revenue is None:
+            revenue = revenue_fuzzy
         return {
             'operating_income': operating_income,
             'net_income':       net_income,
