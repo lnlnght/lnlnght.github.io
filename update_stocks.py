@@ -96,6 +96,8 @@ def dart_fetch_report(api_key, corp_code, year, reprt_code):
         )
         data = res.json()
         if data.get('status') != '000':
+            if reprt_code == '11013':  # Q1 조회 실패만 로그
+                print(f"  [DART] {corp_code} {year}/Q1 status={data.get('status')} msg={data.get('message','')}")
             return None
         operating_income = net_income = revenue = total_equity = None
         revenue_fuzzy = None
