@@ -327,6 +327,10 @@ function renderCards() {
                     <div class="metric-value">${fmtCap(s.net_income_ttm, s.currency)}</div>
                 </div>
                 <div class="metric">
+                    <div class="metric-label">순이익(예상)</div>
+                    <div class="metric-value">${fmtCap(s.forward_net_income, s.currency)}</div>
+                </div>
+                <div class="metric">
                     <div class="metric-label">시가총액</div>
                     <div class="metric-value">${fmtCap(s.market_cap, s.currency)}</div>
                 </div>
