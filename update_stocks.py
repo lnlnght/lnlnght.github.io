@@ -56,41 +56,85 @@ def _parse_naver_consensus(data, code):
     """네이버 컨센서스 응답에서 다음 연도 순이익 추출"""
     try:
         cur_year = datetime.now().year
-        target_years = [str(cur_year + 1), str(cur_year)]  # 내년 우선, 없으면 올해
-        # 리스트 형태: [{year, netIncome, ...}, ...]
-        if isinstance(data, list):
-            items = data
-        elif isinstance(data, dict):
-            # 여러 가능한 키 탐색
+        target_years = [str(cur_year + 1), str(cur_year)]
+
+        # finance/summary 응답: {'chartEps': [...], 'chartIncomeStatement': [...], ...}
+        if isinstance(data, dict):
+            # chartIncomeStatement: [{year, netIncome/당기순이익, ...}]
+            for stmt_key in ('chartIncomeStatement', 'incomeStatement'):
+                items = data.get(stmt_key)
+                if isinstance(items, list) and items:
+                    by_year = {}
+                    for item in items:
+                        if not isinstance(item, dict):
+                            continue
+                        year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
+                        if not year_val:
+                            continue
+                        for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
+                            v = item.get(ni_key)
+                            if v is not None:
+                                try:
+                                    # Naver 단위: 억원 → 원 변환
+                                    val = int(float(v))
+                                    if abs(val) < 1_000_000:  # 억원 단위 추정
+                                        val = val * 100_000_000
+                                    by_year[year_val] = val
+                                except (TypeError, ValueError):
+                                    pass
+                                break
+                    if by_year:
+                        print(f'  [NAVER] {code} incomeStatement by_year={by_year}')
+                        for y in target_years:
+                            if y in by_year and by_year[y] != 0:
+                                return by_year[y]
+
+            # chartEps: [{year, estimate/actual EPS, ...}] — EPS×주식수로 순이익 추정 불가, 스킵
+            # 대신 chartEps 구조 로그만 출력
+            eps_data = data.get('chartEps')
+            if eps_data:
+                print(f'  [NAVER] {code} chartEps sample={eps_data[:2] if isinstance(eps_data, list) else eps_data}')
+
+            # 기존 리스트 키 탐색
             for key in ('annualEstimate', 'estimate', 'consensus', 'list', 'data'):
-                if key in data and isinstance(data[key], list):
-                    items = data[key]
-                    break
-            else:
-                return None
-        else:
-            return None
-
-        # 연도별 순이익 매핑
-        by_year = {}
-        for item in items:
-            if not isinstance(item, dict):
-                continue
-            year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
-            # 순이익 후보 키
-            for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
-                v = item.get(ni_key)
-                if v is not None:
-                    try:
-                        by_year[year_val] = int(float(v))
-                    except (TypeError, ValueError):
-                        pass
-                    break
-
-        print(f'  [NAVER] {code} by_year={by_year}')
-        for y in target_years:
-            if y in by_year and by_year[y] != 0:
-                return by_year[y]
+                items = data.get(key)
+                if isinstance(items, list) and items:
+                    by_year = {}
+                    for item in items:
+                        if not isinstance(item, dict):
+                            continue
+                        year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
+                        for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
+                            v = item.get(ni_key)
+                            if v is not None:
+                                try:
+                                    by_year[year_val] = int(float(v))
+                                except (TypeError, ValueError):
+                                    pass
+                                break
+                    if by_year:
+                        print(f'  [NAVER] {code} by_year={by_year}')
+                        for y in target_years:
+                            if y in by_year and by_year[y] != 0:
+                                return by_year[y]
+        elif isinstance(data, list):
+            by_year = {}
+            for item in data:
+                if not isinstance(item, dict):
+                    continue
+                year_val = str(item.get('fiscalYear') or item.get('year') or item.get('bsnsYear') or '')
+                for ni_key in ('netIncome', 'net_income', '당기순이익', 'netProfit', 'ni'):
+                    v = item.get(ni_key)
+                    if v is not None:
+                        try:
+                            by_year[year_val] = int(float(v))
+                        except (TypeError, ValueError):
+                            pass
+                        break
+            print(f'  [NAVER] {code} by_year={by_year}')
+            for y in target_years:
+                if y in by_year and by_year[y] != 0:
+                    return by_year[y]
     except Exception as e:
         print(f'  [NAVER] {code} parse 실패: {e}')
     return None
