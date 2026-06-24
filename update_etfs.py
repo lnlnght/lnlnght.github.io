@@ -1,5 +1,6 @@
 import yfinance as yf
 import json
+import math
 from datetime import datetime
 
 ETFS = [
@@ -198,8 +199,9 @@ for s in ETFS:
         high_52w = round(float(hist['High'].max()), 2)
         low_52w  = round(float(hist['Low'].min()), 2)
 
-        dates  = [str(d.date()) for d in hist.index]
-        closes = [round(float(r['Close']), 2) for _, r in hist.iterrows()]
+        rows   = [(str(d.date()), round(float(r['Close']), 2)) for d, r in hist.iterrows() if not math.isnan(float(r['Close']))]
+        dates  = [row[0] for row in rows]
+        closes = [row[1] for row in rows]
 
         try:
             expense_ratio = float(info.get('annualReportExpenseRatio') or info.get('expenseRatio') or 0)
