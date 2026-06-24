@@ -24,8 +24,9 @@ def naver_get_forward_income(code):
     if _NAVER_BLOCKED:
         return None
     endpoints = [
-        f'https://m.stock.naver.com/api/stock/{code}/consensus/annual',
-        f'https://m.stock.naver.com/api/stock/{code}/financeSummary',
+        f'https://m.stock.naver.com/api/stock/{code}/investOpinion',
+        f'https://m.stock.naver.com/api/stock/{code}/consensus',
+        f'https://m.stock.naver.com/api/stock/{code}/finance/summary',
     ]
     try:
         for url in endpoints:

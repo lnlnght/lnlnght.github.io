@@ -8,6 +8,26 @@ def fetch_kr_etf_data():
     """KRX 데이터 API에서 한국 ETF 순자산총액·배당수익률 일괄 조회.
     {종목코드: {'aum': 원, 'dividend_yield': float}} 반환"""
     today = datetime.now()
+    headers = {
+        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        'Referer': 'http://data.krx.co.kr/contents/MDC/MDI/mdiFunctions/etf/MDCMDI050101.cmd',
+        'Accept': 'application/json, text/javascript, */*; q=0.01',
+        'Accept-Language': 'ko-KR,ko;q=0.9',
+        'X-Requested-With': 'XMLHttpRequest',
+        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    }
+    # 세션 쿠키 획득 (없으면 HTTP 400 반환됨)
+    session = requests.Session()
+    try:
+        session.get(
+            'http://data.krx.co.kr/contents/MDC/MDI/mdiFunctions/etf/MDCMDI050101.cmd',
+            headers={'User-Agent': headers['User-Agent']},
+            timeout=15,
+        )
+        print(f"[KRX] 세션 쿠키 획득: {list(session.cookies.keys())}")
+    except Exception as e:
+        print(f"[KRX] 세션 초기화 실패 (무시): {e}")
+
     for offset in range(7):
         date_str = (today - timedelta(days=offset)).strftime('%Y%m%d')
         try:
@@ -18,13 +38,9 @@ def fetch_kr_etf_data():
                 'share': '1',
                 'csvxls_isNo': 'false',
             }
-            headers = {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',
-                'Referer': 'http://data.krx.co.kr/contents/MDC/MDI/mdiFunctions/etf/MDCMDI050101.cmd',
-            }
-            res = requests.post(url, data=payload, headers=headers, timeout=30)
+            res = session.post(url, data=payload, headers=headers, timeout=30)
             if res.status_code != 200:
-                print(f"[KRX] {date_str} HTTP {res.status_code}")
+                print(f"[KRX] {date_str} HTTP {res.status_code} body={res.text[:200]}")
                 continue
             data = res.json()
             items = data.get('output', [])
