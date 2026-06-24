@@ -67,9 +67,9 @@ def dart_get_financials(api_key, corp_code, year):
             if sj == 'IS':
                 if operating_income is None and '영업이익' in nm:
                     operating_income = val
-                if net_income is None and nm in ('당기순이익', '당기순이익(손실)'):
+                if net_income is None and '당기순이익' in nm and '지배기업' not in nm and '비지배' not in nm:
                     net_income = val
-                if revenue is None and nm in ('수익(매출액)', '매출액', '영업수익'):
+                if revenue is None and (nm in ('수익(매출액)', '매출액', '영업수익') or ('매출' in nm and '원가' not in nm)):
                     revenue = val
             # 재무상태표(BS)
             elif sj == 'BS':
