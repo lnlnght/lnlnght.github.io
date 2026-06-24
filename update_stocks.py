@@ -121,6 +121,9 @@ for s in STOCKS:
         psr = safe_float(info.get('priceToSalesTrailing12Months'))
         roe = safe_float(info.get('returnOnEquity'))
         eps = safe_float(info.get('trailingEps'))
+        forward_eps = safe_float(info.get('forwardEps'))
+        shares = safe_float(info.get('sharesOutstanding'))
+        forward_net_income = int(forward_eps * shares) if (forward_eps is not None and shares is not None) else None
         operating_income = info.get('operatingIncome')
         try:
             operating_income = int(operating_income) if operating_income else None
@@ -148,8 +151,9 @@ for s in STOCKS:
             "pbr":        round(pbr, 2) if pbr is not None else None,
             "psr":        round(psr, 2) if psr is not None else None,
             "roe":              round(roe * 100, 2) if roe is not None else None,
-            "eps":              round(eps, 2) if eps is not None else None,
-            "operating_income": operating_income,
+            "eps":                round(eps, 2) if eps is not None else None,
+            "operating_income":   operating_income,
+            "forward_net_income": forward_net_income,
             "market_cap":       market_cap,
         })
         cur = "₩" if currency == "KRW" else "$"
