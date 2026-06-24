@@ -139,6 +139,37 @@ for s in STOCKS:
             operating_income = int(operating_income) if operating_income else None
         except (TypeError, ValueError):
             operating_income = None
+        # 한국 주식 등 info에 없으면 분기 재무제표 TTM으로 계산
+        if operating_income is None:
+            try:
+                qf = ticker.quarterly_financials
+                if qf is not None and not qf.empty:
+                    for label in ['Operating Income', 'Total Operating Income As Reported']:
+                        if label in qf.index:
+                            vals = qf.loc[label].dropna().iloc[:4]
+                            if len(vals) > 0:
+                                operating_income = int(vals.sum())
+                            break
+            except Exception:
+                pass
+
+        net_income_ttm = info.get('netIncomeToCommon')
+        try:
+            net_income_ttm = int(net_income_ttm) if net_income_ttm else None
+        except (TypeError, ValueError):
+            net_income_ttm = None
+        if net_income_ttm is None:
+            try:
+                qf = ticker.quarterly_financials
+                if qf is not None and not qf.empty:
+                    for label in ['Net Income', 'Net Income Common Stockholders']:
+                        if label in qf.index:
+                            vals = qf.loc[label].dropna().iloc[:4]
+                            if len(vals) > 0:
+                                net_income_ttm = int(vals.sum())
+                            break
+            except Exception:
+                pass
         market_cap = info.get('marketCap')
         try:
             market_cap = int(market_cap) if market_cap else None
@@ -163,6 +194,7 @@ for s in STOCKS:
             "roe":              round(roe * 100, 2) if roe is not None else None,
             "eps":                round(eps, 2) if eps is not None else None,
             "operating_income":   operating_income,
+            "net_income_ttm":     net_income_ttm,
             "forward_net_income": forward_net_income,
             "market_cap":       market_cap,
         })
