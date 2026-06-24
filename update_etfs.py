@@ -240,6 +240,6 @@ for s in ETFS:
         print(f"✗ {s['code']}: {e}")
 
 with open('etfs.json', 'w', encoding='utf-8') as f:
-    json.dump({"updated": datetime.now().strftime('%Y-%m-%d %H:%M'), "etfs": result}, f, ensure_ascii=False, indent=2)
+    json.dump({"updated": datetime.now().strftime('%Y-%m-%d %H:%M'), "etfs": result}, f, ensure_ascii=False, separators=(',', ':'))
 
 print(f"\n총 {len(result)}/{len(ETFS)}개 업데이트 완료")
