@@ -19,25 +19,26 @@ _NAVER_HEADERS = {
 
 def naver_get_forward_income(code):
     """네이버 금융 컨센서스에서 다음 회계연도 순이익 예상치 조회 (원)"""
+    endpoints = [
+        f'https://m.stock.naver.com/api/stock/{code}/consensus/annual',
+        f'https://m.stock.naver.com/api/stock/{code}/financeSummary',
+        f'https://finance.naver.com/item/coinfo.naver?code={code}&target=finsum_more',
+    ]
     try:
-        # Naver mobile stock API - consensus annual
-        url = f'https://m.stock.naver.com/api/stock/{code}/consensus/annual'
-        res = requests.get(url, headers=_NAVER_HEADERS, timeout=10)
-        if res.status_code == 200:
-            data = res.json()
-            # 응답 구조 파악용 로그 (첫 실행 시 확인)
-            print(f'  [NAVER] {code} annual consensus keys: {list(data.keys()) if isinstance(data, dict) else type(data).__name__}')
+        for url in endpoints:
+            res = requests.get(url, headers=_NAVER_HEADERS, timeout=10)
+            print(f'  [NAVER] {code} {url.split("/")[-1].split("?")[0]} status={res.status_code}')
+            if res.status_code != 200:
+                continue
+            try:
+                data = res.json()
+            except Exception:
+                print(f'  [NAVER] {code} JSON 파싱 실패 (HTML?), len={len(res.text)}')
+                continue
+            print(f'  [NAVER] {code} keys: {list(data.keys()) if isinstance(data, dict) else (type(data).__name__ + f"[{len(data)}]")}')
             income = _parse_naver_consensus(data, code)
             if income is not None:
-                return income
-        # fallback: financeSummary endpoint
-        url2 = f'https://m.stock.naver.com/api/stock/{code}/financeSummary'
-        res2 = requests.get(url2, headers=_NAVER_HEADERS, timeout=10)
-        if res2.status_code == 200:
-            data2 = res2.json()
-            print(f'  [NAVER] {code} financeSummary keys: {list(data2.keys()) if isinstance(data2, dict) else type(data2).__name__}')
-            income = _parse_naver_consensus(data2, code)
-            if income is not None:
+                print(f'  [NAVER] {code} 순이익 예상치={income:,}원')
                 return income
     except Exception as e:
         print(f'  [NAVER] {code} 조회 실패: {e}')
