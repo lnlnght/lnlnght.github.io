@@ -35,4 +35,5 @@ jobs:
           git config --global user.email 'github-actions@github.com'
           git add etfs.json stocks.json
           git commit -m "Auto update ETF and stock data" || echo "No changes to commit"
+          git pull --rebase origin $(git branch --show-current) || true
           git push

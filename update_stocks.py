@@ -60,7 +60,7 @@ def dart_get_financials(api_key, corp_code, year):
             if not raw:
                 continue
             try:
-                val = int(raw) * 1_000_000  # DART 단위: 백만원 → 원
+                val = int(raw)  # DART 단위: 원(KRW)
             except ValueError:
                 continue
             # 손익계산서(IS) 또는 포괄손익계산서(CIS)
