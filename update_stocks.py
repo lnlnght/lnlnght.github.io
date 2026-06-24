@@ -155,6 +155,13 @@ def dart_get_financials(api_key, corp_code, annual_year):
             p = q1_prev.get(key)
             if a is not None and c is not None and p is not None:
                 result[key] = a + c - p  # TTM 보정
+        ni_ttm = result.get('net_income')
+        ni_annual = annual.get('net_income')
+        ni_q1c = q1_curr.get('net_income')
+        ni_q1p = q1_prev.get('net_income')
+        print(f"  [DART TTM] {corp_code} FY{annual_year}={ni_annual} Q1{annual_year+1}={ni_q1c} Q1{annual_year}={ni_q1p} TTM={ni_ttm}")
+    else:
+        print(f"  [DART TTM] {corp_code} Q1데이터없음(q1_curr={'OK' if q1_curr else 'None'} q1_prev={'OK' if q1_prev else 'None'}) → FY{annual_year}만사용={annual.get('net_income')}")
 
     return result
 
