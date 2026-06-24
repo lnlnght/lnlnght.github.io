@@ -326,6 +326,9 @@ for s in STOCKS:
                     forward_per = None
                     if naver_forward_eps and naver_forward_eps > 0:
                         forward_per = round(current / naver_forward_eps, 2)
+                        # 예상 순이익 = 시가총액 / forward PER
+                        if _mc and forward_per > 0:
+                            forward_net_income = int(_mc / forward_per)
                     # PSR = 시가총액 / 매출액
                     if dart_revenue and dart_revenue > 0 and _mc:
                         psr = round(_mc / dart_revenue, 2)
