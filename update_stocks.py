@@ -1,7 +1,79 @@
 import yfinance as yf
 import json
 import math
+import os
+import io
+import zipfile
+import requests
+import xml.etree.ElementTree as ET
 from datetime import datetime
+
+# ── DART API (한국 주식 재무데이터) ──────────────────────────────
+DART_API_KEY = os.environ.get('DART_API_KEY', '')
+
+def dart_load_corp_codes(api_key):
+    """DART 기업코드 목록 다운로드 (stock_code → corp_code 매핑)"""
+    try:
+        res = requests.get(
+            f"https://opendart.fss.or.kr/api/corpCode.xml?crtfc_key={api_key}",
+            timeout=30
+        )
+        with zipfile.ZipFile(io.BytesIO(res.content)) as z:
+            with z.open('CORPCODE.xml') as f:
+                tree = ET.parse(f)
+        mapping = {}
+        for item in tree.getroot().findall('list'):
+            stock_code = item.findtext('stock_code', '').strip()
+            corp_code  = item.findtext('corp_code', '').strip()
+            if stock_code:
+                mapping[stock_code] = corp_code
+        print(f"[DART] 기업코드 {len(mapping)}개 로드")
+        return mapping
+    except Exception as e:
+        print(f"[DART] 기업코드 로드 실패: {e}")
+        return {}
+
+def dart_get_financials(api_key, corp_code, year):
+    """DART 연간 연결재무제표에서 영업이익·당기순이익 추출 (단위: 원)"""
+    try:
+        res = requests.get(
+            "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json",
+            params={
+                'crtfc_key': api_key,
+                'corp_code':  corp_code,
+                'bsns_year':  str(year),
+                'reprt_code': '11011',  # 사업보고서(연간)
+                'fs_div':     'CFS',    # 연결재무제표
+            },
+            timeout=30
+        )
+        data = res.json()
+        if data.get('status') != '000':
+            return None
+        operating_income = net_income = None
+        for item in data.get('list', []):
+            if item.get('sj_div') != 'IS':  # 손익계산서만
+                continue
+            nm = item.get('account_nm', '')
+            raw = item.get('thstrm_amount', '').replace(',', '').strip()
+            if not raw:
+                continue
+            try:
+                val = int(raw) * 1_000_000  # DART 단위: 백만원 → 원
+            except ValueError:
+                continue
+            if operating_income is None and '영업이익' in nm:
+                operating_income = val
+            if net_income is None and nm in ('당기순이익', '당기순이익(손실)'):
+                net_income = val
+        return {'operating_income': operating_income, 'net_income': net_income}
+    except Exception as e:
+        print(f"[DART] {corp_code} {year} 조회 실패: {e}")
+        return None
+
+# DART 기업코드 매핑 로드 (API 키가 있을 때만)
+dart_corp_map = dart_load_corp_codes(DART_API_KEY) if DART_API_KEY else {}
+current_year = datetime.now().year
 
 STOCKS = [
     # ============================================================
@@ -134,42 +206,60 @@ for s in STOCKS:
         forward_eps = safe_float(info.get('forwardEps'))
         shares = safe_float(info.get('sharesOutstanding'))
         forward_net_income = int(forward_eps * shares) if (forward_eps is not None and shares is not None) else None
-        operating_income = info.get('operatingIncome')
-        try:
-            operating_income = int(operating_income) if operating_income else None
-        except (TypeError, ValueError):
-            operating_income = None
-        # 한국 주식 등 info에 없으면 분기 재무제표 TTM으로 계산
-        if operating_income is None:
-            try:
-                qf = ticker.quarterly_financials
-                if qf is not None and not qf.empty:
-                    for label in ['Operating Income', 'Total Operating Income As Reported']:
-                        if label in qf.index:
-                            vals = qf.loc[label].dropna().iloc[:4]
-                            if len(vals) > 0:
-                                operating_income = int(vals.sum())
-                            break
-            except Exception:
-                pass
+        operating_income = None
+        net_income_ttm   = None
 
-        net_income_ttm = info.get('netIncomeToCommon')
-        try:
-            net_income_ttm = int(net_income_ttm) if net_income_ttm else None
-        except (TypeError, ValueError):
-            net_income_ttm = None
-        if net_income_ttm is None:
+        # 한국 주식: DART 우선 조회
+        if s['market'] == 'KR' and dart_corp_map:
+            corp_code = dart_corp_map.get(s['code'])
+            if corp_code:
+                dart = dart_get_financials(DART_API_KEY, corp_code, current_year - 1)
+                if dart is None:  # 작년 데이터 없으면 전전년도 시도
+                    dart = dart_get_financials(DART_API_KEY, corp_code, current_year - 2)
+                if dart:
+                    operating_income = dart.get('operating_income')
+                    net_income_ttm   = dart.get('net_income')
+                    if operating_income or net_income_ttm:
+                        print(f"  [DART] 영업이익={operating_income} 순이익={net_income_ttm}")
+
+        # DART 없거나 미국 주식: yfinance fallback
+        if operating_income is None:
+            operating_income = info.get('operatingIncome')
             try:
-                qf = ticker.quarterly_financials
-                if qf is not None and not qf.empty:
-                    for label in ['Net Income', 'Net Income Common Stockholders']:
-                        if label in qf.index:
-                            vals = qf.loc[label].dropna().iloc[:4]
-                            if len(vals) > 0:
-                                net_income_ttm = int(vals.sum())
-                            break
-            except Exception:
-                pass
+                operating_income = int(operating_income) if operating_income else None
+            except (TypeError, ValueError):
+                operating_income = None
+            if operating_income is None:
+                try:
+                    qf = ticker.quarterly_financials
+                    if qf is not None and not qf.empty:
+                        for label in ['Operating Income', 'Total Operating Income As Reported']:
+                            if label in qf.index:
+                                vals = qf.loc[label].dropna().iloc[:4]
+                                if len(vals) > 0:
+                                    operating_income = int(vals.sum())
+                                break
+                except Exception:
+                    pass
+
+        if net_income_ttm is None:
+            net_income_ttm = info.get('netIncomeToCommon')
+            try:
+                net_income_ttm = int(net_income_ttm) if net_income_ttm else None
+            except (TypeError, ValueError):
+                net_income_ttm = None
+            if net_income_ttm is None:
+                try:
+                    qf = ticker.quarterly_financials
+                    if qf is not None and not qf.empty:
+                        for label in ['Net Income', 'Net Income Common Stockholders']:
+                            if label in qf.index:
+                                vals = qf.loc[label].dropna().iloc[:4]
+                                if len(vals) > 0:
+                                    net_income_ttm = int(vals.sum())
+                                break
+                except Exception:
+                    pass
         market_cap = info.get('marketCap')
         try:
             market_cap = int(market_cap) if market_cap else None
