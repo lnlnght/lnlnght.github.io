@@ -191,7 +191,7 @@ async function loadData() {
     } catch(e) {
         document.getElementById('update-label').textContent = '데이터 없음';
         document.getElementById('etf-grid').innerHTML =
-            '<div class="state-msg">⚠️ 데이터를 불러올 수 없습니다<br><small style="color:#222">GitHub Actions가 아직 실행되지 않았을 수 있습니다</small></div>';
+            '<div class="state-msg">⚠️ 데이터를 불러올 수 없습니다<br><small style="color:#555">'+e.message+'</small></div>';
         btn.disabled = false;
         autoRefreshTimer = setTimeout(loadData, 5*60*1000);
         return;
