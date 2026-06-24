@@ -147,7 +147,6 @@ ETFS = [
     {"yf": "114820.KS", "code": "114820", "name": "KODEX 국고채3년",           "category": "채권",    "market": "KR", "currency": "KRW"},
     {"yf": "148070.KS", "code": "148070", "name": "KOSEF 국고채10년",           "category": "채권",    "market": "KR", "currency": "KRW"},
     {"yf": "304660.KS", "code": "304660", "name": "KODEX 미국채30년선물(H)",    "category": "채권",    "market": "KR", "currency": "KRW"},
-    {"yf": "359200.KS", "code": "359200", "name": "KODEX 단기채권PLUS",         "category": "채권",    "market": "KR", "currency": "KRW"},
     {"yf": "453850.KS", "code": "453850", "name": "KODEX 미국채10년선물",       "category": "채권",    "market": "KR", "currency": "KRW"},
 
     # 섹터 (7)
@@ -164,14 +163,11 @@ ETFS = [
     {"yf": "381170.KS", "code": "381170", "name": "TIGER 미국테크TOP10",        "category": "테마",    "market": "KR", "currency": "KRW"},
     {"yf": "364980.KS", "code": "364980", "name": "TIGER 글로벌사이버보안",     "category": "테마",    "market": "KR", "currency": "KRW"},
     {"yf": "371460.KS", "code": "371460", "name": "TIGER 글로벌AI",             "category": "테마",    "market": "KR", "currency": "KRW"},
-    {"yf": "400770.KS", "code": "400770", "name": "KODEX AI반도체핵심장비MV",   "category": "테마",    "market": "KR", "currency": "KRW"},
     {"yf": "334700.KS", "code": "334700", "name": "KODEX 바이오",               "category": "테마",    "market": "KR", "currency": "KRW"},
-    {"yf": "472330.KS", "code": "472330", "name": "TIGER 미국AI빅테크10",       "category": "테마",    "market": "KR", "currency": "KRW"},
 
     # 원자재 (4)
     {"yf": "132030.KS", "code": "132030", "name": "KODEX 골드선물(H)",          "category": "원자재",  "market": "KR", "currency": "KRW"},
     {"yf": "130680.KS", "code": "130680", "name": "TIGER 원유선물Enhanced",     "category": "원자재",  "market": "KR", "currency": "KRW"},
-    {"yf": "319870.KS", "code": "319870", "name": "KODEX 은선물(H)",             "category": "원자재",  "market": "KR", "currency": "KRW"},
     {"yf": "292050.KS", "code": "292050", "name": "TIGER 구리실물",             "category": "원자재",  "market": "KR", "currency": "KRW"},
 
     # 레버리지·인버스 (6)
