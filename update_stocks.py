@@ -34,7 +34,9 @@ def dart_load_corp_codes(api_key):
         return {}
 
 def dart_get_financials(api_key, corp_code, year):
-    """DART 연간 연결재무제표에서 영업이익·당기순이익 추출 (단위: 원)"""
+    """DART 연간 연결재무제표에서 주요 항목 추출 (단위: 원)
+    반환: operating_income, net_income, revenue, total_equity
+    """
     try:
         res = requests.get(
             "https://opendart.fss.or.kr/api/fnlttSinglAcntAll.json",
@@ -50,11 +52,10 @@ def dart_get_financials(api_key, corp_code, year):
         data = res.json()
         if data.get('status') != '000':
             return None
-        operating_income = net_income = None
+        operating_income = net_income = revenue = total_equity = None
         for item in data.get('list', []):
-            if item.get('sj_div') != 'IS':  # 손익계산서만
-                continue
-            nm = item.get('account_nm', '')
+            sj  = item.get('sj_div', '')
+            nm  = item.get('account_nm', '')
             raw = item.get('thstrm_amount', '').replace(',', '').strip()
             if not raw:
                 continue
@@ -62,11 +63,24 @@ def dart_get_financials(api_key, corp_code, year):
                 val = int(raw) * 1_000_000  # DART 단위: 백만원 → 원
             except ValueError:
                 continue
-            if operating_income is None and '영업이익' in nm:
-                operating_income = val
-            if net_income is None and nm in ('당기순이익', '당기순이익(손실)'):
-                net_income = val
-        return {'operating_income': operating_income, 'net_income': net_income}
+            # 손익계산서(IS)
+            if sj == 'IS':
+                if operating_income is None and '영업이익' in nm:
+                    operating_income = val
+                if net_income is None and nm in ('당기순이익', '당기순이익(손실)'):
+                    net_income = val
+                if revenue is None and nm in ('수익(매출액)', '매출액', '영업수익'):
+                    revenue = val
+            # 재무상태표(BS)
+            elif sj == 'BS':
+                if total_equity is None and nm in ('자본총계', '지배기업 소유주지분'):
+                    total_equity = val
+        return {
+            'operating_income': operating_income,
+            'net_income':       net_income,
+            'revenue':          revenue,
+            'total_equity':     total_equity,
+        }
     except Exception as e:
         print(f"[DART] {corp_code} {year} 조회 실패: {e}")
         return None
@@ -201,7 +215,8 @@ for s in STOCKS:
             if book_value and book_value > 0:
                 pbr = round(current / book_value, 2)
         psr = safe_float(info.get('priceToSalesTrailing12Months'))
-        roe = safe_float(info.get('returnOnEquity'))
+        roe_raw = safe_float(info.get('returnOnEquity'))  # yfinance: 0~1 소수
+        roe = round(roe_raw * 100, 2) if roe_raw is not None else None  # % 변환
         eps = safe_float(info.get('trailingEps'))
         forward_eps = safe_float(info.get('forwardEps'))
         shares = safe_float(info.get('sharesOutstanding'))
@@ -219,8 +234,31 @@ for s in STOCKS:
                 if dart:
                     operating_income = dart.get('operating_income')
                     net_income_ttm   = dart.get('net_income')
+                    dart_revenue     = dart.get('revenue')
+                    dart_equity      = dart.get('total_equity')
+                    # PSR = 시가총액 / 매출액
+                    if dart_revenue and dart_revenue > 0:
+                        _mc = info.get('marketCap')
+                        try:
+                            _mc = int(_mc) if _mc else None
+                        except (TypeError, ValueError):
+                            _mc = None
+                        if _mc:
+                            psr = round(_mc / dart_revenue, 2)
+                    # ROE = 순이익 / 자본총계
+                    if dart_equity and dart_equity > 0 and net_income_ttm is not None:
+                        roe = round(net_income_ttm / dart_equity * 100, 2)
+                    # PBR = 시가총액 / 자본총계
+                    if dart_equity and dart_equity > 0:
+                        _mc = info.get('marketCap')
+                        try:
+                            _mc = int(_mc) if _mc else None
+                        except (TypeError, ValueError):
+                            _mc = None
+                        if _mc:
+                            pbr = round(_mc / dart_equity, 2)
                     if operating_income or net_income_ttm:
-                        print(f"  [DART] 영업이익={operating_income} 순이익={net_income_ttm}")
+                        print(f"  [DART] 영업이익={operating_income} 순이익={net_income_ttm} 매출={dart_revenue} 자본={dart_equity}")
 
         # DART 없거나 미국 주식: yfinance fallback
         if operating_income is None:
@@ -281,7 +319,7 @@ for s in STOCKS:
             "forward_per":  round(forward_per, 2)  if forward_per  is not None else None,
             "pbr":        round(pbr, 2) if pbr is not None else None,
             "psr":        round(psr, 2) if psr is not None else None,
-            "roe":              round(roe * 100, 2) if roe is not None else None,
+            "roe":              roe,
             "eps":                round(eps, 2) if eps is not None else None,
             "operating_income":   operating_income,
             "net_income_ttm":     net_income_ttm,
