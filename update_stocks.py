@@ -56,7 +56,10 @@ STOCKS = [
     {"yf": "BA",    "code": "BA",    "name": "보잉",            "sector": "산업재",  "market": "US"},
 
     # 기타
-    {"yf": "SPCX",  "code": "SPCX",  "name": "스페이스X",        "sector": "산업재",  "market": "US"},
+    {"yf": "SPCX",  "code": "SPCX",  "name": "스페이스X",        "sector": "우주",    "market": "US"},
+    {"yf": "RKLB",  "code": "RKLB",  "name": "로켓랩",           "sector": "우주",    "market": "US"},
+    {"yf": "LUNR",  "code": "LUNR",  "name": "인튜이티브 머신스", "sector": "우주",    "market": "US"},
+    {"yf": "ASTS",  "code": "ASTS",  "name": "AST 스페이스모바일","sector": "우주",    "market": "US"},
 
     # ============================================================
     # 한국 주요 종목
