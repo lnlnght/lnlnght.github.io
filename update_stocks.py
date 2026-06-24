@@ -56,7 +56,7 @@ STOCKS = [
     {"yf": "BA",    "code": "BA",    "name": "보잉",            "sector": "산업재",  "market": "US"},
 
     # 기타
-    {"yf": "SPCX",  "code": "SPCX",  "name": "SPAC ETF",        "sector": "기타",    "market": "US"},
+    {"yf": "SPCX",  "code": "SPCX",  "name": "스페이스X",        "sector": "산업재",  "market": "US"},
 
     # ============================================================
     # 한국 주요 종목
