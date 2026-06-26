@@ -158,6 +158,11 @@
 <footer>ETF 투자 참고 · 미국·한국 장 중 15분 간격 자동 업데이트 · 투자 판단의 최종 책임은 본인에게 있습니다</footer>
 
 <script>
+// ── Supabase 설정 ──────────────────────────────────────────────
+const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+// ──────────────────────────────────────────────────────────────
+
 let allEtfs = [], activeMarket = '전체', activeFilter = '전체';
 let sortKey = 'total_assets', sortDir = -1;
 let timerInterval = null, autoRefreshTimer = null;
@@ -196,16 +201,30 @@ async function loadData() {
     btn.disabled = true;
     if (autoRefreshTimer) clearTimeout(autoRefreshTimer);
     try {
-        const res = await fetch('etfs.json?t=' + Date.now());
-        if (!res.ok) throw new Error('HTTP ' + res.status);
-        const data = await res.json();
-        allEtfs = (data.etfs || []).map(e => ({
+        const useSupabase = SUPABASE_URL && SUPABASE_URL !== 'YOUR_SUPABASE_URL';
+        let etfs, updatedAt;
+        if (useSupabase) {
+            const res = await fetch(
+                `${SUPABASE_URL}/rest/v1/etfs?select=*&order=total_assets.desc.nullslast`,
+                { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
+            );
+            if (!res.ok) throw new Error('Supabase HTTP ' + res.status);
+            etfs = await res.json();
+            updatedAt = etfs[0]?.updated_at ?? null;
+        } else {
+            const res = await fetch('etfs.json?t=' + Date.now());
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            const data = await res.json();
+            etfs = data.etfs || [];
+            updatedAt = data.updated;
+        }
+        allEtfs = etfs.map(e => ({
             ...e,
             w52pos: (e.high_52w > e.low_52w)
                 ? Math.round(((e.current - e.low_52w) / (e.high_52w - e.low_52w)) * 100)
                 : null
         }));
-        startAgeTimer(data.updated);
+        startAgeTimer(updatedAt);
         render();
     } catch (e) {
         document.getElementById('update-label').textContent = '데이터 없음';
