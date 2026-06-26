@@ -1,8 +1,28 @@
 import yfinance as yf
 import json
 import math
+import os
 import requests
 from datetime import datetime, timedelta
+
+# ── Supabase ─────────────────────────────────────────────────
+SUPABASE_URL = os.environ.get('SUPABASE_URL', '')
+SUPABASE_KEY = os.environ.get('SUPABASE_SERVICE_KEY', '')
+
+def supabase_upsert(table, rows):
+    if not SUPABASE_URL or not SUPABASE_KEY:
+        return
+    headers = {
+        'apikey': SUPABASE_KEY,
+        'Authorization': f'Bearer {SUPABASE_KEY}',
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal',
+    }
+    res = requests.post(f'{SUPABASE_URL}/rest/v1/{table}', json=rows, headers=headers, timeout=30)
+    if res.status_code not in (200, 201):
+        print(f'[Supabase] {table} upsert 실패: {res.status_code} {res.text[:200]}')
+    else:
+        print(f'[Supabase] {table} {len(rows)}개 upsert 완료')
 
 def fetch_kr_etf_data():
     """KRX 데이터 API에서 한국 ETF 순자산총액·배당수익률 일괄 조회.
@@ -324,7 +344,12 @@ for s in ETFS:
     except Exception as e:
         print(f"✗ {s['code']}: {e}")
 
+now_str = datetime.now().strftime('%Y-%m-%dT%H:%M')
+
 with open('etfs.json', 'w', encoding='utf-8') as f:
-    json.dump({"updated": datetime.now().strftime('%Y-%m-%dT%H:%M'), "etfs": result}, f, ensure_ascii=False, separators=(',', ':'))
+    json.dump({"updated": now_str, "etfs": result}, f, ensure_ascii=False, separators=(',', ':'))
+
+supabase_rows = [{**r, 'updated_at': now_str} for r in result]
+supabase_upsert('etfs', supabase_rows)
 
 print(f"\n총 {len(result)}/{len(ETFS)}개 업데이트 완료")

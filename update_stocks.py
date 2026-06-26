@@ -11,6 +11,25 @@ from datetime import datetime
 # ── DART API (한국 주식 재무데이터) ──────────────────────────────
 DART_API_KEY = os.environ.get('DART_API_KEY', '')
 
+# ── Supabase ─────────────────────────────────────────────────
+SUPABASE_URL = os.environ.get('SUPABASE_URL', '')
+SUPABASE_KEY = os.environ.get('SUPABASE_SERVICE_KEY', '')
+
+def supabase_upsert(table, rows):
+    if not SUPABASE_URL or not SUPABASE_KEY:
+        return
+    headers = {
+        'apikey': SUPABASE_KEY,
+        'Authorization': f'Bearer {SUPABASE_KEY}',
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates,return=minimal',
+    }
+    res = requests.post(f'{SUPABASE_URL}/rest/v1/{table}', json=rows, headers=headers, timeout=30)
+    if res.status_code not in (200, 201):
+        print(f'[Supabase] {table} upsert 실패: {res.status_code} {res.text[:200]}')
+    else:
+        print(f'[Supabase] {table} {len(rows)}개 upsert 완료')
+
 # ── 네이버 금융 컨센서스 ────────────────────────────────────────
 _NAVER_HEADERS = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
@@ -425,7 +444,13 @@ for s in STOCKS:
     except Exception as e:
         print(f"✗ {s['code']}: {e}")
 
+now_str = datetime.now().strftime('%Y-%m-%dT%H:%M')
+
 with open('stocks.json', 'w', encoding='utf-8') as f:
-    json.dump({"updated": datetime.now().strftime('%Y-%m-%dT%H:%M'), "stocks": result}, f, ensure_ascii=False, separators=(',', ':'))
+    json.dump({"updated": now_str, "stocks": result}, f, ensure_ascii=False, separators=(',', ':'))
+
+# Supabase upsert: updated_at 필드 추가 후 전송
+supabase_rows = [{**r, 'updated_at': now_str} for r in result]
+supabase_upsert('stocks', supabase_rows)
 
 print(f"\n총 {len(result)}/{len(STOCKS)}개 업데이트 완료")
