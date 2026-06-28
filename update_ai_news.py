@@ -18,8 +18,8 @@ PEOPLE = [
         'avatar': 'SA',
         'color': '#10b981',
         'youtube_channels': [
-            'UCXZCJLdBC09xxGZ6gcdrc6A',  # OpenAI
-            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman (인터뷰)
+            'UCXZCJLdBC09xxGZ6gcdrc6A',
+            'UCSHZKyawb77ixDdsGog4iWA',
         ],
         'news_queries': ['Sam Altman', '샘 올트먼', 'OpenAI CEO'],
     },
@@ -31,7 +31,7 @@ PEOPLE = [
         'avatar': 'JH',
         'color': '#76b900',
         'youtube_channels': [
-            'UCHuiy8bXnmK5nisYHUd1J5g',  # NVIDIA
+            'UCHuiy8bXnmK5nisYHUd1J5g',
         ],
         'news_queries': ['Jensen Huang', '젠슨 황', 'NVIDIA CEO AI'],
     },
@@ -43,8 +43,8 @@ PEOPLE = [
         'avatar': 'DA',
         'color': '#d97706',
         'youtube_channels': [
-            'UCG2PZaakRMlN_Y39mGR-YjA',  # Anthropic
-            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+            'UCG2PZaakRMlN_Y39mGR-YjA',
+            'UCSHZKyawb77ixDdsGog4iWA',
         ],
         'news_queries': ['Dario Amodei', '다리오 아모데이', 'Anthropic CEO'],
     },
@@ -56,7 +56,7 @@ PEOPLE = [
         'avatar': 'EM',
         'color': '#6366f1',
         'youtube_channels': [
-            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+            'UCSHZKyawb77ixDdsGog4iWA',
         ],
         'news_queries': ['Elon Musk AI', 'xAI Grok', '일론 머스크 AI'],
     },
@@ -68,7 +68,7 @@ PEOPLE = [
         'avatar': 'GH',
         'color': '#ec4899',
         'youtube_channels': [
-            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+            'UCSHZKyawb77ixDdsGog4iWA',
         ],
         'news_queries': ['Geoffrey Hinton', '제프리 힌튼', 'Hinton AI warning'],
     },
@@ -80,7 +80,7 @@ PEOPLE = [
         'avatar': 'DH',
         'color': '#3b82f6',
         'youtube_channels': [
-            'UCnUYZLuoy1rq1aVMwx4aTzw',  # Google DeepMind
+            'UCnUYZLuoy1rq1aVMwx4aTzw',
         ],
         'news_queries': ['Demis Hassabis', '데미스 하사비스', 'DeepMind CEO'],
     },
@@ -92,8 +92,8 @@ PEOPLE = [
         'avatar': 'YL',
         'color': '#f59e0b',
         'youtube_channels': [
-            'UCbmNph6atAoGfqLoCL_duAg',  # TED
-            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+            'UCbmNph6atAoGfqLoCL_duAg',
+            'UCSHZKyawb77ixDdsGog4iWA',
         ],
         'news_queries': ['Yann LeCun', '얀 르쿤', 'Meta AI LeCun'],
     },
@@ -105,8 +105,8 @@ PEOPLE = [
         'avatar': 'AN',
         'color': '#14b8a6',
         'youtube_channels': [
-            'UCcIXc5mJsHVYTZR1maL5l9w',  # DeepLearning.AI
-            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+            'UCcIXc5mJsHVYTZR1maL5l9w',
+            'UCSHZKyawb77ixDdsGog4iWA',
         ],
         'news_queries': ['Andrew Ng', '앤드류 응', 'DeepLearning AI'],
     },
@@ -118,7 +118,7 @@ PEOPLE = [
         'avatar': 'SN',
         'color': '#0ea5e9',
         'youtube_channels': [
-            'UCFtEEv80fQVKkD4h1PF-Xqw',  # Microsoft
+            'UCFtEEv80fQVKkD4h1PF-Xqw',
         ],
         'news_queries': ['Satya Nadella AI', '사티아 나델라', 'Microsoft AI Copilot'],
     },
@@ -130,7 +130,7 @@ PEOPLE = [
         'avatar': 'SP',
         'color': '#ea4335',
         'youtube_channels': [
-            'UCnUYZLuoy1rq1aVMwx4aTzw',  # Google DeepMind
+            'UCnUYZLuoy1rq1aVMwx4aTzw',
         ],
         'news_queries': ['Sundar Pichai AI', '순다르 피차이', 'Google Gemini CEO'],
     },
@@ -142,16 +142,15 @@ PEOPLE = [
         'avatar': 'MZ',
         'color': '#1877f2',
         'youtube_channels': [
-            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+            'UCSHZKyawb77ixDdsGog4iWA',
         ],
         'news_queries': ['Mark Zuckerberg AI', '마크 저커버그 AI', 'Meta Llama AI'],
     },
 ]
 
-# ── 추가 공통 AI 채널 (모든 인물 탭의 영상 풀 보완) ──────────
 COMMON_CHANNELS = [
-    'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman Podcast
-    'UCbmNph6atAoGfqLoCL_duAg',  # TED Talks
+    'UCSHZKyawb77ixDdsGog4iWA',
+    'UCbmNph6atAoGfqLoCL_duAg',
 ]
 
 HEADERS = {'User-Agent': 'Mozilla/5.0 (compatible; AI-News-Fetcher/1.0)'}
@@ -256,13 +255,9 @@ def supabase_upsert(table, rows):
 
 
 def generate_briefings(news_items):
-    """오늘 수집된 뉴스 중 상위 10개를 선정해 Claude로 한국어 요약 생성 후 ai_briefings에 저장."""
+    """오늘 수집된 뉴스 중 상위 10개를 ai_briefings에 저장. API 키가 있으면 한국어 요약도 생성."""
     anthropic_key = os.environ.get('ANTHROPIC_API_KEY', '')
-    if not anthropic_key:
-        print('[Briefing] ANTHROPIC_API_KEY 없음, 건너뜀')
-        return
 
-    # 최근 48시간 이내 뉴스만 추림 (중복 url 제거)
     cutoff = datetime.now(timezone.utc) - timedelta(hours=48)
     seen_urls_b = set()
     recent = []
@@ -278,7 +273,7 @@ def generate_briefings(news_items):
                 if dt < cutoff:
                     continue
         except Exception:
-            pass  # 날짜 파싱 실패 시 포함
+            pass
         url = item.get('url', '')
         if url in seen_urls_b:
             continue
@@ -293,41 +288,43 @@ def generate_briefings(news_items):
 
     top = recent[:10]
     today = datetime.now(timezone.utc).date().isoformat()
-    print(f'\n[Briefing] 상위 {len(top)}개 뉴스 요약 생성...')
+    print(f'\n[Briefing] 상위 {len(top)}개 뉴스 처리...')
 
     headers_ai = {
         'x-api-key': anthropic_key,
         'anthropic-version': '2023-06-01',
         'content-type': 'application/json',
     }
+
     briefing_rows = []
     for rank, item in enumerate(top, 1):
         title = item.get('title', '')
         source = item.get('source', '')
-        prompt = (
-            f"다음 AI 뉴스 제목을 한국어로 1~2문장으로 핵심만 요약해줘. "
-            f"제목: {title} (출처: {source})\n"
-            f"요약만 출력하고 다른 말은 하지 마."
-        )
-        try:
-            res = requests.post(
-                'https://api.anthropic.com/v1/messages',
-                json={
-                    'model': 'claude-haiku-4-5-20251001',
-                    'max_tokens': 200,
-                    'messages': [{'role': 'user', 'content': prompt}],
-                },
-                headers=headers_ai,
-                timeout=30,
+        summary_ko = ''
+
+        if anthropic_key:
+            prompt = (
+                f"다음 AI 뉴스 제목을 한국어로 1~2문장으로 핵심만 요약해줘. "
+                f"제목: {title} (출처: {source})\n"
+                f"요약만 출력하고 다른 말은 하지 마."
             )
-            if res.status_code == 200:
-                summary_ko = res.json()['content'][0]['text'].strip()
-            else:
-                print(f'  [AI] rank {rank} 오류: {res.status_code} {res.text[:100]}')
-                summary_ko = ''
-        except Exception as e:
-            print(f'  [AI] rank {rank} 예외: {e}')
-            summary_ko = ''
+            try:
+                res = requests.post(
+                    'https://api.anthropic.com/v1/messages',
+                    json={
+                        'model': 'claude-haiku-4-5-20251001',
+                        'max_tokens': 200,
+                        'messages': [{'role': 'user', 'content': prompt}],
+                    },
+                    headers=headers_ai,
+                    timeout=30,
+                )
+                if res.status_code == 200:
+                    summary_ko = res.json()['content'][0]['text'].strip()
+                else:
+                    print(f'  [AI] rank {rank} 오류: {res.status_code} {res.text[:100]}')
+            except Exception as e:
+                print(f'  [AI] rank {rank} 예외: {e}')
 
         briefing_rows.append({
             'date': today,
@@ -339,7 +336,7 @@ def generate_briefings(news_items):
             'published_at': item.get('published_at', ''),
             'summary_ko': summary_ko,
         })
-        print(f'  rank {rank}: {title[:40]}... → {summary_ko[:40]}...' if summary_ko else f'  rank {rank}: {title[:40]}...')
+        print(f'  rank {rank}: {title[:50]}')
 
     if briefing_rows and SUPABASE_URL and SUPABASE_KEY:
         supabase_upsert('ai_briefings', briefing_rows)
@@ -349,13 +346,11 @@ def main():
     all_rows = []
     seen_urls = set()
 
-    # 채널 → 인물 매핑 (Lex Fridman 등 공통 채널 필터용)
     channel_to_people = {}
     for p in PEOPLE:
         for ch in p['youtube_channels']:
             channel_to_people.setdefault(ch, []).append(p['id'])
 
-    # 1) YouTube RSS 수집
     fetched_channels = set()
     for person in PEOPLE:
         print(f'\n[{person["name"]}] YouTube 수집...')
@@ -368,7 +363,6 @@ def main():
             for v in videos:
                 if v['url'] in seen_urls:
                     continue
-                # 공통 채널(Lex 등)이면 제목으로 인물 필터
                 people_for_ch = channel_to_people.get(ch_id, [])
                 assigned = []
                 if len(people_for_ch) > 1:
@@ -380,12 +374,10 @@ def main():
                         continue
                 else:
                     assigned = people_for_ch
-
                 seen_urls.add(v['url'])
                 for pid in assigned:
                     all_rows.append({**v, 'person_id': pid})
 
-    # 2) Google News RSS 수집
     for person in PEOPLE:
         print(f'\n[{person["name"]}] 뉴스 수집...')
         for q in person['news_queries']:
@@ -399,7 +391,6 @@ def main():
                 row = {**a, 'person_id': person['id']}
                 all_rows.append(row)
 
-    # 3) 결과 저장
     now_str = datetime.now(timezone.utc).strftime('%Y-%m-%dT%H:%M:%S')
     for row in all_rows:
         if not row.get('published_at'):
@@ -408,15 +399,12 @@ def main():
 
     print(f'\n총 {len(all_rows)}개 항목 수집')
 
-    # JSON 백업
     with open('ai_news.json', 'w', encoding='utf-8') as f:
         json.dump({'updated': now_str, 'items': all_rows}, f, ensure_ascii=False, separators=(',', ':'))
 
-    # Supabase upsert
     if all_rows:
         supabase_upsert('ai_news', all_rows)
 
-    # ai_briefings 생성
     generate_briefings(all_rows)
 
 
