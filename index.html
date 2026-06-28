@@ -6,70 +6,70 @@
     <title>ETF 투자 참고</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e2e2e8; min-height: 100vh; }
+        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f5f8; color: #1a1a2e; min-height: 100vh; }
 
         /* ── Header ── */
         header { max-width: 1400px; margin: 0 auto; padding: 28px 20px 14px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-        .header-left h1 { font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .header-left p { font-size: 11px; color: #2e2e42; margin-top: 3px; }
+        .header-left h1 { font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #1a1a2e 0%, #5050a0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .header-left p { font-size: 11px; color: #aaa; margin-top: 3px; }
         .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .update-label { font-size: 11px; color: #3a3a4a; }
-        .nav-link { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; color: #555; font-size: 12px; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
-        .nav-link:hover { color: #aaa; border-color: #333; }
-        .refresh-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-        .refresh-btn:hover { color: #aaa; border-color: #333; }
+        .update-label { font-size: 11px; color: #aaa; }
+        .nav-link { padding: 5px 12px; border-radius: 8px; border: 1px solid #ddd; color: #888; font-size: 12px; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
+        .nav-link:hover { color: #333; border-color: #bbb; }
+        .refresh-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid #ddd; background: transparent; color: #888; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+        .refresh-btn:hover { color: #333; border-color: #bbb; }
         .refresh-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
         /* ── Filters ── */
         .filter-area { max-width: 1400px; margin: 0 auto; padding: 8px 20px 16px; display: flex; flex-direction: column; gap: 8px; }
         .filter-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-        .filter-label { font-size: 10px; color: #2e2e42; min-width: 24px; }
-        .filter-btn { padding: 4px 12px; border-radius: 20px; border: 1px solid #1e1e2a; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-        .filter-btn:hover { color: #999; border-color: #2a2a3a; }
-        .filter-btn.active { background: #14141e; color: #e2e2e8; border-color: #6366f1; }
-        .market-btn { padding: 4px 10px; border-radius: 20px; border: 1px solid #1e1e2a; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-        .market-btn:hover { color: #999; border-color: #2a2a3a; }
-        .market-btn.active-all { background: #14141e; color: #e2e2e8; border-color: #6366f1; }
-        .market-btn.active-us  { background: #0f1f0f; color: #22c55e; border-color: #22c55e; }
-        .market-btn.active-kr  { background: #161630; color: #6366f1; border-color: #6366f1; }
+        .filter-label { font-size: 10px; color: #bbb; min-width: 24px; }
+        .filter-btn { padding: 4px 12px; border-radius: 20px; border: 1px solid #ddd; background: transparent; color: #888; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+        .filter-btn:hover { color: #333; border-color: #bbb; }
+        .filter-btn.active { background: #eeeef8; color: #1a1a2e; border-color: #6366f1; }
+        .market-btn { padding: 4px 10px; border-radius: 20px; border: 1px solid #ddd; background: transparent; color: #888; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+        .market-btn:hover { color: #333; border-color: #bbb; }
+        .market-btn.active-all { background: #eeeef8; color: #1a1a2e; border-color: #6366f1; }
+        .market-btn.active-us  { background: #edfaf3; color: #16a34a; border-color: #16a34a; }
+        .market-btn.active-kr  { background: #eeeef8; color: #4f46e5; border-color: #4f46e5; }
 
         /* ── Badges ── */
         .market-badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; vertical-align: middle; }
-        .badge-us { background: #0f1f0f; color: #22c55e; }
-        .badge-kr { background: #161630; color: #6366f1; }
+        .badge-us { background: #edfaf3; color: #16a34a; }
+        .badge-kr { background: #eeeef8; color: #4f46e5; }
         .cat-badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
-        .cat-지수     { background: #16162a; color: #818cf8; }
-        .cat-배당     { background: #0f1f14; color: #4ade80; }
-        .cat-채권     { background: #1c1a10; color: #fbbf24; }
-        .cat-섹터     { background: #170f22; color: #c084fc; }
-        .cat-테마     { background: #1c0f18; color: #f472b6; }
-        .cat-원자재   { background: #191910; color: #facc15; }
-        .cat-레버리지 { background: #1f1010; color: #f87171; }
+        .cat-지수     { background: #eeeef8; color: #4f46e5; }
+        .cat-배당     { background: #edfaf3; color: #16a34a; }
+        .cat-채권     { background: #fefbea; color: #b45309; }
+        .cat-섹터     { background: #f5eeff; color: #7c3aed; }
+        .cat-테마     { background: #fff0f6; color: #be185d; }
+        .cat-원자재   { background: #fefbea; color: #92400e; }
+        .cat-레버리지 { background: #fff1f1; color: #dc2626; }
 
         /* ── Table ── */
         .table-wrap { max-width: 1400px; margin: 0 auto; padding: 0 20px 60px; overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        thead th { padding: 9px 10px; text-align: right; font-size: 11px; font-weight: 600; color: #3a3a4a; border-bottom: 1px solid #16161f; white-space: nowrap; cursor: pointer; user-select: none; }
+        thead th { padding: 9px 10px; text-align: right; font-size: 11px; font-weight: 600; color: #aaa; border-bottom: 1px solid #e8e8f0; white-space: nowrap; cursor: pointer; user-select: none; }
         thead th:first-child, thead th:nth-child(2) { text-align: left; cursor: default; }
-        thead th:hover:not(:first-child):not(:nth-child(2)) { color: #888; }
+        thead th:hover:not(:first-child):not(:nth-child(2)) { color: #555; }
         thead th.sort-asc::after  { content: ' ▲'; color: #6366f1; }
         thead th.sort-desc::after { content: ' ▼'; color: #6366f1; }
-        tbody tr { border-bottom: 1px solid #0f0f16; transition: background 0.1s; }
-        tbody tr:hover { background: #0d0d14; }
-        tbody td { padding: 9px 10px; text-align: right; color: #888; white-space: nowrap; }
+        tbody tr { border-bottom: 1px solid #f0f0f5; transition: background 0.1s; }
+        tbody tr:hover { background: #f0f0fa; }
+        tbody td { padding: 9px 10px; text-align: right; color: #666; white-space: nowrap; }
         tbody td:first-child { text-align: left; }
         tbody td:nth-child(2) { text-align: left; }
-        .td-code { font-size: 13px; font-weight: 700; color: #ccc; }
-        .td-name { font-size: 11px; color: #444; margin-top: 1px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .up { color: #22c55e; } .down { color: #ef4444; } .neutral { color: #555; }
+        .td-code { font-size: 13px; font-weight: 700; color: #222; }
+        .td-name { font-size: 11px; color: #aaa; margin-top: 1px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .up { color: #16a34a; } .down { color: #dc2626; } .neutral { color: #aaa; }
 
         /* ── 52w bar ── */
         .bar-wrap { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
-        .bar-track { width: 64px; height: 4px; background: #1a1a26; border-radius: 2px; flex-shrink: 0; position: relative; }
+        .bar-track { width: 64px; height: 4px; background: #e8e8f0; border-radius: 2px; flex-shrink: 0; position: relative; }
         .bar-fill  { height: 100%; border-radius: 2px; position: absolute; top: 0; left: 0; }
 
         /* ── State ── */
-        .state-msg { text-align: center; padding: 80px 20px; color: #333; font-size: 14px; line-height: 2; }
+        .state-msg { text-align: center; padding: 80px 20px; color: #bbb; font-size: 14px; line-height: 2; }
 
         /* ── Mobile cards ── */
         @media (max-width: 768px) {
@@ -77,26 +77,26 @@
             table, thead, tbody, tr, th, td { display: block; }
             thead { display: none; }
             tbody tr {
-                background: #0e0e16;
-                border: 1px solid #16161f;
+                background: #fff;
+                border: 1px solid #e8e8f0;
                 border-radius: 12px;
                 margin-bottom: 10px;
                 padding: 14px 16px;
             }
-            tbody tr:hover { background: #111118; }
+            tbody tr:hover { background: #f8f8fc; }
             tbody td { padding: 0; text-align: left; border: none; white-space: normal; }
             tbody td:not([data-label]) { display: none; }
             .mobile-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
             .mobile-price-row { display: flex; gap: 8px; align-items: baseline; margin-bottom: 12px; }
             .mobile-price { font-size: 20px; font-weight: 700; }
             .mobile-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-            .m-item .m-label { font-size: 10px; color: #333; margin-bottom: 2px; }
-            .m-item .m-value { font-size: 13px; color: #777; font-weight: 600; }
+            .m-item .m-label { font-size: 10px; color: #bbb; margin-bottom: 2px; }
+            .m-item .m-value { font-size: 13px; color: #555; font-weight: 600; }
             .bar-wrap { justify-content: flex-start; }
             .bar-track { width: 80px; }
         }
 
-        footer { text-align: center; padding: 32px; font-size: 11px; color: #1e1e28; border-top: 1px solid #0e0e16; }
+        footer { text-align: center; padding: 32px; font-size: 11px; color: #ccc; border-top: 1px solid #eee; }
     </style>
 </head>
 <body>
