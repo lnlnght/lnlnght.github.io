@@ -32,11 +32,17 @@ jobs:
           SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
           SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
 
+      - name: Run AI news update script
+        run: python update_ai_news.py
+        env:
+          SUPABASE_URL:         ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+
       - name: Commit and Push
         run: |
           git config --global user.name 'github-actions'
           git config --global user.email 'github-actions@github.com'
-          git add etfs.json stocks.json
-          git commit -m "Auto update ETF and stock data" || echo "No changes to commit"
+          git add etfs.json stocks.json ai_news.json
+          git commit -m "Auto update ETF, stock, and AI news data" || echo "No changes to commit"
           git pull --rebase origin $(git branch --show-current) || true
           git push
