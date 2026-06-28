@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AI 인사이트</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e2e2e8; min-height: 100vh; }
+
+    /* ── Header ── */
+    header { max-width: 1400px; margin: 0 auto; padding: 28px 20px 14px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .header-left h1 { font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .header-left p { font-size: 11px; color: #2e2e42; margin-top: 3px; }
+    .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .update-label { font-size: 11px; color: #3a3a4a; }
+    .nav-link { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; color: #555; font-size: 12px; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
+    .nav-link:hover { color: #aaa; border-color: #333; }
+    .refresh-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+    .refresh-btn:hover { color: #aaa; border-color: #333; }
+    .refresh-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    /* ── Person Tabs ── */
+    .person-tabs { max-width: 1400px; margin: 0 auto; padding: 12px 20px 0; display: flex; gap: 8px; flex-wrap: wrap; }
+    .person-tab { display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 10px; border: 1px solid #1e1e2a; background: transparent; color: #555; font-size: 13px; cursor: pointer; transition: all 0.2s; }
+    .person-tab:hover { color: #aaa; border-color: #2a2a3a; }
+    .person-tab.active { background: #14141e; color: #e2e2e8; border-color: var(--tab-color); }
+    .avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; flex-shrink: 0; }
+    .tab-info { display: flex; flex-direction: column; line-height: 1.3; }
+    .tab-name { font-size: 12px; font-weight: 600; }
+    .tab-title { font-size: 10px; color: #444; }
+    .person-tab.active .tab-title { color: #666; }
+
+    /* ── Type Filter ── */
+    .type-filter { max-width: 1400px; margin: 0 auto; padding: 14px 20px 0; display: flex; gap: 6px; align-items: center; }
+    .type-btn { padding: 4px 14px; border-radius: 20px; border: 1px solid #1e1e2a; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+    .type-btn:hover { color: #999; border-color: #2a2a3a; }
+    .type-btn.active { background: #14141e; color: #e2e2e8; border-color: #6366f1; }
+
+    /* ── Grid ── */
+    .grid-wrap { max-width: 1400px; margin: 0 auto; padding: 20px 20px 60px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+
+    /* ── Card ── */
+    .card { border-radius: 12px; border: 1px solid #1a1a26; background: #0d0d16; overflow: hidden; transition: border-color 0.2s, transform 0.15s; cursor: pointer; text-decoration: none; display: block; }
+    .card:hover { border-color: #2a2a3a; transform: translateY(-2px); }
+    .card-thumb { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: #111; display: block; }
+    .card-thumb-placeholder { width: 100%; aspect-ratio: 16/9; background: #111; display: flex; align-items: center; justify-content: center; color: #222; font-size: 24px; }
+    .card-body { padding: 12px 14px 14px; }
+    .card-meta { display: flex; align-items: center; gap: 6px; margin-bottom: 7px; }
+    .card-type { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 3px; }
+    .type-video { background: #1a0f0f; color: #f87171; }
+    .type-news  { background: #0f1a1f; color: #38bdf8; }
+    .card-source { font-size: 10px; color: #444; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .card-date { font-size: 10px; color: #333; margin-left: auto; flex-shrink: 0; }
+    .card-title { font-size: 13px; color: #ccc; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+
+    /* ── State ── */
+    .state-msg { text-align: center; padding: 80px 20px; color: #333; font-size: 14px; line-height: 2; }
+
+    /* ── Mobile ── */
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: 1fr; }
+      .person-tab .tab-title { display: none; }
+      .person-tab { padding: 6px 12px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>AI 인사이트</h1>
+    <p id="updated-label">업데이트: —</p>
+  </div>
+  <div class="header-right">
+    <span class="update-label" id="last-update"></span>
+    <a class="nav-link" href="index.html">ETF</a>
+    <a class="nav-link" href="stocks.html">주식</a>
+    <button class="refresh-btn" id="refresh-btn" onclick="loadData(true)">↻ 새로고침</button>
+  </div>
+</header>
+
+<div class="person-tabs" id="person-tabs"></div>
+<div class="type-filter">
+  <button class="type-btn active" data-type="all" onclick="setType('all')">전체</button>
+  <button class="type-btn" data-type="video" onclick="setType('video')">▶ 영상</button>
+  <button class="type-btn" data-type="news" onclick="setType('news')">📰 뉴스</button>
+</div>
+<div class="grid-wrap">
+  <div class="grid" id="grid"></div>
+  <div class="state-msg" id="state-msg">로딩 중...</div>
+</div>
+
+<script>
+const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+
+const PEOPLE = [
+  { id: 'all',            name: '전체',        name_ko: '전체',        title: '',                   avatar: '★',  color: '#6366f1' },
+  { id: 'sam_altman',     name: 'Sam Altman',  name_ko: '샘 올트먼',   title: 'CEO, OpenAI',        avatar: 'SA', color: '#10b981' },
+  { id: 'jensen_huang',   name: 'Jensen Huang',name_ko: '젠슨 황',     title: 'CEO, NVIDIA',        avatar: 'JH', color: '#76b900' },
+  { id: 'dario_amodei',   name: 'Dario Amodei',name_ko: '다리오 아모데이', title: 'CEO, Anthropic',  avatar: 'DA', color: '#d97706' },
+  { id: 'elon_musk',      name: 'Elon Musk',   name_ko: '일론 머스크', title: 'CEO, xAI / Tesla',  avatar: 'EM', color: '#6366f1' },
+  { id: 'geoffrey_hinton',name: 'G. Hinton',   name_ko: '제프리 힌튼', title: 'Godfather of AI',   avatar: 'GH', color: '#ec4899' },
+  { id: 'demis_hassabis', name: 'D. Hassabis', name_ko: '데미스 하사비스', title: 'CEO, DeepMind',  avatar: 'DH', color: '#3b82f6' },
+];
+
+let allItems = [];
+let currentPerson = 'all';
+let currentType = 'all';
+
+function buildTabs() {
+  const wrap = document.getElementById('person-tabs');
+  wrap.innerHTML = PEOPLE.map(p => `
+    <button class="person-tab ${p.id === 'all' ? 'active' : ''}"
+      data-id="${p.id}" style="--tab-color:${p.color}"
+      onclick="setPerson('${p.id}')">
+      <div class="avatar" style="background:${p.color}22;color:${p.color}">${p.avatar}</div>
+      <div class="tab-info">
+        <span class="tab-name">${p.name_ko || p.name}</span>
+        ${p.title ? `<span class="tab-title">${p.title}</span>` : ''}
+      </div>
+    </button>
+  `).join('');
+}
+
+function setPerson(id) {
+  currentPerson = id;
+  document.querySelectorAll('.person-tab').forEach(b => b.classList.toggle('active', b.dataset.id === id));
+  render();
+}
+
+function setType(t) {
+  currentType = t;
+  document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === t));
+  render();
+}
+
+function relativeTime(iso) {
+  if (!iso) return '';
+  const diff = Date.now() - new Date(iso).getTime();
+  const h = Math.floor(diff / 3600000);
+  if (h < 1) return '방금';
+  if (h < 24) return `${h}시간 전`;
+  const d = Math.floor(h / 24);
+  if (d < 30) return `${d}일 전`;
+  return `${Math.floor(d / 30)}개월 전`;
+}
+
+function render() {
+  const grid = document.getElementById('grid');
+  const msg  = document.getElementById('state-msg');
+  let items = allItems;
+  if (currentPerson !== 'all') items = items.filter(i => i.person_id === currentPerson);
+  if (currentType   !== 'all') items = items.filter(i => i.type === currentType);
+
+  if (!items.length) {
+    grid.innerHTML = '';
+    msg.style.display = 'block';
+    msg.textContent = '항목이 없습니다.';
+    return;
+  }
+  msg.style.display = 'none';
+
+  grid.innerHTML = items.map(item => {
+    const thumb = item.thumbnail
+      ? `<img class="card-thumb" src="${item.thumbnail}" alt="" loading="lazy" onerror="this.style.display='none'">`
+      : `<div class="card-thumb-placeholder">${item.type === 'video' ? '▶' : '📰'}</div>`;
+    return `
+      <a class="card" href="${item.url}" target="_blank" rel="noopener">
+        ${thumb}
+        <div class="card-body">
+          <div class="card-meta">
+            <span class="card-type type-${item.type}">${item.type === 'video' ? '▶ 영상' : '📰 뉴스'}</span>
+            <span class="card-source">${item.source || ''}</span>
+            <span class="card-date">${relativeTime(item.published_at)}</span>
+          </div>
+          <div class="card-title">${item.title || ''}</div>
+        </div>
+      </a>`;
+  }).join('');
+}
+
+async function loadData(force = false) {
+  const btn = document.getElementById('refresh-btn');
+  btn.disabled = true;
+
+  try {
+    const useSupabase = SUPABASE_URL && SUPABASE_URL !== 'YOUR_SUPABASE_URL';
+    let items = [];
+    let updatedAt = null;
+
+    if (useSupabase) {
+      const res = await fetch(
+        `${SUPABASE_URL}/rest/v1/ai_news?select=*&order=published_at.desc`,
+        { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+      );
+      items = await res.json();
+      updatedAt = items[0]?.updated_at ?? null;
+    } else {
+      const res = await fetch(`ai_news.json?t=${Date.now()}`);
+      const data = await res.json();
+      items = data.items || [];
+      updatedAt = data.updated ?? null;
+    }
+
+    allItems = items;
+    if (updatedAt) {
+      document.getElementById('updated-label').textContent = `업데이트: ${updatedAt.slice(0,16).replace('T',' ')}`;
+    }
+    render();
+  } catch (e) {
+    document.getElementById('state-msg').style.display = 'block';
+    document.getElementById('state-msg').textContent = '데이터를 불러오지 못했습니다.';
+    console.error(e);
+  } finally {
+    btn.disabled = false;
+  }
+}
+
+buildTabs();
+loadData();
+</script>
+</body>
+</html>

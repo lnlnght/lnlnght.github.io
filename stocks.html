@@ -120,6 +120,7 @@
     </div>
     <div class="header-right">
         <a href="/" class="nav-link">ETF</a>
+        <a href="/ai.html" class="nav-link">AI</a>
         <a href="https://lnlnght.github.io/my-profile-site/" class="nav-link">자기소개</a>
         <span class="update-label" id="update-label">로딩 중…</span>
         <button class="refresh-btn" id="refresh-btn" onclick="loadData()">↻</button>
@@ -175,8 +176,8 @@
 <script>
 // ── Supabase 설정 ──────────────────────────────────────────────
 // supabase.com에서 프로젝트 생성 후 아래 값을 교체하세요.
-const SUPABASE_URL      = 'https://tnqkwfcnoelbwkyiyyra.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRucWt3ZmNub2VsYndreWl5eXJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0NDA1MDIsImV4cCI6MjA5ODAxNjUwMn0.qjXPMx9Bs8ozPrFYKQKuy5M0_vtXawfnnpeFQhqJSvA';  // anon public key
+const SUPABASE_URL      = 'YOUR_SUPABASE_URL';       // 예: https://abcxyz.supabase.co
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';  // Settings > API > anon public
 // ──────────────────────────────────────────────────────────────
 
 let allStocks = [], activeMarket = '전체', activeSector = '전체';

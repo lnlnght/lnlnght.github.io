@@ -51,3 +51,19 @@ ALTER TABLE etfs   ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "public read stocks" ON stocks FOR SELECT USING (true);
 CREATE POLICY "public read etfs"   ON etfs   FOR SELECT USING (true);
+
+-- AI 뉴스·인터뷰 테이블
+CREATE TABLE IF NOT EXISTS ai_news (
+  id            BIGSERIAL PRIMARY KEY,
+  person_id     TEXT NOT NULL,
+  type          TEXT,           -- 'video' | 'news'
+  title         TEXT,
+  url           TEXT UNIQUE,
+  thumbnail     TEXT,
+  source        TEXT,
+  published_at  TIMESTAMPTZ,
+  updated_at    TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE ai_news ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "public read ai_news" ON ai_news FOR SELECT USING (true);

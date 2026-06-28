@@ -107,6 +107,7 @@
     </div>
     <div class="header-right">
         <a href="/stocks.html" class="nav-link">주식</a>
+        <a href="/ai.html" class="nav-link">AI</a>
         <a href="https://lnlnght.github.io/my-profile-site/" class="nav-link">자기소개</a>
         <span class="update-label" id="update-label">로딩 중…</span>
         <button class="refresh-btn" id="refresh-btn" onclick="loadData()">↻ 새로고침</button>
@@ -159,8 +160,8 @@
 
 <script>
 // ── Supabase 설정 ──────────────────────────────────────────────
-const SUPABASE_URL      = 'https://tnqkwfcnoelbwkyiyyra.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRucWt3ZmNub2VsYndreWl5eXJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0NDA1MDIsImV4cCI6MjA5ODAxNjUwMn0.qjXPMx9Bs8ozPrFYKQKuy5M0_vtXawfnnpeFQhqJSvA';  // anon public key
+const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
 // ──────────────────────────────────────────────────────────────
 
 let allEtfs = [], activeMarket = '전체', activeFilter = '전체';
