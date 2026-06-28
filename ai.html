@@ -179,9 +179,9 @@ function renderBriefing(items) {
   const today = new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
   document.getElementById('briefing-date').textContent = today;
 
-  // 오늘 날짜 기준 24시간 이내 뉴스만, 인물별 최신 1개씩
-  const oneDayAgo = Date.now() - 24 * 3600 * 1000;
-  const recentNews = items.filter(i => i.type === 'news' && new Date(i.published_at).getTime() > oneDayAgo);
+  // 최근 72시간 이내 뉴스, 인물별 최신 1개씩
+  const cutoff = Date.now() - 72 * 3600 * 1000;
+  const recentNews = items.filter(i => i.type === 'news' && new Date(i.published_at).getTime() > cutoff);
 
   // 인물별 최신 1개
   const seen = new Set();
@@ -193,14 +193,20 @@ function renderBriefing(items) {
     }
   }
 
-  // 브리핑 아이템이 없으면 전체 최신 뉴스 상위 6개로 대체
-  const fallback = briefItems.length === 0;
-  const finalItems = fallback
-    ? [...items].filter(i => i.type === 'news').sort((a, b) => new Date(b.published_at) - new Date(a.published_at)).slice(0, 6)
-    : briefItems;
+  // 브리핑 아이템이 없으면 전체 최신 뉴스 인물별 1개씩 (날짜 무관)
+  let finalItems = briefItems;
+  if (!finalItems.length) {
+    const seenFb = new Set();
+    for (const item of [...items].filter(i => i.type === 'news').sort((a, b) => new Date(b.published_at) - new Date(a.published_at))) {
+      if (!seenFb.has(item.person_id) && finalItems.length < 11) {
+        seenFb.add(item.person_id);
+        finalItems.push(item);
+      }
+    }
+  }
 
   if (!finalItems.length) {
-    list.innerHTML = '<div style="color:#bbb;font-size:13px;padding:12px 0">오늘의 뉴스가 없습니다.</div>';
+    list.innerHTML = '<div style="color:#bbb;font-size:13px;padding:12px 0">뉴스 데이터가 없습니다. 잠시 후 새로고침해 주세요.</div>';
     return;
   }
 
@@ -279,7 +285,8 @@ async function loadData(force = false) {
         `${SUPABASE_URL}/rest/v1/ai_news?select=*&order=published_at.desc`,
         { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
       );
-      items = await res.json();
+      const raw = await res.json();
+      items = Array.isArray(raw) ? raw : [];
       updatedAt = items[0]?.updated_at ?? null;
     } else {
       const res = await fetch(`ai_news.json?t=${Date.now()}`);
