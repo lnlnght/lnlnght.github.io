@@ -122,7 +122,6 @@ def fetch_youtube_rss(channel_id):
                 'thumbnail': thumb,
                 'source': channel_name,
                 'published_at': published[:19] if published else '',
-                'vid_id': vid_id,
             })
         return items
     except Exception as e:
@@ -163,7 +162,6 @@ def fetch_google_news(query, lang='en'):
                 'thumbnail': '',
                 'source': source,
                 'published_at': pub_iso,
-                'vid_id': '',
             })
         return items
     except Exception as e:
@@ -232,7 +230,6 @@ def main():
                 seen_urls.add(v['url'])
                 for pid in assigned:
                     row = {**v, 'person_id': pid}
-                    row.pop('vid_id', None)
                     all_rows.append(row)
 
     # 2) Google News RSS 수집
