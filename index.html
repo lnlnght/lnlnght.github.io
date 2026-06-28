@@ -1,366 +1,107 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ETF 투자 참고</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f5f8; color: #1a1a2e; min-height: 100vh; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>투자 & AI 대시보드</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f5f8; color: #1a1a2e; min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* ── Header ── */
-        header { max-width: 1400px; margin: 0 auto; padding: 28px 20px 14px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-        .header-left h1 { font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #1a1a2e 0%, #5050a0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-        .header-left p { font-size: 11px; color: #aaa; margin-top: 3px; }
-        .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-        .update-label { font-size: 11px; color: #aaa; }
-        .nav-link { padding: 5px 12px; border-radius: 8px; border: 1px solid #ddd; color: #888; font-size: 12px; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
-        .nav-link:hover { color: #333; border-color: #bbb; }
-        .refresh-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid #ddd; background: transparent; color: #888; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-        .refresh-btn:hover { color: #333; border-color: #bbb; }
-        .refresh-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    /* ── Header ── */
+    header { max-width: 960px; margin: 0 auto; width: 100%; padding: 48px 24px 0; }
+    .site-title { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #1a1a2e 0%, #5050a0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .site-sub { font-size: 13px; color: #aaa; margin-top: 6px; }
 
-        /* ── Filters ── */
-        .filter-area { max-width: 1400px; margin: 0 auto; padding: 8px 20px 16px; display: flex; flex-direction: column; gap: 8px; }
-        .filter-row { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
-        .filter-label { font-size: 10px; color: #bbb; min-width: 24px; }
-        .filter-btn { padding: 4px 12px; border-radius: 20px; border: 1px solid #ddd; background: transparent; color: #888; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-        .filter-btn:hover { color: #333; border-color: #bbb; }
-        .filter-btn.active { background: #eeeef8; color: #1a1a2e; border-color: #6366f1; }
-        .market-btn { padding: 4px 10px; border-radius: 20px; border: 1px solid #ddd; background: transparent; color: #888; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-        .market-btn:hover { color: #333; border-color: #bbb; }
-        .market-btn.active-all { background: #eeeef8; color: #1a1a2e; border-color: #6366f1; }
-        .market-btn.active-us  { background: #edfaf3; color: #16a34a; border-color: #16a34a; }
-        .market-btn.active-kr  { background: #eeeef8; color: #4f46e5; border-color: #4f46e5; }
+    /* ── Grid ── */
+    .grid { max-width: 960px; margin: 48px auto 0; width: 100%; padding: 0 24px 80px; display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
 
-        /* ── Badges ── */
-        .market-badge { display: inline-block; font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 700; margin-left: 4px; vertical-align: middle; }
-        .badge-us { background: #edfaf3; color: #16a34a; }
-        .badge-kr { background: #eeeef8; color: #4f46e5; }
-        .cat-badge { display: inline-block; font-size: 10px; padding: 2px 7px; border-radius: 4px; font-weight: 600; }
-        .cat-지수     { background: #eeeef8; color: #4f46e5; }
-        .cat-배당     { background: #edfaf3; color: #16a34a; }
-        .cat-채권     { background: #fefbea; color: #b45309; }
-        .cat-섹터     { background: #f5eeff; color: #7c3aed; }
-        .cat-테마     { background: #fff0f6; color: #be185d; }
-        .cat-원자재   { background: #fefbea; color: #92400e; }
-        .cat-레버리지 { background: #fff1f1; color: #dc2626; }
+    /* ── Card ── */
+    .card { background: #fff; border: 1px solid #e8e8f0; border-radius: 16px; padding: 28px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 12px; transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; cursor: pointer; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.08); border-color: var(--card-color); }
+    .card-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: var(--card-bg); flex-shrink: 0; }
+    .card-title { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+    .card-desc { font-size: 13px; color: #888; line-height: 1.6; }
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .tag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px; background: var(--card-bg); color: var(--card-color); }
+    .card-arrow { margin-top: auto; font-size: 18px; color: var(--card-color); align-self: flex-end; }
 
-        /* ── Table ── */
-        .table-wrap { max-width: 1400px; margin: 0 auto; padding: 0 20px 60px; overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; font-size: 13px; }
-        thead th { padding: 9px 10px; text-align: right; font-size: 11px; font-weight: 600; color: #aaa; border-bottom: 1px solid #e8e8f0; white-space: nowrap; cursor: pointer; user-select: none; }
-        thead th:first-child, thead th:nth-child(2) { text-align: left; cursor: default; }
-        thead th:hover:not(:first-child):not(:nth-child(2)) { color: #555; }
-        thead th.sort-asc::after  { content: ' ▲'; color: #6366f1; }
-        thead th.sort-desc::after { content: ' ▼'; color: #6366f1; }
-        tbody tr { border-bottom: 1px solid #f0f0f5; transition: background 0.1s; }
-        tbody tr:hover { background: #f0f0fa; }
-        tbody td { padding: 9px 10px; text-align: right; color: #666; white-space: nowrap; }
-        tbody td:first-child { text-align: left; }
-        tbody td:nth-child(2) { text-align: left; }
-        .td-code { font-size: 13px; font-weight: 700; color: #222; }
-        .td-name { font-size: 11px; color: #aaa; margin-top: 1px; max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        .up { color: #16a34a; } .down { color: #dc2626; } .neutral { color: #aaa; }
+    /* ── Card colors ── */
+    .card-etf   { --card-color: #4f46e5; --card-bg: #eeeef8; }
+    .card-stock { --card-color: #16a34a; --card-bg: #edfaf3; }
+    .card-ai    { --card-color: #0369a1; --card-bg: #eff8ff; }
+    .card-profile { --card-color: #be185d; --card-bg: #fff0f6; }
 
-        /* ── 52w bar ── */
-        .bar-wrap { display: flex; align-items: center; gap: 6px; justify-content: flex-end; }
-        .bar-track { width: 64px; height: 4px; background: #e8e8f0; border-radius: 2px; flex-shrink: 0; position: relative; }
-        .bar-fill  { height: 100%; border-radius: 2px; position: absolute; top: 0; left: 0; }
+    /* ── Footer ── */
+    footer { margin-top: auto; text-align: center; padding: 28px; font-size: 11px; color: #ccc; border-top: 1px solid #eee; }
 
-        /* ── State ── */
-        .state-msg { text-align: center; padding: 80px 20px; color: #bbb; font-size: 14px; line-height: 2; }
-
-        /* ── Mobile cards ── */
-        @media (max-width: 768px) {
-            .table-wrap { padding: 0 12px 60px; }
-            table, thead, tbody, tr, th, td { display: block; }
-            thead { display: none; }
-            tbody tr {
-                background: #fff;
-                border: 1px solid #e8e8f0;
-                border-radius: 12px;
-                margin-bottom: 10px;
-                padding: 14px 16px;
-            }
-            tbody tr:hover { background: #f8f8fc; }
-            tbody td { padding: 0; text-align: left; border: none; white-space: normal; }
-            tbody td:not([data-label]) { display: none; }
-            .mobile-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; }
-            .mobile-price-row { display: flex; gap: 8px; align-items: baseline; margin-bottom: 12px; }
-            .mobile-price { font-size: 20px; font-weight: 700; }
-            .mobile-metrics { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-            .m-item .m-label { font-size: 10px; color: #bbb; margin-bottom: 2px; }
-            .m-item .m-value { font-size: 13px; color: #555; font-weight: 600; }
-            .bar-wrap { justify-content: flex-start; }
-            .bar-track { width: 80px; }
-        }
-
-        footer { text-align: center; padding: 32px; font-size: 11px; color: #ccc; border-top: 1px solid #eee; }
-    </style>
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      header { padding: 36px 20px 0; }
+      .site-title { font-size: 22px; }
+    }
+  </style>
 </head>
 <body>
+
 <header>
-    <div class="header-left">
-        <h1>ETF 투자 참고</h1>
-        <p>미국·한국 주요 ETF · 장 중 15분 간격 업데이트</p>
-    </div>
-    <div class="header-right">
-        <a href="/stocks.html" class="nav-link">주식</a>
-        <a href="/ai.html" class="nav-link">AI</a>
-        <a href="https://lnlnght.github.io/my-profile-site/" class="nav-link">자기소개</a>
-        <span class="update-label" id="update-label">로딩 중…</span>
-        <button class="refresh-btn" id="refresh-btn" onclick="loadData()">↻ 새로고침</button>
-    </div>
+  <div class="site-title">투자 & AI 대시보드</div>
+  <div class="site-sub">ETF · 주식 밸류에이션 · AI 인사이트 · 자기소개</div>
 </header>
 
-<div class="filter-area">
-    <div class="filter-row">
-        <span class="filter-label">시장</span>
-        <button class="market-btn active-all" onclick="applyMarket('전체',this)">전체</button>
-        <button class="market-btn" onclick="applyMarket('US',this)">미국</button>
-        <button class="market-btn" onclick="applyMarket('KR',this)">한국</button>
+<div class="grid">
+  <a class="card card-etf" href="/etf.html">
+    <div class="card-icon">📊</div>
+    <div class="card-title">ETF</div>
+    <div class="card-desc">미국·한국 주요 ETF의 운용보수, 배당수익률, AUM, 52주 위치를 한눈에 확인하세요.</div>
+    <div class="card-tags">
+      <span class="tag">지수</span>
+      <span class="tag">배당</span>
+      <span class="tag">채권</span>
+      <span class="tag">섹터</span>
+      <span class="tag">테마</span>
     </div>
-    <div class="filter-row">
-        <span class="filter-label">분류</span>
-        <button class="filter-btn active" onclick="applyFilter('전체',this)">전체</button>
-        <button class="filter-btn" onclick="applyFilter('지수',this)">지수</button>
-        <button class="filter-btn" onclick="applyFilter('배당',this)">배당</button>
-        <button class="filter-btn" onclick="applyFilter('채권',this)">채권</button>
-        <button class="filter-btn" onclick="applyFilter('섹터',this)">섹터</button>
-        <button class="filter-btn" onclick="applyFilter('테마',this)">테마</button>
-        <button class="filter-btn" onclick="applyFilter('원자재',this)">원자재</button>
-        <button class="filter-btn" onclick="applyFilter('레버리지',this)">레버리지</button>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-stock" href="/stocks.html">
+    <div class="card-icon">📈</div>
+    <div class="card-title">주식 밸류에이션</div>
+    <div class="card-desc">미국·한국 주요 종목의 PER, PBR, ROE, 영업이익, 시가총액을 비교해보세요.</div>
+    <div class="card-tags">
+      <span class="tag">PER</span>
+      <span class="tag">PBR</span>
+      <span class="tag">ROE</span>
+      <span class="tag">시가총액</span>
     </div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-ai" href="/ai.html">
+    <div class="card-icon">🤖</div>
+    <div class="card-title">AI 인사이트</div>
+    <div class="card-desc">샘 올트먼, 젠슨 황 등 AI 업계 주요 인사들의 최신 인터뷰 영상과 뉴스를 모아봅니다.</div>
+    <div class="card-tags">
+      <span class="tag">영상</span>
+      <span class="tag">뉴스</span>
+      <span class="tag">11인</span>
+    </div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-profile" href="https://lnlnght.github.io/my-profile-site/" target="_blank" rel="noopener">
+    <div class="card-icon">👤</div>
+    <div class="card-title">자기소개</div>
+    <div class="card-desc">개발자 소개 페이지입니다. 프로젝트, 기술 스택, 연락처를 확인해보세요.</div>
+    <div class="card-tags">
+      <span class="tag">Profile</span>
+      <span class="tag">Portfolio</span>
+    </div>
+    <div class="card-arrow">↗</div>
+  </a>
 </div>
 
-<div class="table-wrap">
-    <table id="etf-table">
-        <thead>
-            <tr>
-                <th style="min-width:140px">종목</th>
-                <th style="min-width:80px">분류</th>
-                <th onclick="sortBy('current')">현재가</th>
-                <th onclick="sortBy('change_pct')">등락률</th>
-                <th onclick="sortBy('expense_ratio')">운용보수</th>
-                <th onclick="sortBy('dividend_yield')">배당수익률</th>
-                <th onclick="sortBy('total_assets')">AUM</th>
-                <th onclick="sortBy('w52pos')" style="min-width:100px">52주 위치</th>
-                <th onclick="sortBy('high_52w')">52주 고점</th>
-                <th onclick="sortBy('low_52w')">52주 저점</th>
-            </tr>
-        </thead>
-        <tbody id="etf-tbody">
-            <tr><td colspan="10" class="state-msg">📊 데이터 불러오는 중…</td></tr>
-        </tbody>
-    </table>
-</div>
+<footer>투자 정보는 참고용이며 투자 권유가 아닙니다 · 데이터 출처: Yahoo Finance, DART, Google News</footer>
 
-<footer>ETF 투자 참고 · 미국·한국 장 중 15분 간격 자동 업데이트 · 투자 판단의 최종 책임은 본인에게 있습니다</footer>
-
-<script>
-// ── Supabase 설정 ──────────────────────────────────────────────
-const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-// ──────────────────────────────────────────────────────────────
-
-let allEtfs = [], activeMarket = '전체', activeFilter = '전체';
-let sortKey = 'total_assets', sortDir = -1;
-let timerInterval = null, autoRefreshTimer = null;
-
-const fmtPrice = (v, cur) => cur === 'KRW'
-    ? '₩' + Math.round(v).toLocaleString('ko-KR')
-    : '$' + v.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-
-const fmtPct = v => v ? (v * 100).toFixed(2) + '%' : '—';
-
-const fmtAum = (v, cur) => {
-    if (!v) return '—';
-    if (cur === 'KRW') {
-        if (v >= 1e12) return (v / 1e12).toFixed(1) + '조₩';
-        if (v >= 1e8)  return (v / 1e8).toFixed(0) + '억₩';
-        return (v / 1e6).toFixed(0) + '백만₩';
-    }
-    if (v >= 1e12) return '$' + (v / 1e12).toFixed(1) + 'T';
-    if (v >= 1e9)  return '$' + (v / 1e9).toFixed(1) + 'B';
-    return '$' + (v / 1e6).toFixed(0) + 'M';
-};
-
-function startAgeTimer(dateStr) {
-    if (timerInterval) clearInterval(timerInterval);
-    const base = new Date(dateStr);
-    const tick = () => {
-        const m = Math.floor((Date.now() - base.getTime()) / 60000);
-        document.getElementById('update-label').textContent = m < 1 ? '방금 업데이트' : `${m}분 전 업데이트`;
-    };
-    tick();
-    timerInterval = setInterval(tick, 60000);
-}
-
-async function loadData() {
-    const btn = document.getElementById('refresh-btn');
-    btn.disabled = true;
-    if (autoRefreshTimer) clearTimeout(autoRefreshTimer);
-    try {
-        const useSupabase = SUPABASE_URL && SUPABASE_URL !== 'YOUR_SUPABASE_URL';
-        let etfs, updatedAt;
-        if (useSupabase) {
-            const res = await fetch(
-                `${SUPABASE_URL}/rest/v1/etfs?select=*&order=total_assets.desc.nullslast`,
-                { headers: { 'apikey': SUPABASE_ANON_KEY, 'Authorization': `Bearer ${SUPABASE_ANON_KEY}` } }
-            );
-            if (!res.ok) throw new Error('Supabase HTTP ' + res.status);
-            etfs = await res.json();
-            updatedAt = etfs[0]?.updated_at ?? null;
-        } else {
-            const res = await fetch('etfs.json?t=' + Date.now());
-            if (!res.ok) throw new Error('HTTP ' + res.status);
-            const data = await res.json();
-            etfs = data.etfs || [];
-            updatedAt = data.updated;
-        }
-        allEtfs = etfs.map(e => ({
-            ...e,
-            w52pos: (e.high_52w > e.low_52w)
-                ? Math.round(((e.current - e.low_52w) / (e.high_52w - e.low_52w)) * 100)
-                : null
-        }));
-        startAgeTimer(updatedAt);
-        render();
-    } catch (e) {
-        document.getElementById('update-label').textContent = '데이터 없음';
-        document.getElementById('etf-tbody').innerHTML =
-            `<tr><td colspan="10" class="state-msg">⚠️ 데이터를 불러올 수 없습니다<br><small style="color:#555">${e.message}</small></td></tr>`;
-        btn.disabled = false;
-        autoRefreshTimer = setTimeout(loadData, 5 * 60 * 1000);
-        return;
-    }
-    btn.disabled = false;
-    autoRefreshTimer = setTimeout(loadData, 5 * 60 * 1000);
-}
-
-function filtered() {
-    return allEtfs
-        .filter(e => activeMarket === '전체' || e.market === activeMarket)
-        .filter(e => activeFilter === '전체' || e.category === activeFilter);
-}
-
-function sorted(list) {
-    return [...list].sort((a, b) => {
-        const av = a[sortKey], bv = b[sortKey];
-        if (av == null && bv == null) return 0;
-        if (av == null) return 1;
-        if (bv == null) return -1;
-        return sortDir * (av > bv ? 1 : av < bv ? -1 : 0);
-    });
-}
-
-function render() {
-    const isMobile = window.innerWidth <= 768;
-    isMobile ? renderCards() : renderTable();
-}
-
-function renderTable() {
-    const list = sorted(filtered());
-    const tbody = document.getElementById('etf-tbody');
-    if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="10" class="state-msg">표시할 ETF가 없습니다</td></tr>';
-        return;
-    }
-    tbody.innerHTML = list.map(e => {
-        const sign = e.change_pct >= 0 ? '+' : '';
-        const chgCls = e.change_pct > 0 ? 'up' : e.change_pct < 0 ? 'down' : 'neutral';
-        const badgeCls = e.market === 'US' ? 'badge-us' : 'badge-kr';
-        const barColor = e.change_pct >= 0 ? '#22c55e' : '#ef4444';
-        const pos = e.w52pos != null ? e.w52pos : 50;
-        return `<tr>
-            <td><span class="td-code">${e.code}</span><span class="market-badge ${badgeCls}">${e.market}</span><div class="td-name">${e.name}</div></td>
-            <td><span class="cat-badge cat-${e.category}">${e.category}</span></td>
-            <td>${fmtPrice(e.current, e.currency)}</td>
-            <td class="${chgCls}">${sign}${e.change_pct.toFixed(2)}%</td>
-            <td>${fmtPct(e.expense_ratio)}</td>
-            <td>${fmtPct(e.dividend_yield)}</td>
-            <td>${fmtAum(e.total_assets, e.currency)}</td>
-            <td><div class="bar-wrap"><span style="font-size:11px;color:#555">${e.w52pos != null ? e.w52pos + '%' : '—'}</span><div class="bar-track"><div class="bar-fill" style="width:${pos}%;background:${barColor}"></div></div></div></td>
-            <td>${fmtPrice(e.high_52w, e.currency)}</td>
-            <td>${fmtPrice(e.low_52w, e.currency)}</td>
-        </tr>`;
-    }).join('');
-
-    document.querySelectorAll('thead th').forEach(th => th.classList.remove('sort-asc', 'sort-desc'));
-    const keyMap = [null, null, 'current', 'change_pct', 'expense_ratio', 'dividend_yield', 'total_assets', 'w52pos', 'high_52w', 'low_52w'];
-    const idx = keyMap.indexOf(sortKey);
-    if (idx >= 0) document.querySelectorAll('thead th')[idx].classList.add(sortDir > 0 ? 'sort-asc' : 'sort-desc');
-}
-
-function renderCards() {
-    const list = sorted(filtered());
-    const tbody = document.getElementById('etf-tbody');
-    if (!list.length) {
-        tbody.innerHTML = '<tr><td colspan="10" class="state-msg">표시할 ETF가 없습니다</td></tr>';
-        return;
-    }
-    tbody.innerHTML = list.map(e => {
-        const sign = e.change_pct >= 0 ? '+' : '';
-        const chgCls = e.change_pct > 0 ? 'up' : e.change_pct < 0 ? 'down' : 'neutral';
-        const badgeCls = e.market === 'US' ? 'badge-us' : 'badge-kr';
-        const barColor = e.change_pct >= 0 ? '#22c55e' : '#ef4444';
-        const pos = e.w52pos != null ? e.w52pos : 50;
-        return `<tr>
-            <td data-label="card">
-                <div class="mobile-header">
-                    <div>
-                        <span class="td-code">${e.code}</span>
-                        <span class="market-badge ${badgeCls}">${e.market}</span>
-                        <span class="cat-badge cat-${e.category}" style="margin-left:4px">${e.category}</span>
-                        <div class="td-name" style="margin-top:3px">${e.name}</div>
-                    </div>
-                    <div style="text-align:right">
-                        <div class="mobile-price" style="font-size:18px;font-weight:700">${fmtPrice(e.current, e.currency)}</div>
-                        <div class="${chgCls}" style="font-size:13px">${sign}${e.change_pct.toFixed(2)}%</div>
-                    </div>
-                </div>
-                <div class="mobile-metrics">
-                    <div class="m-item"><div class="m-label">운용보수</div><div class="m-value">${fmtPct(e.expense_ratio)}</div></div>
-                    <div class="m-item"><div class="m-label">배당수익률</div><div class="m-value">${fmtPct(e.dividend_yield)}</div></div>
-                    <div class="m-item"><div class="m-label">AUM</div><div class="m-value">${fmtAum(e.total_assets, e.currency)}</div></div>
-                    <div class="m-item">
-                        <div class="m-label">52주 위치</div>
-                        <div class="bar-wrap" style="margin-top:4px">
-                            <span style="font-size:11px;color:#555">${e.w52pos != null ? e.w52pos + '%' : '—'}</span>
-                            <div class="bar-track"><div class="bar-fill" style="width:${pos}%;background:${barColor}"></div></div>
-                        </div>
-                    </div>
-                    <div class="m-item"><div class="m-label">52주 고점</div><div class="m-value">${fmtPrice(e.high_52w, e.currency)}</div></div>
-                    <div class="m-item"><div class="m-label">52주 저점</div><div class="m-value">${fmtPrice(e.low_52w, e.currency)}</div></div>
-                </div>
-            </td>
-        </tr>`;
-    }).join('');
-}
-
-function sortBy(key) {
-    if (sortKey === key) sortDir *= -1;
-    else { sortKey = key; sortDir = -1; }
-    render();
-}
-
-function applyMarket(mkt, btn) {
-    activeMarket = mkt;
-    document.querySelectorAll('.market-btn').forEach(b => b.className = 'market-btn');
-    btn.classList.add(mkt === '전체' ? 'active-all' : mkt === 'US' ? 'active-us' : 'active-kr');
-    render();
-}
-
-function applyFilter(cat, btn) {
-    activeFilter = cat;
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    render();
-}
-
-window.addEventListener('resize', render);
-loadData();
-</script>
 </body>
 </html>
