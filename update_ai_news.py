@@ -184,7 +184,9 @@ def supabase_upsert(table, rows):
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates,return=minimal',
     }
-    res = requests.post(f'{SUPABASE_URL}/rest/v1/{table}', json=rows, headers=headers, timeout=30)
+    on_conflict = 'url' if table == 'ai_news' else ''
+    url = f'{SUPABASE_URL}/rest/v1/{table}' + (f'?on_conflict={on_conflict}' if on_conflict else '')
+    res = requests.post(url, json=rows, headers=headers, timeout=30)
     if res.status_code not in (200, 201):
         print(f'[Supabase] {table} upsert 실패: {res.status_code} {res.text[:200]}')
     else:
