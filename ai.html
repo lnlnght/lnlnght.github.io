@@ -69,6 +69,7 @@
     .briefing-content { flex: 1; min-width: 0; }
     .briefing-person { font-size: 10px; font-weight: 600; margin-bottom: 2px; }
     .briefing-title { font-size: 13px; color: #333; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+    .briefing-summary { font-size: 12px; color: #555; line-height: 1.5; margin-top: 3px; }
     .briefing-source { font-size: 10px; color: #bbb; margin-top: 2px; }
 
     /* ── State ── */
@@ -114,9 +115,9 @@
 
 <div class="person-tabs" id="person-tabs"></div>
 <div class="type-filter">
-  <button class="type-btn active" data-type="all" onclick="setType('all')">전체</button>
-  <button class="type-btn" data-type="video" onclick="setType('video')">▶ 영상</button>
-  <button class="type-btn" data-type="news" onclick="setType('news')">📰 뉴스</button>
+  <button class="type-btn active" data-type="all" onclick="setType('all')">&#xC804;&#xCCB4;</button>
+  <button class="type-btn" data-type="video" onclick="setType('video')">&#x25B6; &#xC601;&#xC0C1;</button>
+  <button class="type-btn" data-type="news" onclick="setType('news')">&#x1F4F0; &#xB274;&#xC2A4;</button>
 </div>
 <div class="grid-wrap">
   <div class="grid" id="grid"></div>
@@ -125,8 +126,7 @@
 
 <script>
 const SUPABASE_URL      = 'https://tnqkwfcnoelbwkyiyyra.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRucWt3ZmNub2VsYndreWl5eXJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0NDA1MDIsImV4cCI6MjA5ODAxNjUwMn0.qjXPMx9Bs8ozPrFYKQKuy5M0_vtXawfnnpeFQhqJSvA';  // anon public key
-
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRucWt3ZmNub2VsYndreWl5eXJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0NDA1MDIsImV4cCI6MjA5ODAxNjUwMn0.qjXPMx9Bs8ozPrFYKQKuy5M0_vtXawfnnpeFQhqJSvA';
 
 const PEOPLE = [
   { id: 'all',            name: '전체',        name_ko: '전체',        title: '',                   avatar: '★',  color: '#6366f1' },
@@ -135,12 +135,12 @@ const PEOPLE = [
   { id: 'dario_amodei',   name: 'Dario Amodei',name_ko: '다리오 아모데이', title: 'CEO, Anthropic',  avatar: 'DA', color: '#d97706' },
   { id: 'elon_musk',      name: 'Elon Musk',   name_ko: '일론 머스크', title: 'CEO, xAI / Tesla',  avatar: 'EM', color: '#6366f1' },
   { id: 'geoffrey_hinton',name: 'G. Hinton',   name_ko: '제프리 힌튼', title: 'Godfather of AI',   avatar: 'GH', color: '#ec4899' },
-  { id: 'demis_hassabis',   name: 'D. Hassabis',    name_ko: '데미스 하사비스', title: 'CEO, DeepMind',          avatar: 'DH', color: '#3b82f6' },
-  { id: 'yann_lecun',       name: 'Yann LeCun',     name_ko: '얀 르쿤',        title: 'Chief AI Scientist, Meta', avatar: 'YL', color: '#f59e0b' },
-  { id: 'andrew_ng',        name: 'Andrew Ng',      name_ko: '앤드류 응',      title: 'Founder, DeepLearning.AI', avatar: 'AN', color: '#14b8a6' },
-  { id: 'satya_nadella',    name: 'S. Nadella',     name_ko: '사티아 나델라',  title: 'CEO, Microsoft',           avatar: 'SN', color: '#0ea5e9' },
-  { id: 'sundar_pichai',    name: 'S. Pichai',      name_ko: '순다르 피차이',  title: 'CEO, Google',              avatar: 'SP', color: '#ea4335' },
-  { id: 'mark_zuckerberg',  name: 'M. Zuckerberg',  name_ko: '마크 저커버그',  title: 'CEO, Meta',                avatar: 'MZ', color: '#1877f2' },
+  { id: 'demis_hassabis', name: 'D. Hassabis', name_ko: '데미스 하사비스', title: 'CEO, DeepMind',  avatar: 'DH', color: '#3b82f6' },
+  { id: 'yann_lecun',     name: 'Yann LeCun',  name_ko: '얀 르쿤',    title: 'Chief AI Scientist, Meta', avatar: 'YL', color: '#f59e0b' },
+  { id: 'andrew_ng',      name: 'Andrew Ng',   name_ko: '앤드류 응',  title: 'Founder, DeepLearning.AI', avatar: 'AN', color: '#14b8a6' },
+  { id: 'satya_nadella',  name: 'S. Nadella',  name_ko: '사티아 나델라', title: 'CEO, Microsoft',  avatar: 'SN', color: '#0ea5e9' },
+  { id: 'sundar_pichai',  name: 'S. Pichai',   name_ko: '순다르 피차이', title: 'CEO, Google',     avatar: 'SP', color: '#ea4335' },
+  { id: 'mark_zuckerberg',name: 'M. Zuckerberg',name_ko: '마크 저커버그', title: 'CEO, Meta',      avatar: 'MZ', color: '#1877f2' },
 ];
 
 let allItems = [];
@@ -174,56 +174,47 @@ function setType(t) {
   render();
 }
 
-function renderBriefing(items) {
+async function loadBriefings() {
   const list = document.getElementById('briefing-list');
   const today = new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
   document.getElementById('briefing-date').textContent = today;
 
-  // 최근 72시간 이내 뉴스, 인물별 최신 1개씩
-  const cutoff = Date.now() - 72 * 3600 * 1000;
-  const recentNews = items.filter(i => i.type === 'news' && new Date(i.published_at).getTime() > cutoff);
+  try {
+    const todayIso = new Date().toISOString().slice(0, 10);
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ai_briefings?select=*&date=eq.${todayIso}&order=rank.asc`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
+    const raw = await res.json();
+    const briefings = Array.isArray(raw) ? raw : [];
 
-  // 인물별 최신 1개
-  const seen = new Set();
-  const briefItems = [];
-  for (const item of [...recentNews].sort((a, b) => new Date(b.published_at) - new Date(a.published_at))) {
-    if (!seen.has(item.person_id) && briefItems.length < 11) {
-      seen.add(item.person_id);
-      briefItems.push(item);
+    if (!briefings.length) {
+      list.innerHTML = '<div style="color:#bbb;font-size:13px;padding:12px 0">오늘의 브리핑이 아직 없습니다. 매일 오전 9시에 업데이트됩니다.</div>';
+      return;
     }
-  }
 
-  // 브리핑 아이템이 없으면 전체 최신 뉴스 인물별 1개씩 (날짜 무관)
-  let finalItems = briefItems;
-  if (!finalItems.length) {
-    const seenFb = new Set();
-    for (const item of [...items].filter(i => i.type === 'news').sort((a, b) => new Date(b.published_at) - new Date(a.published_at))) {
-      if (!seenFb.has(item.person_id) && finalItems.length < 11) {
-        seenFb.add(item.person_id);
-        finalItems.push(item);
-      }
-    }
+    list.innerHTML = briefings.map(item => {
+      const p = PEOPLE.find(p => p.id === item.person_id);
+      const color = p?.color || '#6366f1';
+      const name = p?.name_ko || p?.name || '';
+      const summaryHtml = item.summary_ko
+        ? `<div class="briefing-summary">${item.summary_ko}</div>`
+        : '';
+      return `
+        <a class="briefing-item" href="${item.url}" target="_blank" rel="noopener">
+          <div class="briefing-avatar" style="background:${color}18;color:${color}">${p?.avatar || '?'}</div>
+          <div class="briefing-content">
+            ${name ? `<div class="briefing-person" style="color:${color}">${name}</div>` : ''}
+            <div class="briefing-title">${item.title}</div>
+            ${summaryHtml}
+            <div class="briefing-source">${item.source || ''} · ${relativeTime(item.published_at)}</div>
+          </div>
+        </a>`;
+    }).join('');
+  } catch (e) {
+    list.innerHTML = '<div style="color:#bbb;font-size:13px;padding:12px 0">브리핑을 불러오지 못했습니다.</div>';
+    console.error(e);
   }
-
-  if (!finalItems.length) {
-    list.innerHTML = '<div style="color:#bbb;font-size:13px;padding:12px 0">뉴스 데이터가 없습니다. 잠시 후 새로고침해 주세요.</div>';
-    return;
-  }
-
-  list.innerHTML = finalItems.map(item => {
-    const p = PEOPLE.find(p => p.id === item.person_id);
-    const color = p?.color || '#6366f1';
-    const name = p?.name_ko || p?.name || '';
-    return `
-      <a class="briefing-item" href="${item.url}" target="_blank" rel="noopener">
-        <div class="briefing-avatar" style="background:${color}18;color:${color}">${p?.avatar || '?'}</div>
-        <div class="briefing-content">
-          <div class="briefing-person" style="color:${color}">${name}</div>
-          <div class="briefing-title">${item.title}</div>
-          <div class="briefing-source">${item.source || ''} · ${relativeTime(item.published_at)}</div>
-        </div>
-      </a>`;
-  }).join('');
 }
 
 function relativeTime(iso) {
@@ -276,30 +267,17 @@ async function loadData(force = false) {
   btn.disabled = true;
 
   try {
-    const useSupabase = SUPABASE_URL && SUPABASE_URL !== 'YOUR_SUPABASE_URL';
-    let items = [];
-    let updatedAt = null;
-
-    if (useSupabase) {
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/ai_news?select=*&order=published_at.desc`,
-        { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
-      );
-      const raw = await res.json();
-      items = Array.isArray(raw) ? raw : [];
-      updatedAt = items[0]?.updated_at ?? null;
-    } else {
-      const res = await fetch(`ai_news.json?t=${Date.now()}`);
-      const data = await res.json();
-      items = data.items || [];
-      updatedAt = data.updated ?? null;
-    }
-
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ai_news?select=*&order=published_at.desc`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
+    const raw = await res.json();
+    const items = Array.isArray(raw) ? raw : [];
     allItems = items;
+    const updatedAt = items[0]?.updated_at ?? null;
     if (updatedAt) {
       document.getElementById('updated-label').textContent = `업데이트: ${updatedAt.slice(0,16).replace('T',' ')}`;
     }
-    renderBriefing(items);
     render();
   } catch (e) {
     document.getElementById('state-msg').style.display = 'block';
@@ -311,6 +289,7 @@ async function loadData(force = false) {
 }
 
 buildTabs();
+loadBriefings();
 loadData();
 </script>
 </body>
