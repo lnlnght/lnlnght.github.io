@@ -246,7 +246,7 @@ def supabase_upsert(table, rows):
         'Content-Type': 'application/json',
         'Prefer': 'resolution=merge-duplicates,return=minimal',
     }
-    on_conflict = 'url' if table == 'ai_news' else ''
+    on_conflict = 'url,person_id' if table == 'ai_news' else ''
     url = f'{SUPABASE_URL}/rest/v1/{table}' + (f'?on_conflict={on_conflict}' if on_conflict else '')
     res = requests.post(url, json=rows, headers=headers, timeout=30)
     if res.status_code not in (200, 201):
