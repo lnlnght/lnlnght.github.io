@@ -271,11 +271,14 @@ def generate_briefings(news_items):
             continue
         pub = item.get('published_at', '')
         try:
-            dt = datetime.fromisoformat(pub.replace('Z', '+00:00')) if pub else None
-            if dt and dt < cutoff:
-                continue
+            if pub:
+                dt = datetime.fromisoformat(pub.replace('Z', '+00:00'))
+                if dt.tzinfo is None:
+                    dt = dt.replace(tzinfo=timezone.utc)
+                if dt < cutoff:
+                    continue
         except Exception:
-            continue
+            pass  # 날짜 파싱 실패 시 포함
         url = item.get('url', '')
         if url in seen_urls_b:
             continue
@@ -285,7 +288,7 @@ def generate_briefings(news_items):
             break
 
     if not recent:
-        print('[Briefing] 최근 48시간 이내 뉴스 없음, 건너뜀')
+        print('[Briefing] 수집된 뉴스 없음, 건너뜀')
         return
 
     top = recent[:10]
