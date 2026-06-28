@@ -2,7 +2,7 @@ name: ETF Data Update
 
 on:
   schedule:
-    - cron: '0 * * * *'           # 매시간 정각
+    - cron: '0 0 * * *'           # 매일 오전 9시 (KST)
   workflow_dispatch:
 
 jobs:

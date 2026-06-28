@@ -84,6 +84,68 @@ PEOPLE = [
         ],
         'news_queries': ['Demis Hassabis', '데미스 하사비스', 'DeepMind CEO'],
     },
+    {
+        'id': 'yann_lecun',
+        'name': 'Yann LeCun',
+        'name_ko': '얀 르쿤',
+        'title': 'Chief AI Scientist, Meta',
+        'avatar': 'YL',
+        'color': '#f59e0b',
+        'youtube_channels': [
+            'UCbmNph6atAoGfqLoCL_duAg',  # TED
+            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+        ],
+        'news_queries': ['Yann LeCun', '얀 르쿤', 'Meta AI LeCun'],
+    },
+    {
+        'id': 'andrew_ng',
+        'name': 'Andrew Ng',
+        'name_ko': '앤드류 응',
+        'title': 'Founder, DeepLearning.AI',
+        'avatar': 'AN',
+        'color': '#14b8a6',
+        'youtube_channels': [
+            'UCcIXc5mJsHVYTZR1maL5l9w',  # DeepLearning.AI
+            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+        ],
+        'news_queries': ['Andrew Ng', '앤드류 응', 'DeepLearning AI'],
+    },
+    {
+        'id': 'satya_nadella',
+        'name': 'Satya Nadella',
+        'name_ko': '사티아 나델라',
+        'title': 'CEO, Microsoft',
+        'avatar': 'SN',
+        'color': '#0ea5e9',
+        'youtube_channels': [
+            'UCFtEEv80fQVKkD4h1PF-Xqw',  # Microsoft
+        ],
+        'news_queries': ['Satya Nadella AI', '사티아 나델라', 'Microsoft AI Copilot'],
+    },
+    {
+        'id': 'sundar_pichai',
+        'name': 'Sundar Pichai',
+        'name_ko': '순다르 피차이',
+        'title': 'CEO, Google',
+        'avatar': 'SP',
+        'color': '#ea4335',
+        'youtube_channels': [
+            'UCnUYZLuoy1rq1aVMwx4aTzw',  # Google DeepMind
+        ],
+        'news_queries': ['Sundar Pichai AI', '순다르 피차이', 'Google Gemini CEO'],
+    },
+    {
+        'id': 'mark_zuckerberg',
+        'name': 'Mark Zuckerberg',
+        'name_ko': '마크 저커버그',
+        'title': 'CEO, Meta',
+        'avatar': 'MZ',
+        'color': '#1877f2',
+        'youtube_channels': [
+            'UCSHZKyawb77ixDdsGog4iWA',  # Lex Fridman
+        ],
+        'news_queries': ['Mark Zuckerberg AI', '마크 저커버그 AI', 'Meta Llama AI'],
+    },
 ]
 
 # ── 추가 공통 AI 채널 (모든 인물 탭의 영상 풀 보완) ──────────
