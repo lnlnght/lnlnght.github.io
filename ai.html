@@ -11,9 +11,9 @@
     /* ── Header ── */
     header { max-width: 1400px; margin: 0 auto; padding: 28px 20px 14px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
     .header-left h1 { font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .header-left p { font-size: 11px; color: #2e2e42; margin-top: 3px; }
+    .header-left p { font-size: 11px; color: #555; margin-top: 3px; }
     .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
-    .update-label { font-size: 11px; color: #3a3a4a; }
+    .update-label { font-size: 11px; color: #555; }
     .nav-link { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; color: #555; font-size: 12px; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
     .nav-link:hover { color: #aaa; border-color: #333; }
     .refresh-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
@@ -55,6 +55,23 @@
     .card-date { font-size: 10px; color: #333; margin-left: auto; flex-shrink: 0; }
     .card-title { font-size: 13px; color: #ccc; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 
+    /* ── Briefing ── */
+    .briefing-wrap { max-width: 1400px; margin: 0 auto; padding: 20px 20px 0; }
+    .briefing-box { background: #0d0d16; border: 1px solid #1a1a26; border-radius: 14px; padding: 20px 24px; }
+    .briefing-header { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+    .briefing-header h2 { font-size: 14px; font-weight: 700; color: #e2e2e8; }
+    .briefing-date { font-size: 11px; color: #444; margin-left: auto; }
+    .briefing-list { display: flex; flex-direction: column; gap: 0; }
+    .briefing-item { display: flex; align-items: flex-start; gap: 12px; padding: 10px 0; border-bottom: 1px solid #14141e; text-decoration: none; color: inherit; transition: background 0.1s; border-radius: 6px; }
+    .briefing-item:last-child { border-bottom: none; }
+    .briefing-item:hover { background: #111118; }
+    .briefing-avatar { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+    .briefing-content { flex: 1; min-width: 0; }
+    .briefing-person { font-size: 10px; font-weight: 600; margin-bottom: 2px; }
+    .briefing-title { font-size: 13px; color: #ccc; line-height: 1.45; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+    .briefing-summary { font-size: 12px; color: #888; line-height: 1.5; margin-top: 3px; }
+    .briefing-source { font-size: 10px; color: #444; margin-top: 2px; }
+
     /* ── State ── */
     .state-msg { text-align: center; padding: 80px 20px; color: #333; font-size: 14px; line-height: 2; }
 
@@ -63,6 +80,7 @@
       .grid { grid-template-columns: 1fr; }
       .person-tab .tab-title { display: none; }
       .person-tab { padding: 6px 12px; }
+      .briefing-title { -webkit-line-clamp: 2; }
     }
   </style>
 </head>
@@ -75,11 +93,25 @@
   </div>
   <div class="header-right">
     <span class="update-label" id="last-update"></span>
-    <a class="nav-link" href="index.html">ETF</a>
-    <a class="nav-link" href="stocks.html">주식</a>
+    <a class="nav-link" href="/">홈</a>
+    <a class="nav-link" href="/etf.html">ETF</a>
+    <a class="nav-link" href="/stocks.html">주식</a>
     <button class="refresh-btn" id="refresh-btn" onclick="loadData(true)">↻ 새로고침</button>
   </div>
 </header>
+
+<div class="briefing-wrap">
+  <div class="briefing-box">
+    <div class="briefing-header">
+      <span style="font-size:16px">📰</span>
+      <h2>오늘의 AI 브리핑</h2>
+      <span class="briefing-date" id="briefing-date"></span>
+    </div>
+    <div class="briefing-list" id="briefing-list">
+      <div style="color:#444;font-size:13px;padding:12px 0">로딩 중...</div>
+    </div>
+  </div>
+</div>
 
 <div class="person-tabs" id="person-tabs"></div>
 <div class="type-filter">
@@ -93,8 +125,8 @@
 </div>
 
 <script>
-const SUPABASE_URL      = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL      = 'https://tnqkwfcnoelbwkyiyyra.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRucWt3ZmNub2VsYndreWl5eXJhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI0NDA1MDIsImV4cCI6MjA5ODAxNjUwMn0.qjXPMx9Bs8ozPrFYKQKuy5M0_vtXawfnnpeFQhqJSvA';
 
 const PEOPLE = [
   { id: 'all',            name: '전체',        name_ko: '전체',        title: '',                   avatar: '★',  color: '#6366f1' },
@@ -104,6 +136,11 @@ const PEOPLE = [
   { id: 'elon_musk',      name: 'Elon Musk',   name_ko: '일론 머스크', title: 'CEO, xAI / Tesla',  avatar: 'EM', color: '#6366f1' },
   { id: 'geoffrey_hinton',name: 'G. Hinton',   name_ko: '제프리 힌튼', title: 'Godfather of AI',   avatar: 'GH', color: '#ec4899' },
   { id: 'demis_hassabis', name: 'D. Hassabis', name_ko: '데미스 하사비스', title: 'CEO, DeepMind',  avatar: 'DH', color: '#3b82f6' },
+  { id: 'yann_lecun',     name: 'Yann LeCun',  name_ko: '얀 르쿤',    title: 'Chief AI Scientist, Meta', avatar: 'YL', color: '#f59e0b' },
+  { id: 'andrew_ng',      name: 'Andrew Ng',   name_ko: '앤드류 응',  title: 'Founder, DeepLearning.AI', avatar: 'AN', color: '#14b8a6' },
+  { id: 'satya_nadella',  name: 'S. Nadella',  name_ko: '사티아 나델라', title: 'CEO, Microsoft',  avatar: 'SN', color: '#0ea5e9' },
+  { id: 'sundar_pichai',  name: 'S. Pichai',   name_ko: '순다르 피차이', title: 'CEO, Google',     avatar: 'SP', color: '#ea4335' },
+  { id: 'mark_zuckerberg',name: 'M. Zuckerberg',name_ko: '마크 저커버그', title: 'CEO, Meta',      avatar: 'MZ', color: '#1877f2' },
 ];
 
 let allItems = [];
@@ -135,6 +172,49 @@ function setType(t) {
   currentType = t;
   document.querySelectorAll('.type-btn').forEach(b => b.classList.toggle('active', b.dataset.type === t));
   render();
+}
+
+async function loadBriefings() {
+  const list = document.getElementById('briefing-list');
+  const today = new Date().toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' });
+  document.getElementById('briefing-date').textContent = today;
+
+  try {
+    const todayIso = new Date().toISOString().slice(0, 10);
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ai_briefings?select=*&date=eq.${todayIso}&order=rank.asc`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
+    const raw = await res.json();
+    const briefings = Array.isArray(raw) ? raw : [];
+
+    if (!briefings.length) {
+      list.innerHTML = '<div style="color:#444;font-size:13px;padding:12px 0">오늘의 브리핑이 아직 없습니다. 매일 오전 9시에 업데이트됩니다.</div>';
+      return;
+    }
+
+    list.innerHTML = briefings.map(item => {
+      const p = PEOPLE.find(p => p.id === item.person_id);
+      const color = p?.color || '#6366f1';
+      const name = p?.name_ko || p?.name || '';
+      const summaryHtml = item.summary_ko
+        ? `<div class="briefing-summary">${item.summary_ko}</div>`
+        : '';
+      return `
+        <a class="briefing-item" href="${item.url}" target="_blank" rel="noopener">
+          <div class="briefing-avatar" style="background:${color}18;color:${color}">${p?.avatar || '?'}</div>
+          <div class="briefing-content">
+            ${name ? `<div class="briefing-person" style="color:${color}">${name}</div>` : ''}
+            <div class="briefing-title">${item.title}</div>
+            ${summaryHtml}
+            <div class="briefing-source">${item.source || ''} · ${relativeTime(item.published_at)}</div>
+          </div>
+        </a>`;
+    }).join('');
+  } catch (e) {
+    list.innerHTML = '<div style="color:#444;font-size:13px;padding:12px 0">브리핑을 불러오지 못했습니다.</div>';
+    console.error(e);
+  }
 }
 
 function relativeTime(iso) {
@@ -187,25 +267,14 @@ async function loadData(force = false) {
   btn.disabled = true;
 
   try {
-    const useSupabase = SUPABASE_URL && SUPABASE_URL !== 'YOUR_SUPABASE_URL';
-    let items = [];
-    let updatedAt = null;
-
-    if (useSupabase) {
-      const res = await fetch(
-        `${SUPABASE_URL}/rest/v1/ai_news?select=*&order=published_at.desc`,
-        { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
-      );
-      items = await res.json();
-      updatedAt = items[0]?.updated_at ?? null;
-    } else {
-      const res = await fetch(`ai_news.json?t=${Date.now()}`);
-      const data = await res.json();
-      items = data.items || [];
-      updatedAt = data.updated ?? null;
-    }
-
+    const res = await fetch(
+      `${SUPABASE_URL}/rest/v1/ai_news?select=*&order=published_at.desc`,
+      { headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` } }
+    );
+    const raw = await res.json();
+    const items = Array.isArray(raw) ? raw : [];
     allItems = items;
+    const updatedAt = items[0]?.updated_at ?? null;
     if (updatedAt) {
       document.getElementById('updated-label').textContent = `업데이트: ${updatedAt.slice(0,16).replace('T',' ')}`;
     }
@@ -220,6 +289,7 @@ async function loadData(force = false) {
 }
 
 buildTabs();
+loadBriefings();
 loadData();
 </script>
 </body>

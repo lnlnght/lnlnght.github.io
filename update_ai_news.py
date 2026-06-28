@@ -2,7 +2,7 @@ import os
 import json
 import requests
 import xml.etree.ElementTree as ET
-from datetime import datetime, timezone
+from datetime import datetime, timezone, timedelta
 from email.utils import parsedate_to_datetime
 
 SUPABASE_URL = os.environ.get('SUPABASE_URL', '')
@@ -193,6 +193,93 @@ def supabase_upsert(table, rows):
         print(f'[Supabase] {table} {len(rows)}개 upsert 완료')
 
 
+def generate_briefings(news_items):
+    """오늘 수집된 뉴스 중 상위 10개를 선정해 Claude로 한국어 요약 생성 후 ai_briefings에 저장."""
+    anthropic_key = os.environ.get('ANTHROPIC_API_KEY', '')
+    if not anthropic_key:
+        print('[Briefing] ANTHROPIC_API_KEY 없음, 건너뜀')
+        return
+
+    # 최근 48시간 이내 뉴스만 추림 (중복 url 제거)
+    cutoff = datetime.now(timezone.utc) - timedelta(hours=48)
+    seen_urls_b = set()
+    recent = []
+    for item in sorted(news_items, key=lambda x: x.get('published_at', ''), reverse=True):
+        if item.get('type') != 'news':
+            continue
+        pub = item.get('published_at', '')
+        try:
+            dt = datetime.fromisoformat(pub.replace('Z', '+00:00')) if pub else None
+            if dt and dt < cutoff:
+                continue
+        except Exception:
+            continue
+        url = item.get('url', '')
+        if url in seen_urls_b:
+            continue
+        seen_urls_b.add(url)
+        recent.append(item)
+        if len(recent) >= 30:
+            break
+
+    if not recent:
+        print('[Briefing] 최근 48시간 이내 뉴스 없음, 건너뜀')
+        return
+
+    top = recent[:10]
+    today = datetime.now(timezone.utc).date().isoformat()
+    print(f'\n[Briefing] 상위 {len(top)}개 뉴스 요약 생성...')
+
+    headers_ai = {
+        'x-api-key': anthropic_key,
+        'anthropic-version': '2023-06-01',
+        'content-type': 'application/json',
+    }
+    briefing_rows = []
+    for rank, item in enumerate(top, 1):
+        title = item.get('title', '')
+        source = item.get('source', '')
+        prompt = (
+            f"다음 AI 뉴스 제목을 한국어로 1~2문장으로 핵심만 요약해줘. "
+            f"제목: {title} (출처: {source})\n"
+            f"요약만 출력하고 다른 말은 하지 마."
+        )
+        try:
+            res = requests.post(
+                'https://api.anthropic.com/v1/messages',
+                json={
+                    'model': 'claude-haiku-4-5-20251001',
+                    'max_tokens': 200,
+                    'messages': [{'role': 'user', 'content': prompt}],
+                },
+                headers=headers_ai,
+                timeout=30,
+            )
+            if res.status_code == 200:
+                summary_ko = res.json()['content'][0]['text'].strip()
+            else:
+                print(f'  [AI] rank {rank} 오류: {res.status_code} {res.text[:100]}')
+                summary_ko = ''
+        except Exception as e:
+            print(f'  [AI] rank {rank} 예외: {e}')
+            summary_ko = ''
+
+        briefing_rows.append({
+            'date': today,
+            'rank': rank,
+            'person_id': item.get('person_id', ''),
+            'title': title,
+            'url': item.get('url', ''),
+            'source': source,
+            'published_at': item.get('published_at', ''),
+            'summary_ko': summary_ko,
+        })
+        print(f'  rank {rank}: {title[:40]}... → {summary_ko[:40]}...' if summary_ko else f'  rank {rank}: {title[:40]}...')
+
+    if briefing_rows and SUPABASE_URL and SUPABASE_KEY:
+        supabase_upsert('ai_briefings', briefing_rows)
+
+
 def main():
     all_rows = []
     seen_urls = set()
@@ -265,6 +352,9 @@ def main():
     # Supabase upsert
     if all_rows:
         supabase_upsert('ai_news', all_rows)
+
+    # ai_briefings 생성
+    generate_briefings(all_rows)
 
 
 if __name__ == '__main__':
