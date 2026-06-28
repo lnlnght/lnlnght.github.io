@@ -287,7 +287,7 @@ def main():
                         if p_obj and title_matches_person(v['title'], p_obj):
                             assigned.append(pid)
                     if not assigned:
-                        assigned = people_for_ch  # 매칭 없으면 채널 소유자 전체
+                        continue  # 공통 채널에서 인물 언급 없으면 건너뜀
                 else:
                     assigned = people_for_ch
 
