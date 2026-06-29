@@ -6,58 +6,58 @@
   <title>BTC 시그널</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e2e2e8; min-height: 100vh; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f5f8; color: #1a1a2e; min-height: 100vh; }
 
     header { max-width: 900px; margin: 0 auto; padding: 28px 20px 14px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
-    .header-left h1 { font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .header-left p { font-size: 11px; color: #3a3a4a; margin-top: 3px; }
+    .header-left h1 { font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #1a1a2e 0%, #5050a0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .header-left p { font-size: 11px; color: #aaa; margin-top: 3px; }
     .header-right { display: flex; align-items: center; gap: 8px; }
-    .nav-link { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; color: #555; font-size: 12px; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
-    .nav-link:hover { color: #aaa; border-color: #333; }
-    .refresh-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
-    .refresh-btn:hover { color: #aaa; border-color: #333; }
+    .nav-link { padding: 5px 12px; border-radius: 8px; border: 1px solid #ddd; color: #888; font-size: 12px; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
+    .nav-link:hover { color: #333; border-color: #bbb; }
+    .refresh-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid #ddd; background: transparent; color: #888; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+    .refresh-btn:hover { color: #333; border-color: #bbb; }
     .refresh-btn:disabled { opacity: 0.3; cursor: not-allowed; }
 
     main { max-width: 900px; margin: 0 auto; padding: 8px 20px 40px; }
 
     /* ── Signal Card ── */
-    .signal-card { background: #0f0f1a; border: 1px solid #1e1e2a; border-radius: 16px; padding: 32px; margin-bottom: 16px; display: flex; align-items: center; gap: 32px; }
+    .signal-card { background: #fff; border: 1px solid #e8e8f0; border-radius: 16px; padding: 32px; margin-bottom: 16px; display: flex; align-items: center; gap: 32px; }
     .signal-icon { font-size: 72px; line-height: 1; flex-shrink: 0; }
     .signal-info { flex: 1; }
-    .signal-label { font-size: 11px; color: #3a3a4a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .signal-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
     .signal-name { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
-    .signal-desc { font-size: 13px; color: #555; }
-    .signal-clarity { font-size: 13px; color: #888; margin-top: 6px; }
+    .signal-desc { font-size: 13px; color: #888; }
+    .signal-clarity { font-size: 13px; color: #aaa; margin-top: 6px; }
 
-    .signal-clear .signal-name  { color: #f59e0b; }
-    .signal-cloudy .signal-name { color: #6366f1; }
-    .signal-stormy .signal-name { color: #ef4444; }
+    .signal-clear .signal-name  { color: #d97706; }
+    .signal-cloudy .signal-name { color: #4f46e5; }
+    .signal-stormy .signal-name { color: #dc2626; }
 
     /* ── Position Badge ── */
     .pos-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 700; margin-top: 10px; }
-    .pos-buy  { background: #0f1f0f; color: #22c55e; border: 1px solid #22c55e44; }
-    .pos-sell { background: #1f0f0f; color: #ef4444; border: 1px solid #ef444444; }
-    .pos-hold { background: #14141e; color: #6366f1; border: 1px solid #6366f144; }
+    .pos-buy  { background: #edfaf3; color: #16a34a; border: 1px solid #16a34a44; }
+    .pos-sell { background: #fef2f2; color: #dc2626; border: 1px solid #dc262644; }
+    .pos-hold { background: #eeeef8; color: #4f46e5; border: 1px solid #4f46e544; }
 
     /* ── Metrics Grid ── */
     .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
-    .metric-card { background: #0f0f1a; border: 1px solid #1e1e2a; border-radius: 12px; padding: 20px; }
-    .metric-label { font-size: 11px; color: #3a3a4a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
-    .metric-value { font-size: 26px; font-weight: 700; color: #e2e2e8; }
-    .metric-sub { font-size: 11px; color: #555; margin-top: 4px; }
-    .metric-pos { color: #22c55e; }
-    .metric-neg { color: #ef4444; }
+    .metric-card { background: #fff; border: 1px solid #e8e8f0; border-radius: 12px; padding: 20px; }
+    .metric-label { font-size: 11px; color: #aaa; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .metric-value { font-size: 26px; font-weight: 700; color: #1a1a2e; }
+    .metric-sub { font-size: 11px; color: #bbb; margin-top: 4px; }
+    .metric-pos { color: #16a34a; }
+    .metric-neg { color: #dc2626; }
 
     /* ── Disclaimer ── */
-    .disclaimer { background: #0f0f1a; border: 1px solid #1e1e2a; border-radius: 10px; padding: 14px 18px; font-size: 11px; color: #3a3a4a; line-height: 1.6; }
-    .disclaimer strong { color: #555; }
+    .disclaimer { background: #fff; border: 1px solid #e8e8f0; border-radius: 10px; padding: 14px 18px; font-size: 11px; color: #aaa; line-height: 1.6; }
+    .disclaimer strong { color: #888; }
 
     /* ── Update time ── */
-    .update-time { font-size: 11px; color: #2e2e42; text-align: right; margin-bottom: 12px; }
+    .update-time { font-size: 11px; color: #bbb; text-align: right; margin-bottom: 12px; }
 
     /* ── Loading / Error ── */
-    .loading { text-align: center; padding: 80px 20px; color: #3a3a4a; font-size: 14px; }
-    .error-msg { background: #1f0f0f; border: 1px solid #ef444433; border-radius: 10px; padding: 16px 20px; color: #ef4444; font-size: 13px; margin-bottom: 16px; }
+    .loading { text-align: center; padding: 80px 20px; color: #bbb; font-size: 14px; }
+    .error-msg { background: #fef2f2; border: 1px solid #dc262633; border-radius: 10px; padding: 16px 20px; color: #dc2626; font-size: 13px; margin-bottom: 16px; }
 
     @media (max-width: 600px) {
       .signal-card { flex-direction: column; align-items: flex-start; gap: 16px; }
@@ -95,7 +95,7 @@
   const API_URL = 'https://cryptoweather.xyz/signal_btc';
 
   const SIGNAL_META = {
-    'C':  { icon: '☀️', cls: 'signal-clear',  name: 'Clear',  desc: '방향성이 명확한 강한 신호' },
+    'C': { icon: '☀️', cls: 'signal-clear',  name: 'Clear',  desc: '방향성이 명확한 강한 신호' },
     'CL': { icon: '☁️', cls: 'signal-cloudy', name: 'Cloudy', desc: '혼조 또는 불확실한 시장 상황' },
     'ST': { icon: '⛈️', cls: 'signal-stormy', name: 'Stormy', desc: '높은 변동성 예상' },
   };
@@ -183,7 +183,7 @@
   }
 
   loadSignal();
-  setInterval(loadSignal, 60 * 60 * 1000);
+  setInterval(loadSignal, 60 * 60 * 1000); // 매 1시간 자동 갱신
 </script>
 </body>
 </html>
