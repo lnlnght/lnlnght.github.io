@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BTC 시그널</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #0a0a0f; color: #e2e2e8; min-height: 100vh; }
+
+    header { max-width: 900px; margin: 0 auto; padding: 28px 20px 14px; display: flex; align-items: flex-end; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+    .header-left h1 { font-size: 22px; font-weight: 700; background: linear-gradient(135deg, #fff 0%, #9090b0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .header-left p { font-size: 11px; color: #3a3a4a; margin-top: 3px; }
+    .header-right { display: flex; align-items: center; gap: 8px; }
+    .nav-link { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; color: #555; font-size: 12px; text-decoration: none; transition: all 0.15s; white-space: nowrap; }
+    .nav-link:hover { color: #aaa; border-color: #333; }
+    .refresh-btn { padding: 5px 12px; border-radius: 8px; border: 1px solid #222; background: transparent; color: #555; font-size: 12px; cursor: pointer; transition: all 0.15s; }
+    .refresh-btn:hover { color: #aaa; border-color: #333; }
+    .refresh-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+    main { max-width: 900px; margin: 0 auto; padding: 8px 20px 40px; }
+
+    /* ── Signal Card ── */
+    .signal-card { background: #0f0f1a; border: 1px solid #1e1e2a; border-radius: 16px; padding: 32px; margin-bottom: 16px; display: flex; align-items: center; gap: 32px; }
+    .signal-icon { font-size: 72px; line-height: 1; flex-shrink: 0; }
+    .signal-info { flex: 1; }
+    .signal-label { font-size: 11px; color: #3a3a4a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+    .signal-name { font-size: 32px; font-weight: 700; margin-bottom: 4px; }
+    .signal-desc { font-size: 13px; color: #555; }
+    .signal-clarity { font-size: 13px; color: #888; margin-top: 6px; }
+
+    .signal-clear .signal-name  { color: #f59e0b; }
+    .signal-cloudy .signal-name { color: #6366f1; }
+    .signal-stormy .signal-name { color: #ef4444; }
+
+    /* ── Position Badge ── */
+    .pos-badge { display: inline-flex; align-items: center; gap: 6px; padding: 6px 16px; border-radius: 20px; font-size: 14px; font-weight: 700; margin-top: 10px; }
+    .pos-buy  { background: #0f1f0f; color: #22c55e; border: 1px solid #22c55e44; }
+    .pos-sell { background: #1f0f0f; color: #ef4444; border: 1px solid #ef444444; }
+    .pos-hold { background: #14141e; color: #6366f1; border: 1px solid #6366f144; }
+
+    /* ── Metrics Grid ── */
+    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 16px; }
+    .metric-card { background: #0f0f1a; border: 1px solid #1e1e2a; border-radius: 12px; padding: 20px; }
+    .metric-label { font-size: 11px; color: #3a3a4a; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px; }
+    .metric-value { font-size: 26px; font-weight: 700; color: #e2e2e8; }
+    .metric-sub { font-size: 11px; color: #555; margin-top: 4px; }
+    .metric-pos { color: #22c55e; }
+    .metric-neg { color: #ef4444; }
+
+    /* ── Disclaimer ── */
+    .disclaimer { background: #0f0f1a; border: 1px solid #1e1e2a; border-radius: 10px; padding: 14px 18px; font-size: 11px; color: #3a3a4a; line-height: 1.6; }
+    .disclaimer strong { color: #555; }
+
+    /* ── Update time ── */
+    .update-time { font-size: 11px; color: #2e2e42; text-align: right; margin-bottom: 12px; }
+
+    /* ── Loading / Error ── */
+    .loading { text-align: center; padding: 80px 20px; color: #3a3a4a; font-size: 14px; }
+    .error-msg { background: #1f0f0f; border: 1px solid #ef444433; border-radius: 10px; padding: 16px 20px; color: #ef4444; font-size: 13px; margin-bottom: 16px; }
+
+    @media (max-width: 600px) {
+      .signal-card { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .signal-icon { font-size: 56px; }
+      .metrics-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-left">
+    <h1>BTC 시그널</h1>
+    <p>CryptoWeather AI · 매시간 업데이트</p>
+  </div>
+  <div class="header-right">
+    <a href="index.html" class="nav-link">ETF</a>
+    <a href="stocks.html" class="nav-link">주식</a>
+    <a href="ai.html" class="nav-link">AI</a>
+    <button class="refresh-btn" id="refreshBtn" onclick="loadSignal()">새로고침</button>
+  </div>
+</header>
+
+<main>
+  <div id="updateTime" class="update-time"></div>
+  <div id="content">
+    <div class="loading">⏳ 신호 불러오는 중...</div>
+  </div>
+  <div class="disclaimer">
+    <strong>⚠️ 투자 고지:</strong> CryptoWeather 예측은 정보 제공 목적으로만 제공됩니다. 이는 금융 조언이 아닙니다. 투자 결정 전 반드시 개인 리서치를 수행하고 리스크 허용 범위를 고려하세요. 과거 성과가 미래 결과를 보장하지 않습니다.
+  </div>
+</main>
+
+<script>
+  const API_URL = 'https://cryptoweather.xyz/signal_btc';
+
+  const SIGNAL_META = {
+    'C':  { icon: '☀️', cls: 'signal-clear',  name: 'Clear',  desc: '방향성이 명확한 강한 신호' },
+    'CL': { icon: '☁️', cls: 'signal-cloudy', name: 'Cloudy', desc: '혼조 또는 불확실한 시장 상황' },
+    'ST': { icon: '⛈️', cls: 'signal-stormy', name: 'Stormy', desc: '높은 변동성 예상' },
+  };
+
+  const POS_META = {
+    'buy':  { cls: 'pos-buy',  icon: '▲', label: 'Buy' },
+    'sell': { cls: 'pos-sell', icon: '▼', label: 'Sell' },
+    'hold': { cls: 'pos-hold', icon: '◆', label: 'Hold' },
+  };
+
+  function parseSignalKey(sig) {
+    if (!sig) return null;
+    const s = sig.toUpperCase();
+    if (s.startsWith('ST')) return 'ST';
+    if (s.startsWith('CL') || s === 'CLOUDY') return 'CL';
+    if (s === 'C' || s === 'CLEAR') return 'C';
+    return null;
+  }
+
+  function formatPct(val) {
+    if (!val) return '-';
+    return String(val).includes('%') ? val : val + '%';
+  }
+
+  async function loadSignal() {
+    const btn = document.getElementById('refreshBtn');
+    btn.disabled = true;
+    btn.textContent = '불러오는 중...';
+
+    try {
+      const res = await fetch(API_URL);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+
+      const clear = data['Clear'] || {};
+      const sigKey = parseSignalKey(clear.sig || clear.signal || '');
+      const meta = SIGNAL_META[sigKey] || { icon: '❓', cls: '', name: clear.signal || '-', desc: '' };
+      const pos = (clear.pos || 'hold').toLowerCase();
+      const posMeta = POS_META[pos] || POS_META['hold'];
+      const clarity = formatPct(clear.Clarity);
+      const profit = formatPct(clear.profit);
+      const backtest = formatPct(clear.backtest);
+      const version = data.version || '';
+
+      document.getElementById('updateTime').textContent =
+        `마지막 업데이트: ${new Date().toLocaleString('ko-KR')}` + (version ? `  ·  v${version}` : '');
+
+      document.getElementById('content').innerHTML = `
+        <div class="signal-card ${meta.cls}">
+          <div class="signal-icon">${meta.icon}</div>
+          <div class="signal-info">
+            <div class="signal-label">현재 신호</div>
+            <div class="signal-name">${meta.name}</div>
+            <div class="signal-desc">${meta.desc}</div>
+            <div class="signal-clarity">신뢰도 ${clarity}</div>
+            <div class="pos-badge ${posMeta.cls}">${posMeta.icon} ${posMeta.label}</div>
+          </div>
+        </div>
+        <div class="metrics-grid">
+          <div class="metric-card">
+            <div class="metric-label">현재 수익률</div>
+            <div class="metric-value ${profit.startsWith('-') ? 'metric-neg' : 'metric-pos'}">${profit}</div>
+            <div class="metric-sub">현재 포지션 기준</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">백테스트 수익률</div>
+            <div class="metric-value metric-pos">${backtest}</div>
+            <div class="metric-sub">역사적 누적 성과</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-label">신호 유형</div>
+            <div class="metric-value" style="font-size:18px">${clear.sig || '-'}</div>
+            <div class="metric-sub">원시 신호 코드</div>
+          </div>
+        </div>
+      `;
+    } catch (e) {
+      document.getElementById('content').innerHTML = `
+        <div class="error-msg">⚠️ 데이터를 불러오지 못했습니다: ${e.message}</div>
+      `;
+    }
+
+    btn.disabled = false;
+    btn.textContent = '새로고침';
+  }
+
+  loadSignal();
+  setInterval(loadSignal, 60 * 60 * 1000);
+</script>
+</body>
+</html>
