@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>투자 & AI 대시보드</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; background: #f5f5f8; color: #1a1a2e; min-height: 100vh; display: flex; flex-direction: column; }
+
+    /* ── Header ── */
+    header { max-width: 960px; margin: 0 auto; width: 100%; padding: 48px 24px 0; }
+    .site-title { font-size: 28px; font-weight: 800; background: linear-gradient(135deg, #1a1a2e 0%, #5050a0 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .site-sub { font-size: 13px; color: #aaa; margin-top: 6px; }
+
+    /* ── Grid ── */
+    .grid { max-width: 960px; margin: 48px auto 0; width: 100%; padding: 0 24px 80px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+    /* ── Card ── */
+    .card { background: #fff; border: 1px solid #e8e8f0; border-radius: 16px; padding: 28px; text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 12px; transition: transform 0.15s, box-shadow 0.15s, border-color 0.15s; cursor: pointer; }
+    .card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.08); border-color: var(--card-color); }
+    .card-icon { width: 48px; height: 48px; border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; background: var(--card-bg); flex-shrink: 0; }
+    .card-title { font-size: 18px; font-weight: 700; color: #1a1a2e; }
+    .card-desc { font-size: 13px; color: #888; line-height: 1.6; }
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
+    .tag { font-size: 10px; font-weight: 600; padding: 3px 8px; border-radius: 20px; background: var(--card-bg); color: var(--card-color); }
+    .card-arrow { margin-top: auto; font-size: 18px; color: var(--card-color); align-self: flex-end; }
+
+    /* ── Card colors ── */
+    .card-etf   { --card-color: #4f46e5; --card-bg: #eeeef8; }
+    .card-stock { --card-color: #16a34a; --card-bg: #edfaf3; }
+    .card-ai    { --card-color: #0369a1; --card-bg: #eff8ff; }
+    .card-profile { --card-color: #be185d; --card-bg: #fff0f6; }
+    .card-btc     { --card-color: #f59e0b; --card-bg: #fffbeb; }
+
+    /* ── Footer ── */
+    footer { margin-top: auto; text-align: center; padding: 28px; font-size: 11px; color: #ccc; border-top: 1px solid #eee; }
+
+    @media (max-width: 600px) {
+      .grid { grid-template-columns: 1fr; }
+      header { padding: 36px 20px 0; }
+      .site-title { font-size: 22px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="site-title">투자 & AI 대시보드</div>
+  <div class="site-sub">ETF · 주식 밸류에이션 · AI 인사이트 · 자기소개</div>
+</header>
+
+<div class="grid">
+  <a class="card card-etf" href="/etf.html">
+    <div class="card-icon">📊</div>
+    <div class="card-title">ETF</div>
+    <div class="card-desc">미국·한국 주요 ETF의 운용보수, 배당수익률, AUM, 52주 위치를 한눈에 확인하세요.</div>
+    <div class="card-tags">
+      <span class="tag">지수</span>
+      <span class="tag">배당</span>
+      <span class="tag">채권</span>
+      <span class="tag">섹터</span>
+      <span class="tag">테마</span>
+    </div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-stock" href="/stocks.html">
+    <div class="card-icon">📈</div>
+    <div class="card-title">주식 밸류에이션</div>
+    <div class="card-desc">미국·한국 주요 종목의 PER, PBR, ROE, 영업이익, 시가총액을 비교해보세요.</div>
+    <div class="card-tags">
+      <span class="tag">PER</span>
+      <span class="tag">PBR</span>
+      <span class="tag">ROE</span>
+      <span class="tag">시가총액</span>
+    </div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-ai" href="/ai.html">
+    <div class="card-icon">🤖</div>
+    <div class="card-title">AI 인사이트</div>
+    <div class="card-desc">샘 올트먼, 젠슨 황 등 AI 업계 주요 인사들의 최신 인터뷰 영상과 뉴스를 모아봅니다.</div>
+    <div class="card-tags">
+      <span class="tag">영상</span>
+      <span class="tag">뉴스</span>
+      <span class="tag">11인</span>
+    </div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-btc" href="/crypto.html">
+    <div class="card-icon">₿</div>
+    <div class="card-title">BTC 시그널</div>
+    <div class="card-desc">CryptoWeather AI가 제공하는 비트코인 매매 시그널과 신뢰도, 수익률 지표를 확인하세요.</div>
+    <div class="card-tags">
+      <span class="tag">Buy/Sell/Hold</span>
+      <span class="tag">매시간</span>
+    </div>
+    <div class="card-arrow">→</div>
+  </a>
+
+  <a class="card card-profile" href="https://lnlnght.github.io/my-profile-site/" target="_blank" rel="noopener">
+    <div class="card-icon">👤</div>
+    <div class="card-title">자기소개</div>
+    <div class="card-desc">개발자 소개 페이지입니다. 프로젝트, 기술 스택, 연락처를 확인해보세요.</div>
+    <div class="card-tags">
+      <span class="tag">Profile</span>
+      <span class="tag">Portfolio</span>
+    </div>
+    <div class="card-arrow">↗</div>
+  </a>
+</div>
+
+<footer>투자 정보는 참고용이며 투자 권유가 아닙니다 · 데이터 출처: Yahoo Finance, DART, Google News</footer>
+
+</body>
+</html>
